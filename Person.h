@@ -42,8 +42,8 @@ public:
      /* 'set' member-functions */
     void setSpecialStatus(bool newStatus);
     
-    friend ostream& operator<<(ostream& out, const Student& s);
-    friend istream& operator>>(istream& out, const Student& s);
+    friend std::ostream& operator<<(std::ostream& out, const Student& s);
+    friend std::istream& operator>>(std::istream& out, const Student& s);
 };
 
 class Teacher : public Person {
@@ -53,6 +53,6 @@ public:
     //vector<Unit> units; //Unit class needs to be defined
     //vector<Student> pupils; //Another solution may be adopted (each Student has a Teacher* to their mentor)
     
-    friend ostream& operator<<(ostream& out, const Teacher& s);
-    friend istream& operator>>(istream& out, const Teacher& s);
+    friend std::ostream& operator<<(std::ostream& out, const Teacher& s);
+    friend std::istream& operator>>(std::istream& out, const Teacher& s);
 };

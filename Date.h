@@ -20,7 +20,7 @@ public:
 	void setYear(unsigned int newYear); //Sets date's year to newYear
 	*/
     
-    friend istream& operator >>(istream& in, Date &date); //Overload of >> to read from files
-	friend ostream& operator<<(ostream& out, const Date &date); //Overload of << operator so it can be send to cout like objects
+    friend std::istream& operator >>(std::istream& in, Date &date); //Overload of >> to read from files
+    friend std::ostream& operator<<(std::ostream& out, const Date &date); //Overload of << operator so it can be send to cout like objects
 	friend bool operator<(const Date &date1, const Date &date2); //Overload of < operator to compare two dates
 };
