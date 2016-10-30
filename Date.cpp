@@ -34,6 +34,17 @@ unsigned int Date::getYear() const {
 	return year;
 }
 
+istream& operator >>(istream &in, const Date &date)
+{
+    in >> date.day;
+    in.ignore();
+    in >> date.month;
+    in.ignore();
+    in >> date.year;
+    
+    return in;
+}
+
 ostream& operator<<(ostream& out, const Date &date) {
 	out << date.getDay() << "/" << date.getMonth() << "/" << date.getYear();
 	return out;
