@@ -1,3 +1,6 @@
+# MIEIC
+## CLI C++ based tool that emulates a course's registration system. Made in colaboration with @cyrilico and @diogotorres97
+
 ### Classes
 ##### PessoaFEUP (base class):
 - name
@@ -50,12 +53,13 @@
 - vacancies (? maybe only defined in derived classes - create a virtual function that returns true on obligatory units and a number on optional units)
 
 ##### Derived from Unit:
-- ##### ObligatoryUnit
-    - vacancies (?)
-- ##### OptionalUnit
-    - scientificArea
-    - course (?)
-    - institution (?)
+##### - ObligatoryUnit
+   - vacancies (?)
+   
+##### - OptionalUnit
+   - scientificArea
+   - course (?)
+   - institution (?)
 
 Other ideas:
 - When program is started, ask if user wants to read info from files or start with an empty database
