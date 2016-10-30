@@ -1,19 +1,7 @@
-#include <sstream>
 #include "Date.h"
 #include "Exceptions.h"
 
 using namespace std;
-
-Date::Date(std::string date) {
-	istringstream dateTemp;
-	dateTemp.str(date);
-	dateTemp >> day;
-	dateTemp.ignore();
-	dateTemp >> month;
-	dateTemp.ignore();
-	dateTemp >> year;
-	/*To add: Exception handling (if day is bigger than 31, month bigger than 12 or date is not valid according to Gregorian calendar standars; exception classes need to be created*/
-}
 
 Date::Date(unsigned int day, unsigned int month, unsigned int year) {
 	this->day = day;
@@ -34,7 +22,7 @@ unsigned int Date::getYear() const {
 	return year;
 }
 
-istream& operator >>(istream &in, const Date &date)
+istream& operator >>(istream &in, Date &date)
 {
     in >> date.day;
     in.ignore();

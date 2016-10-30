@@ -1,9 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <fstream>
 #include <string>
-using namespace std;
 
 class Date {
 private:
@@ -12,7 +10,6 @@ private:
 	unsigned int year;
 public:
 	Date(){}; //Default constructor (does nothing; just here because since there are other constructors, default one isn't automatically created)
-	Date(string date); //Date is given in a string in the format DD/MM/YYYY (to use when reading information from files)
 	Date(unsigned int day, unsigned int month, unsigned int year); //Date elements given in separate (to use with run-time created objects)
 	unsigned int getDay() const; //Returns date day
 	unsigned int getMonth() const; //Returns date month
@@ -23,7 +20,7 @@ public:
 	void setYear(unsigned int newYear); //Sets date's year to newYear
 	*/
     
-    friend istream& operator >>(istream& in, const Date &date); //Overload of >> to read from files
+    friend istream& operator >>(istream& in, Date &date); //Overload of >> to read from files
 	friend ostream& operator<<(ostream& out, const Date &date); //Overload of << operator so it can be send to cout like objects
 	friend bool operator<(const Date &date1, const Date &date2); //Overload of < operator to compare two dates
 };
