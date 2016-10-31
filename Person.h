@@ -12,7 +12,7 @@ protected:
     std::string code;
     std::string email; //created directly from code
 public:
-	Person() {}; //default constructor
+	Person(); //default constructor
     Person(std::string name, std::string code, Date birthDate); //basic constructor
     
     /* 'get' member-functions */
@@ -37,7 +37,7 @@ class Student : public Person {
 	std::string year; // class date??
 
 public:
-	Student() {}; //default constructor
+	Student(); //default constructor
     Student(std::string name, std::string code, Date birthDate, bool specialStatus);
         
     /* 'get' member-functions */
@@ -57,7 +57,7 @@ class Teacher : public Person {
 	//vector<Unit> units; //Unit class needs to be defined
 	//vector<Student> pupils; //Another solution may be adopted (each Student has a Teacher* to their mentor)
 public:
-	Teacher() {}; //default constructor
+	Teacher(); //default constructor
     //Teacher(std::string name, std::string code, Date birthDate, vector<Unit> units); //Unit class needs to be defined
     
     friend std::ostream& operator<<(std::ostream& out, const Teacher& s);

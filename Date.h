@@ -12,7 +12,7 @@ private:
 	unsigned int month;
 	unsigned int year;
 public:
-	Date(){}; //Default constructor (does nothing; just here because since there are other constructors, default one isn't automatically created)
+	Date(); //Default constructor (does nothing; just here because since there are other constructors, default one isn't automatically created)
 	Date(unsigned int day, unsigned int month, unsigned int year); //Date elements given in separate (to use with run-time created objects)
 	Date(std::string DateStr); //constructor for a date with a string (DD/MM/YYYY)
 
