@@ -2,6 +2,7 @@
 #include <string>
 #include "Date.h"
 
+
 //Header file for class Person and its derived classes (Student and Teacher, for now; to be implemented)
 
 class Person {
@@ -20,39 +21,45 @@ public:
     std::string getCode() const;
     std::string getEmail() const;
     
-    /* 'set' member-functions (are they necessary though? maybe implement later on)
+    /* 'set' member-functions (are they necessary though? maybe implement later on)*/
     void setBirthDate(Date newDate);
-    void setEmail(string newEmail); //Unecessary? Since e-mail depends directly on the person's code
-    void setName(string newName); //Useful?
-	*/    
+    void setEmail(std::string newEmail); //Unecessary? Since e-mail depends directly on the person's code
+    void setName(std::string newName); //Useful?
+
+	virtual void displayInfo() = 0;
+	
 };
 
 class Student : public Person {
     bool specialStatus; // Differentiate between athlete and worker?
     int ECTSNumber;
+	//vector<Unit> units; //Unit class needs to be defined
+	std::string year; // class date??
+
 public:
 	Student() {}; //default constructor
-    Student(std::string name, Date birthDate, bool specialStatus);
-    //vector<Unit> units; //Unit class needs to be defined
+    Student(std::string name, std::string code, Date birthDate, bool specialStatus);
         
     /* 'get' member-functions */
     bool getSpecialStatus();
     int getECTSNumber();
+	// vector<Unit> getUnits();
     
      /* 'set' member-functions */
     void setSpecialStatus(bool newStatus);
-    
+
+	    
     friend std::ostream& operator<<(std::ostream& out, const Student& s);
-    friend std::istream& operator>>(std::istream& out, const Student& s);
+    friend std::istream& operator>>(std::istream& in, const Student& s);
 };
 
 class Teacher : public Person {
+	//vector<Unit> units; //Unit class needs to be defined
+	//vector<Student> pupils; //Another solution may be adopted (each Student has a Teacher* to their mentor)
 public:
 	Teacher() {}; //default constructor
-    //Teacher(string name, Date birthDate, vector<Unit> units); //Unit class needs to be defined
-    //vector<Unit> units; //Unit class needs to be defined
-    //vector<Student> pupils; //Another solution may be adopted (each Student has a Teacher* to their mentor)
+    //Teacher(std::string name, std::string code, Date birthDate, vector<Unit> units); //Unit class needs to be defined
     
     friend std::ostream& operator<<(std::ostream& out, const Teacher& s);
-    friend std::istream& operator>>(std::istream& out, const Teacher& s);
+    friend std::istream& operator>>(std::istream& in, const Teacher& s);
 };
