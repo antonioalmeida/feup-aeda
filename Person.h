@@ -1,6 +1,9 @@
 #pragma once
+
+#include <iostream>
 #include <string>
 #include "Date.h"
+#include "Unit.h"
 
 
 //Header file for class Person and its derived classes (Student and Teacher, for now; to be implemented)
@@ -9,57 +12,51 @@ class Person {
 protected:
     std::string name;
     Date birthDate;
-    std::string code;
     std::string email; //created directly from code
 public:
-	Person(); //default constructor
-    Person(std::string name, std::string code, Date birthDate); //basic constructor
-    
-    /* 'get' member-functions */
+	Person() {}; //default constructor
+    Person(std::string name, Date birthDate);
+
     Date getBirthDate() const;
     std::string getName() const;
     std::string getCode() const;
     std::string getEmail() const;
-    
-    /* 'set' member-functions (are they necessary though? maybe implement later on)*/
     void setBirthDate(Date newDate);
-    void setEmail(std::string newEmail); //Unecessary? Since e-mail depends directly on the person's code
-    void setName(std::string newName); //Useful?
-
-	virtual void displayInfo() = 0;
-	
+    void setName(std::string newName);	
 };
 
 class Student : public Person {
-    bool specialStatus; // Differentiate between athlete and worker?
-    int ECTSNumber;
-	//vector<Unit> units; //Unit class needs to be defined
-	std::string year; // class date??
+protected:
+	static unsigned int nextCode; //Sequential code used for 1st timers
+	unsigned int code;
+    std::string status;
+    unsigned int ectsTaking;
+	unsigned int curricularYear;
+	vector<vector<Unit*>> units;
 
 public:
-	Student(); //default constructor
-    Student(std::string name, std::string code, Date birthDate, bool specialStatus);
-        
-    /* 'get' member-functions */
-    bool getSpecialStatus();
-    int getECTSNumber();
-	// vector<Unit> getUnits();
-    
-     /* 'set' member-functions */
-    void setSpecialStatus(bool newStatus);
+	Student() {}; //default constructor
+    Student(std::string name, Date birthDate, std::string specialStatus, unsigned int curricularYear, unsigned int code = Student::nextCode);
+
+    std::string getSpecialStatus() const;
+	unsigned int getECTSTaking() const;
+	unsigned int getCode() const;
+	vector<vector<Unit*>> getUnits() const;
+    void setSpecialStatus(std::string newStatus);
 
 	    
     friend std::ostream& operator<<(std::ostream& out, const Student& s);
-    friend std::istream& operator>>(std::istream& in, const Student& s);
+    friend std::istream& operator>>(std::istream& in, Student& s); //Check if curricular year is 1. If so, code is automatically given from static member. If not, code is read from file
 };
 
 class Teacher : public Person {
-	//vector<Unit> units; //Unit class needs to be defined
-	//vector<Student> pupils; //Another solution may be adopted (each Student has a Teacher* to their mentor)
+protected:
+	std::string code;
+	vector<Unit*> units;
 public:
-	Teacher(); //default constructor
-    //Teacher(std::string name, std::string code, Date birthDate, vector<Unit> units); //Unit class needs to be defined
+	Teacher() {}; //default constructor
+    Teacher(std::string name, std::string code, Date birthDate, vector<Unit*> units);
     
     friend std::ostream& operator<<(std::ostream& out, const Teacher& s);
-    friend std::istream& operator>>(std::istream& in, const Teacher& s);
+    friend std::istream& operator>>(std::istream& in, Teacher& s);
 };

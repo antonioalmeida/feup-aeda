@@ -1,7 +1,7 @@
 #pragma once
+
 #include <string>
 #include <vector>
-#include "Person.h"
 //Header file for class Unit and its derived classes (MandatoryUnit and OptionalUnit, for now; to be implemented)
 
 class Unit {
@@ -33,6 +33,8 @@ public:
     void removeStudent(Student removedStudent); //Create a version that takes an iterator as argument?
     void addTeacher(Teacher newTeacher);
     void removeTeacher(Teacher removedTeacher); //"YOU'RE FIRED!" Create a version that takes an iterator as argument?
+
+	friend bool operator<(const Unit &u1, const Unit &u2); //To compare 2 units (important because units in a larger scale may be used in a big map - easier to work with
     
 };
 
