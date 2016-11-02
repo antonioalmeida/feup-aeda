@@ -49,3 +49,15 @@ public:
 	}
 };
 
+template <class T> class invalidIdentification { //When search for specific person goes wrong (may search by code - which can be string or unsigned long it, name... whatever)
+private:
+	T identification;
+public:
+	invalidIdentification(T id) {
+		identification = id;
+	}
+	T getInvIdentification() const {
+		return identification;
+	}
+};
+

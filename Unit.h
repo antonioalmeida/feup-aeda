@@ -34,7 +34,7 @@ public:
     void addTeacher(Teacher newTeacher);
     void removeTeacher(Teacher removedTeacher); //"YOU'RE FIRED!" Create a version that takes an iterator as argument?
 
-	friend bool operator<(const Unit &u1, const Unit &u2); //To compare 2 units (important because units in a larger scale may be used in a big map - easier to work with
+	friend bool operator<(const Unit &u1, const Unit &u2); //To compare 2 units (important because units in a larger scale may be used in a big map - easier to work with; CRITERIA!!!! u1<u2 IF curricularYear(u1) < curricularYear(u2) OR same curricularYear and acronym(u1)<acronym(u2))
     
 };
 
