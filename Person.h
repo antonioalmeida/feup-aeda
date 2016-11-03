@@ -42,8 +42,7 @@ protected:
 
 public:
 	Student() {}; //default constructor
-	Student(std::string name, Date birthDate, std::string specialStatus, unsigned int curricularYear); //Ask for units inside the method (through curricularYear do a loop for all units of each year <= curricularYear) + if curricularYear >= 2 ask for code (CHECK IF IT DOESN'T EXIST ALREADY!!!)
-
+    Student::Student(string name, Date birthDate,string specialStatus, unsigned int curricularYear, unsigned long int code = nextCode++);
 	std::string getStatus() const;
 	unsigned int getECTSTaking() const;
 	unsigned long int getCode() const;

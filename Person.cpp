@@ -31,38 +31,31 @@ void Person::setName(string newName) {
 	name = newName;
 }
 
-
 /*Student*/
 
-/*
-Student::Student(string name, Date birthDate,string specialStatus, unsigned int curricularYear) : Person(name, birthDate){
+Student::Student(string name, Date birthDate,string specialStatus, unsigned int curricularYear, unsigned long int code = nextCode++) : Person(name, birthDate) {
+    
 	status = specialStatus;
 	this->curricularYear = curricularYear;
-	email = "up" + code + "@fe.up.pt";
+    
+    if(code != nextCode) {
+        /*
+         if(curricularYear < 2)
+            throw InvalidCurricularYear(curricularYear);
+         */
+        this->code = code;
+    }
+    
+    email = "up";
+    email.append(to_string(code));
+    email.append("@fe.up.pt");
+    
 	ectsTaking = 0;
-	average = 0;
+	average = 0.0;
 	mentor = NULL;
-
-	//SEE COMMIT -> SUGGESTION
-
-	//Ask for units inside the method (through curricularYear do a loop for all units of each year <= curricularYear)
-	//+ if curricularYear >= 2 ask for code (CHECK IF IT DOESN'T EXIST ALREADY!!!)
-	if (curricularYear >= 2){
-		cout << "Insert your code:" << endl;
-		cin >> code;
-		if(code)
-		for (int i = 0; i <= curricularYear;i++){
-		//See commit
-	}
-	}
-	else{
-		code = nextCode;
-		nextCode++;
-	}
-
-	registrationComplete = false;
+    
+    registrationComplete = false;
 }
-*/
 
 string Student::getStatus() const {
 	return status;
