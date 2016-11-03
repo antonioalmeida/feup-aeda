@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 
 class Date {
 private:
@@ -19,9 +20,9 @@ public:
 	void setDay(unsigned int newDay); //Sets date's day to newDay
 	void setMonth(unsigned int newMonth); //Sets date's month to newMonth
 	void setYear(unsigned int newYear); //Sets date's year to newYear
-    
-    friend std::istream& operator>>(std::istream& in, Date &date); //Overload of >> to read from files
-    friend std::ostream& operator<<(std::ostream& out, const Date &date); //Overload of << operator so it can be send to cout like objects
+
+	friend std::istream& operator>>(std::istream& in, Date &date); //Overload of >> to read from files
+	friend std::ostream& operator<<(std::ostream& out, const Date &date); //Overload of << operator so it can be send to cout like objects
 	friend bool operator<(const Date &date1, const Date &date2); //Overload of < operator to compare two dates
 	friend bool operator==(const Date &dat1, const Date &dat2); //Overload of == operator to compare if two dates are equal
 };
