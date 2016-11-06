@@ -61,8 +61,8 @@ ostream& operator<<(ostream &out, const Unit &u1) {
 MandatoryUnit::MandatoryUnit(string name, string abbreviation, string scientificArea, float ects, unsigned int curricularYear): Unit(name,abbreviation,scientificArea,ects,curricularYear) {
 }
 
-bool MandatoryUnit::notFull() const {
-	return true;
+bool MandatoryUnit::isFull() const {
+	return false;
 }
 
 void MandatoryUnit::print(ostream &out) const { //May change display format later
@@ -112,11 +112,11 @@ unsigned int OptionalUnit::getFixedVacancies() const {
 }
 
 void OptionalUnit::updateVacancies() {
-	vacancies--; //No need to check if it is already 0 if we make sure it isn't called unless noFull() returns true
+	vacancies--; //No need to check if it is already 0 if we make sure it isn't called unless isFull() returns false
 }
 
-bool OptionalUnit::notFull() const {
-	return vacancies > 0;
+bool OptionalUnit::isFull() const {
+	return vacancies == 0;
 }
 
 void OptionalUnit::print(ostream &out) const {
