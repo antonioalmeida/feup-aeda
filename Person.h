@@ -22,7 +22,7 @@ public:
 	std::string getEmail() const;
 	void setBirthDate(Date newDate);
 	void setName(std::string newName);
-	virtual void save(std::ostream &out) = 0; //Save object to file (can't use overloaded operator<< because it'll be used to show object information in a more user-friendly way) - guarantees this class can't be instatiated (exactly what wanted)
+	virtual void save(std::ostream &out) const = 0; //Save object to file (can't use overloaded operator<< because it'll be used to show object information in a more user-friendly way) - guarantees this class can't be instatiated (exactly what wanted)
 };
 
 class Student : public Person {
@@ -55,7 +55,7 @@ public:
 	void setRegistration(); //The only state possible is to go from false to true so keeping it simple
 	void setStatus(std::string newStatus);
 	void setMentor(Teacher* newMentor);
-	virtual void save(std::ostream &out);
+	virtual void save(std::ostream &out) const;
 
 	friend std::ostream& operator<<(std::ostream& out, const Student& s);
 	friend std::istream& operator>>(std::istream& in, Student& s); //Check if curricular year is 1. If so, code is automatically given by static member. If not, code is read from file (in the same line as curricularYear, to simplify)
@@ -71,7 +71,7 @@ public:
 
 	std::string getCode() const;
 	std::vector<Unit*> getUnitsTaught() const;
-	virtual void save(std::ostream &out);
+	virtual void save(std::ostream &out) const;
 
 	friend std::ostream& operator<<(std::ostream& out, const Teacher& s);
 	friend std::istream& operator>>(std::istream& in, Teacher& s);

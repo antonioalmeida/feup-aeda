@@ -1,67 +1,64 @@
 #pragma once
 
+#include <iostream>
 #include <string>
-#include <vector>
+
 //Header file for class Unit and its derived classes (MandatoryUnit and OptionalUnit, for now; to be implemented)
 
 class Unit {
+protected:
     std::string name;
-    std::string code;
-    int ECTS;
-    int year;
+    std::string abbreviation;
+	std::string scientificArea;
+    float ECTS;
+    unsigned int curricularYear;
 public:
-    Unit(); //default constructor
-    Unit(std::string name, std::string code, int ects, int year); //complete constructor
-    std::vector<Teacher> teachers;
-    std::vector<Student> students;
-    
-   /* 'get'-methods */
-    std::string getName();
-    std::string getCode();
-    int getECTS();
-    int getYear();
-    std::vector<Teacher> getTeachers();
-    std::vector<Student> getStudents();
-    virtual bool isVacant() = 0;
-    
-    /* 'set'-methods */
+	Unit() {}; //default constructor
+    Unit(std::string name, std::string abbreviation, std::string scientificArea, float ects, unsigned int curricularYear);
+      
+    std::string getName() const;
+    std::string getAbbreviation() const;
+	std::string getScientificArea() const;
+    float getECTS() const;
+    unsigned int getCurricularYear() const;
+    virtual bool notFull() const = 0; //Checks if curricular unit has a place for the student (always true in mandatory units)
     void setName(std::string newName);
-    void setCode(std::string newCode);
-    void setECTS(int newECTS);
-    
-    void addStudent(Student newStudent);
-    void removeStudent(Student removedStudent); //Create a version that takes an iterator as argument?
-    void addTeacher(Teacher newTeacher);
-    void removeTeacher(Teacher removedTeacher); //"YOU'RE FIRED!" Create a version that takes an iterator as argument?
+    void setAbbreviation(std::string newAbbreviation);
+	void setScientificArea(std::string newScientificArea);
+    /*void setECTS(float newECTS); //Does it make sense? Considering we're using pointers in the Student/Teacher class, if we change the ECTS Value it may fuck up the amount of ECTS the student is taking*/
+	virtual void print(std::ostream &out) const = 0; //Will be called in operator<< overload (kinda "forcing" polymorphism)
+	virtual void save(std::ostream &out) const = 0;
 
-	friend bool operator<(const Unit &u1, const Unit &u2); //To compare 2 units (important because units in a larger scale may be used in a big map - easier to work with; CRITERIA!!!! u1<u2 IF curricularYear(u1) < curricularYear(u2) OR same curricularYear and acronym(u1)<acronym(u2))
-    
+    friend bool operator<(const Unit &u1, const Unit &u2); //u1 < u2 if curricularYear(u1) < curricularYear(u2) or if curricularYear is equal and abbreviation(u1) < abbreviation(u2)
+	friend std::ostream& operator<<(std::ostream &out, const Unit &u1);
 };
 
 class MandatoryUnit : public Unit {
-    int vacancies;
 public:
-    MandatoryUnit(); //default constructor
-    MandatoryUnit(std::string name, std::string code, int ects, int year);//complete constructor
+	MandatoryUnit() {}; //default constructor
+    MandatoryUnit(std::string name, std::string abbreviation, std::string scientificArea, float ects, unsigned int curricularYear);
     
-    /* 'get'-methods */
-    int getVacancies();
-    
-    bool isVacant();
+    virtual bool notFull() const;
+	virtual void print(std::ostream &out) const;
+	virtual void save(std::ostream &out) const;
+
+	friend std::istream& operator>>(std::istream &in, MandatoryUnit &u1);
 };
 
 class OptionalUnit : public Unit {
-    std::string scientificArea;
-    //std::string institution; //Needed?
-    //std::string course; //Needed?
+protected:
+	const unsigned int fixedVacancies; //To keep track of original value and to not lose it (so we can save it to the file when exiting)
+	unsigned int vacancies;
 public:
-    OptionalUnit(); //default constructor
-    /* add complete constructor */
-    
-    /* 'get'-methods */
-    std::string getScientificArea();
-    //std::string getInstitution();
-    //std::string getCourse();
-    
-    bool isVacant(); //In this class, should always return true
+	OptionalUnit() {};
+	OptionalUnit(std::string name, std::string abbreviation, std::string scientificArea, float ects, unsigned int curricularYear, unsigned int fixedVacancies);
+
+	unsigned int getVacancies() const;
+	unsigned int getFixedVacancies() const;
+	void updateVacancies();
+	virtual bool notFull() const;
+	virtual void print(std::ostream &out) const;
+	virtual void save(std::ostream &out) const;
+
+	friend std::istream& operator>>(std::istream &in, OptionalUnit &u1);
 };
