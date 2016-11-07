@@ -39,21 +39,22 @@ public:
 class MandatoryUnit : public Unit {
 public:
 	MandatoryUnit() {}; // Default constructor
+	MandatoryUnit(std::ifstream &in);
     MandatoryUnit(std::string name, std::string abbreviation, std::string scientificArea, float ects, unsigned int curricularYear); //!< Class constructor with parameters. Each parameter is assigned to its respective protected member
     
     virtual bool isFull() const;
 	virtual void print(std::ostream &out) const;
 	virtual void save(std::ostream &out) const;
 
-	friend std::istream& operator>>(std::istream &in, MandatoryUnit &u1); //!< Overload of >> operator to read from files
 };
 
 class OptionalUnit : public Unit {
 protected:
-	const unsigned int fixedVacancies; //!< To keep track of unit's original vacancies value (so we can save it to the file when exiting)
+	unsigned int fixedVacancies; //!< To keep track of unit's original vacancies value (so we can save it to the file when exiting)
 	unsigned int vacancies;
 public:
 	OptionalUnit() {}; // Default constructor
+	OptionalUnit(std::ifstream &in);
 	OptionalUnit(std::string name, std::string abbreviation, std::string scientificArea, float ects, unsigned int curricularYear, unsigned int fixedVacancies); //!< Class constructor with parameters. Each parameter is assigned to its respective protected member
 
 	unsigned int getVacancies() const; //!< Returns vacancies
@@ -64,6 +65,4 @@ public:
 	virtual bool isFull() const; //!< Checks if curricular unit has a place for the student
 	virtual void print(std::ostream &out) const;
 	virtual void save(std::ostream &out) const;
-
-	friend std::istream& operator>>(std::istream &in, OptionalUnit &u1); //!< Overload of >> operator to read from files
 };

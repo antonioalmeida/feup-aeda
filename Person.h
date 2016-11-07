@@ -11,16 +11,13 @@
 class Person {
 protected:
 	std::string name;
-	Date birthDate;
 	std::string email; //created directly from code ("up"+code+"@fe.up.pt" for Student, code+"@fe.up.pt" for Teacher)
 public:
 	Person() {}; //default constructor
-	Person(std::string name, Date birthDate);
+	Person(std::string name);
 
-	Date getBirthDate() const;
 	std::string getName() const;
 	std::string getEmail() const;
-	void setBirthDate(Date newDate);
 	void setName(std::string newName);
 	virtual void save(std::ostream &out) const = 0; //Save object to file (can't use overloaded operator<< because it'll be used to show object information in a more user-friendly way) - guarantees this class can't be instatiated (exactly what wanted)
 };
@@ -42,10 +39,12 @@ protected:
 
 public:
 	Student() {}; //default constructor
-    Student::Student(string name, Date birthDate,string specialStatus, unsigned int curricularYear, unsigned long int code = nextCode++);
+	Student(ifstream &in);
+    Student(std::string name, std::string status, unsigned int curricularYear, unsigned long int code = nextCode++);
 	std::string getStatus() const;
 	unsigned int getECTSTaking() const;
 	unsigned long int getCode() const;
+	double getAverage() const;
 	std::vector<std::vector<std::pair<Unit*, unsigned int>>> getUnitsDone() const;
 	std::vector<std::vector<std::pair<Unit*, unsigned int>>> getUnitsToDo() const;
 	std::vector<Unit*> getUnitsTaking() const;
@@ -58,7 +57,6 @@ public:
 	virtual void save(std::ostream &out) const;
 
 	friend std::ostream& operator<<(std::ostream& out, const Student& s);
-	friend std::istream& operator>>(std::istream& in, Student& s); //Check if curricular year is 1. If so, code is automatically given by static member. If not, code is read from file (in the same line as curricularYear, to simplify)
 };
 
 class Teacher : public Person {
@@ -67,12 +65,13 @@ protected:
 	std::vector<Unit*> unitsTaught;
 public:
 	Teacher() {}; //default constructor
-	Teacher(std::string name, std::string code, Date birthDate); //Ask for units taught inside the method
+	Teacher(ifstream &in);
+	Teacher(std::string name, std::string code); //Ask for units taught inside the method
 
 	std::string getCode() const;
+	void addUnitTaught(Unit* newUnit);
 	std::vector<Unit*> getUnitsTaught() const;
 	virtual void save(std::ostream &out) const;
 
 	friend std::ostream& operator<<(std::ostream& out, const Teacher& s);
-	friend std::istream& operator>>(std::istream& in, Teacher& s);
 };

@@ -58,6 +58,14 @@ ostream& operator<<(ostream &out, const Unit &u1) {
 
 /* Derived class MandatoryUnit methods */
 
+MandatoryUnit::MandatoryUnit(ifstream &in) {
+	in >> abbreviation;
+	getline(in, name);
+	in >> curricularYear >> ECTS;
+	in.ignore(1000, '\n'); //Ignore any elements left in current line (should only be newline)
+	getline(in, scientificArea);
+}
+
 MandatoryUnit::MandatoryUnit(string name, string abbreviation, string scientificArea, float ects, unsigned int curricularYear): Unit(name,abbreviation,scientificArea,ects,curricularYear) {
 }
 
@@ -88,16 +96,18 @@ void MandatoryUnit::save(ostream &out) const {
 	out << abbreviation << " " << name << endl << curricularYear << " " << ECTS << endl << scientificArea;
 }
 
-istream& operator >> (istream &in, MandatoryUnit &u1) {
-	in >> u1.abbreviation;
-	getline(in, u1.name);
-	in >> u1.curricularYear >> u1.ECTS;
-	in.ignore(1000, '\n'); //Ignore any elements left in current line (should only be newline)
-	getline(in, u1.scientificArea);
-	return in;
-}
-
 /* Derived class OptionUnit methods */
+
+OptionalUnit::OptionalUnit(ifstream &in) {
+	in >> abbreviation;
+	getline(in, name);
+	in >> curricularYear >> ECTS;
+	in.ignore(1000, '\n'); //Ignore any elements left in current line (should only be newline)
+	getline(in, scientificArea);
+	in >> vacancies;
+	fixedVacancies = vacancies;
+	in.ignore(1000, '\n');
+}
 
 OptionalUnit::OptionalUnit(string name, string abbreviation, string scientificArea, float ects, unsigned int curricularYear, unsigned int fixedVacancies) : Unit(name, abbreviation, scientificArea, ects, curricularYear), fixedVacancies(fixedVacancies) {
 	//No exception handling needed (about the new member, (fixed)Vacancies), I think...
@@ -139,16 +149,5 @@ void OptionalUnit::print(ostream &out) const {
 }
 
 void OptionalUnit::save(ostream &out) const {
-	out << abbreviation << " " << name << endl << curricularYear << " " << ECTS << endl << scientificArea << endl << vacancies;
-}
-
-istream& operator>>(istream &in, OptionalUnit &u1) {
-	in >> u1.abbreviation;
-	getline(in, u1.name);
-	in >> u1.curricularYear >> u1.ECTS;
-	in.ignore(1000, '\n'); //Ignore any elements left in current line (should only be newline)
-	getline(in, u1.scientificArea);
-	in >> u1.vacancies;
-	in.ignore(1000, '\n');
-	return in;
+	out << abbreviation << " " << name << endl << curricularYear << " " << ECTS << endl << scientificArea << endl << fixedVacancies;
 }
