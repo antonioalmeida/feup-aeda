@@ -1,18 +1,17 @@
 #include "Unit.h"
 
-//Source file for class Unit and its derived classes (MandatoryUnit and OptionalUnit, for now; to be implemented)
+//Source file for class Unit and its derived classes (MandatoryUnit and OptionalUnit)
 
 using namespace std;
 
 /* Base class Unit methods */
 
-Unit::Unit(string name, string abbreviation, string scientificArea, unsigned int ects, unsigned int curricularYear) {
-	this->name = name;
-	this->abbreviation = abbreviation;
-	this->scientificArea = scientificArea;
-	ECTS = ects;
-	this->curricularYear = curricularYear;
-	/*MISSING: Exception handling*/
+Unit::Unit(ifstream &in) {
+	in >> abbreviation;
+	getline(in, name);
+	in >> curricularYear >> ECTS;
+	in.ignore(1000, '\n');
+	getline(in, scientificArea);
 }
 
 string Unit::getName() const {
@@ -58,15 +57,7 @@ ostream& operator<<(ostream &out, const Unit &u1) {
 
 /* Derived class MandatoryUnit methods */
 
-MandatoryUnit::MandatoryUnit(ifstream &in) {
-	in >> abbreviation;
-	getline(in, name);
-	in >> curricularYear >> ECTS;
-	in.ignore(1000, '\n'); //Ignore any elements left in current line (should only be newline)
-	getline(in, scientificArea);
-}
-
-MandatoryUnit::MandatoryUnit(string name, string abbreviation, string scientificArea, float ects, unsigned int curricularYear): Unit(name,abbreviation,scientificArea,ects,curricularYear) {
+MandatoryUnit::MandatoryUnit(ifstream &in): Unit(in) {
 }
 
 bool MandatoryUnit::isFull() const {
@@ -98,15 +89,9 @@ void MandatoryUnit::save(ostream &out) const {
 
 /* Derived class OptionUnit methods */
 
-OptionalUnit::OptionalUnit(ifstream &in) {
-	in >> abbreviation;
-	getline(in, name);
-	in >> curricularYear >> ECTS;
-	in.ignore(1000, '\n'); //Ignore any elements left in current line (should only be newline)
-	getline(in, scientificArea);
-	in >> vacancies;
-	fixedVacancies = vacancies;
-	in.ignore(1000, '\n');
+OptionalUnit::OptionalUnit(ifstream &in):Unit(in) {
+	in >> fixedVacancies;
+	vacancies = fixedVacancies;
 }
 
 OptionalUnit::OptionalUnit(string name, string abbreviation, string scientificArea, float ects, unsigned int curricularYear, unsigned int fixedVacancies) : Unit(name, abbreviation, scientificArea, ects, curricularYear), fixedVacancies(fixedVacancies) {

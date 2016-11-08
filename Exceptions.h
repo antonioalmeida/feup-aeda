@@ -2,8 +2,7 @@
 
 //Header file for custom made exceptions to be caught and treated throughout program execution (to be implemented)
 
-/* Date class exceptions */
-class invalidDay{
+class invalidDay{ //Invalid day regardless of other date specifications (day == 0 or day > 31)
 private:
 	unsigned int day;
 public:
@@ -15,7 +14,7 @@ public:
 	}
 };
 
-class invalidMonth{
+class invalidMonth{ //Invalid month regardless of other date specifications (month == 0 or month > 12)
 private:
 	unsigned int month;
 public:
@@ -27,7 +26,7 @@ public:
 	}
 };
     
-class invalidDate { //When day and month are in a valid range but are wrongly used (ex: 30th February, 31st November, ...)
+class invalidDate { //When day and month are in a valid range but are wrongly used (ex: 30th February, 29th February on a non-leap year, 31st November, ...)
 private:
 	unsigned int day;
 	unsigned int month;
@@ -61,3 +60,14 @@ public:
 	}
 };
 
+template <class T> class repeatedIdentification { //When trying to change an identification member of an object, it may already exist. That would cause conflict if searches are made based on it, so can't allow it
+private:
+	T identification;
+public:
+	repeatedIdentification(T id) {
+		identification = id;
+	}
+	T getRepIdentification() const {
+		return identification;
+	}
+};
