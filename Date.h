@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include "Exceptions.h"
+#include "Utils.h"
 
 /*! Date Class */
 
@@ -23,7 +25,6 @@ public:
 	void setMonth(unsigned int newMonth); //!< Sets date's month to newMonth
 	void setYear(unsigned int newYear); //!< Sets date's year to newYear
 
-	friend std::istream& operator>>(std::istream& in, Date &date); //!< Overload of >> operator to read from files
 	friend std::ostream& operator<<(std::ostream& out, const Date &date); //!< Overload of << operator so it can be sent to cout like objects
 	friend bool operator<(const Date &date1, const Date &date2); //!< Overload of < operator to compare two dates
 	friend bool operator==(const Date &dat1, const Date &dat2); //!< Overload of == operator to compare if two dates are equal
