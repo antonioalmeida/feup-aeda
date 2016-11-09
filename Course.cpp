@@ -6,7 +6,6 @@ using namespace std;
 
 Course::Course(string studentsFile, string teachersFile, string manUnitsFile, string optUnitsFile) {
 	ifstream studentsIn, teachersIn, manUnitsIn, optUnitsIn;
-	studentsIn.open(studentsFile);
 	unsigned int numberOfStudents, numberOfTeachers, numberOfManUnits, numberOfOptUnits;
 
 	/* Read mandatory units from respective file */
@@ -67,4 +66,61 @@ Course::Course(string studentsFile, string teachersFile, string manUnitsFile, st
 		studentsIn.ignore(1000, '\n'); //Not sure but I think Student constructor does not skip blank line between students
 	}
 	studentsIn.close(); //To avoid conflict
+}
+
+vector<Student> Course::getStudents() const{
+	return students;
+}
+
+vector<Teacher> Course::getTeachers() const {
+	return teachers;
+}
+
+vector<Unit*> Course::getAllUnits() const {
+	vector<Unit*> result;
+	for (map<string, Unit*>::const_iterator it = abbreviationToUnit.begin(); it != abbreviationToUnit.end(); it++)
+		result.push_back(it->second);
+
+	return result;
+}
+
+vector<Unit*> Course::getUnitsFromYear(unsigned int curricularYear) const {
+	vector<Unit*> result;
+	for (map<string, Unit*>::const_iterator it = abbreviationToUnit.begin(); it != abbreviationToUnit.end(); it++) {
+		if(it->second->getCurricularYear() == curricularYear)
+			result.push_back(it->second);
+	}
+
+	return result;
+}
+
+vector<Unit*> Course::getOptUnitsFromYear(unsigned int curricularYear) const {
+	vector<Unit*> result;
+	for (map<string, Unit*>::const_iterator it = abbreviationToUnit.begin(); it != abbreviationToUnit.end(); it++) {
+		if (it->second->getCurricularYear() == curricularYear && dynamic_cast<OptionalUnit*>(it->second) != NULL)
+			result.push_back(it->second);
+	}
+	return result;
+}
+
+vector<Unit*> Course::getManUnitsFromYear(unsigned int curricularYear) const {
+	if (curricularYear < 4)
+		return getUnitsFromYear(curricularYear);
+	vector<Unit*> result;
+	for (map<string, Unit*>::const_iterator it = abbreviationToUnit.begin(); it != abbreviationToUnit.end(); it++) {
+		if (it->second->getCurricularYear() == curricularYear && dynamic_cast<MandatoryUnit*>(it->second) != NULL)
+			result.push_back(it->second);
+	}
+	return result;
+}
+
+vector<Unit*> Course::getUnitsFromSameScientificArea(Unit* u1) const {
+	vector<Unit*> result;
+	for (map<string, Unit*>::const_iterator it = abbreviationToUnit.begin(); it != abbreviationToUnit.end(); it++) {
+		if (dynamic_cast<OptionalUnit*>(it->second) != NULL) {
+			if (it->second->getScientificArea() == u1->getScientificArea() && !(it->second->isFull()))
+				result.push_back(it->second);
+		}
+	}
+	return result;
 }

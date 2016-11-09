@@ -19,15 +19,13 @@ public:
 	Course() {}; //Default constructor
 	Course(std::string studentsFile, std::string teachersFile, std::string manUnitsFile, std::string optUnitsFile);
 	~Course() {}; //Deconstructor (NOT EMPTY, IMPLEMENT LATER!)
-    std::vector<Student> getStudents(); //!< Returns students vector
-    std::vector<Teacher> getTeachers(); //!< Returns teachers vector
-    
-    void addStudent(Student s1); //!< Adds a student to the students vector. Not the same as registering him/her
-    void removeStudent(Student s1); //!< Removes a student from the students vector
-    
-    void showStudents(int curricularYear); //!< Show students from a specific curricular year
-    void showStudents(Unit* unit); //!< Show a specific unit's students
-    void showAllStudents(); //!< Show all students alphabetically
-    
-    void showRegistrations(Student s1); //!< Show unit(s) a specific student is registered in
+
+    std::vector<Student> getStudents() const; //!< Returns students vector
+    std::vector<Teacher> getTeachers() const; //!< Returns teachers vector
+	/* Different kinds of get to work with units throughout program */
+	std::vector<Unit*> getAllUnits() const; //!< Returns vector with all units
+	std::vector<Unit*> getUnitsFromYear(unsigned int curricularYear) const; //!< Returns vector with all units from curricular year specified
+	std::vector<Unit*> getOptUnitsFromYear(unsigned int curricularYear) const; //!< Returns vector with all optional units from curricular year specified (which can only be 4 or 5!)
+	std::vector<Unit*> getManUnitsFromYear(unsigned int curricularYear) const; //!< Returns vector with all mandatory units from curricular year specified
+	std::vector<Unit*> getUnitsFromSameScientificArea(Unit* u1) const; //!< Returns vector with all (optional) units with all optional units (not full!!) whose scientific area is the same as u1
 };
