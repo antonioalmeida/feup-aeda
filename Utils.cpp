@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Utils.h"
 
 //Source file for Utils, a file with useful functions to use throughout the program
@@ -38,4 +37,16 @@ bool validDate(unsigned int day, unsigned int month, unsigned int year) {
 		else
 			return day < 28;
 	}
+}
+
+void clearScreen() {
+	for (unsigned int i = 0; i < WINDOW_SIZE; i++)
+		cout << endl;
+}
+
+void PressToContinue() {
+	string trash;
+	cout << "Press any key followed by ENTER to continue.";
+	getline(cin, trash);
+	cout << endl;
 }

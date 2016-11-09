@@ -45,11 +45,15 @@ public:
 	std::string getStatus() const;
 	float getECTSTaking() const;
 	unsigned long int getCode() const;
+	unsigned int getCurricularYear() const;
 	double getAverage() const;
 	std::vector<std::vector<std::pair<Unit*, unsigned int>>> getUnitsDone() const;
 	std::vector<std::vector<std::pair<Unit*, unsigned int>>> getUnitsToDo() const;
 	std::vector<Unit*> getUnitsTaking() const;
 	Date getRegistrationDate() const; //If registrationComplete = false, do what?
+	void addUnitDone(std::pair<Unit*, unsigned int> p);
+	void addUnitToDo(std::pair<Unit*, unsigned int> p);
+	void addUnitTaking(Unit* u);
 	bool isRegistered() const; //Check if student is already registered, if so he'll be ignored in the registration process
 	void setRegistration(); //The only state possible is to go from false to true so keeping it simple
 	void setStatus(std::string newStatus);
@@ -60,6 +64,7 @@ public:
 
 class Teacher : public Person {
 protected:
+	static unsigned int lessStudents; //One (or more) teacher(s) will have the least amount of students as pupils. It is to those that should be assigned students first. This variable holds that minimum
 	std::string code;
 	std::vector<Unit*> unitsTaught;
 	std::vector<Student*> pupils;

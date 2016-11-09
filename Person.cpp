@@ -3,6 +3,7 @@
 using namespace std;
 
 unsigned long int Student::nextCode = 201600000; //ID of first 1st timer to come! (Who wouldn't like to have this number?)
+unsigned int Teacher::lessStudents = 0;
 
 /*Person*/
 
@@ -59,14 +60,14 @@ Student::Student(string name, string status, unsigned int curricularYear, vector
 		double number_of_ects = 0.0;
 		for (int i = 0; i < unitsDone.size(); i++) {
 			for (int j = 0; j < unitsDone.at(i).size(); j++) {
-				number_of_ects += unitsDone.at(i).at(j)->first->getECTS();
-				average += unitsDone.at(i).at(j)->second;
+				number_of_ects += unitsDone.at(i).at(j).first->getECTS();
+				average += unitsDone.at(i).at(j).second;
 			}
 		}
 		for (int i = 0; i < unitsToDo.size(); i++) {
 			for (int j = 0; j < unitsToDo.at(i).size(); j++) {
-				number_of_ects += unitsToDo.at(i).at(j)->first->getECTS();
-				average += unitsToDo.at(i).at(j)->second;
+				number_of_ects += unitsToDo.at(i).at(j).first->getECTS();
+				average += unitsToDo.at(i).at(j).second;
 			}
 		}
 		average /= number_of_ects;
@@ -84,6 +85,10 @@ float Student::getECTSTaking() const {
 
 unsigned long int Student::getCode() const {
 	return code;
+}
+
+unsigned int Student::getCurricularYear() const {
+	return curricularYear;
 }
 
 double Student::getAverage() const {
@@ -106,6 +111,20 @@ Date Student::getRegistrationDate() const {
 	return registrationDate;
 }
 
+void Student::addUnitDone(std::pair<Unit*, unsigned int> p) {
+	int index = p.first->getCurricularYear();
+	unitsDone.at(index-1).push_back(p);
+}
+
+void Student::addUnitToDo(std::pair<Unit*, unsigned int> p) {
+	int index = p.first->getCurricularYear();
+	unitsDone.at(index - 1).push_back(p);
+}
+
+void Student::addUnitTaking(Unit* u) {
+	unitsTaking.push_back(u);
+}
+
 bool Student::isRegistered() const {
 	return registrationComplete;
 }
@@ -125,11 +144,11 @@ void Student::save(std::ostream &out) const{
 	out << endl;
 	for (int i = 0; i < unitsDone.size(); i++) {
 		for (int j = 0; j < unitsDone.at(i).size(); j++) {
-			out << unitsDone.at(i).at(j)->first->getAcronym() << " " << unitsDone.at(i).at(j)->second << " ";
+			out << unitsDone.at(i).at(j).first->getAbbreviation() << " " << unitsDone.at(i).at(j).second << " ";
 		}
 		if (i < unitsToDo.size()) { //unitsToDo.size() is always lower or equal than unitsDone.size() so it's a safe parallel test/loop
 			for (int k = 0; k < unitsToDo.at(i).size(); k++)
-				out << unitsToDo.at(i).at(k)->first->getAcronym() << " " << unitsDone.at(i).at(k)->second << " ";
+				out << unitsToDo.at(i).at(k).first->getAbbreviation() << " " << unitsDone.at(i).at(k).second << " ";
 		}
 	}
 }
@@ -141,8 +160,7 @@ ostream& operator<<(ostream& out, const Student& s) {
 
 /*Teacher*/
 
-Teacher::Teacher(istream &in) {
-	getline(in, name);
+Teacher::Teacher(istream &in):Person(in) {
 	getline(in, code);
 	email = code + "@fe.up.pt";
 	//Reads units after creating object (goes to the line and searches map for unit, adding it to the vector)

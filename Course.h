@@ -1,26 +1,24 @@
 #pragma once
+
+#include <iostream>
 #include <string>
 #include <vector>
 #include <map>
+#include <fstream>
 #include "Person.h"
 #include "Unit.h"
 
-//Header file for class Course, a class to handle a specific studies course (may be renamed to MIEIC; to be implemented)
+//Header file for class Course, a class to handle a specific studies course
 
 class Course {
 private:
-    /*vector<Student> students;
-    vector<Teacher> teachers;
-    
-    map<string,Unit*> unitsYear;
-    
-    map<string,Unit*> unitsYear1;
-    map<string,Unit*> unitsYear2;
-    map<string,Unit*> unitsYear3;
-    map<string,Unit*> unitsYear4;
-    map<string,Unit*> unitsYear5;*/
-    
+    std::vector<Student> students;
+    std::vector<Teacher> teachers;
+    std::map<std::string,Unit*> abbreviationToUnit; //Map whose key is a unit abbreviation, which is associated with its respective Unit pointer
 public:
+	Course() {}; //Default constructor
+	Course(std::string studentsFile, std::string teachersFile, std::string manUnitsFile, std::string optUnitsFile);
+	~Course() {}; //Deconstructor (NOT EMPTY, IMPLEMENT LATER!)
     std::vector<Student> getStudents(); //!< Returns students vector
     std::vector<Teacher> getTeachers(); //!< Returns teachers vector
     
@@ -30,8 +28,6 @@ public:
     void showStudents(int curricularYear); //!< Show students from a specific curricular year
     void showStudents(Unit* unit); //!< Show a specific unit's students
     void showAllStudents(); //!< Show all students alphabetically
-    
-    void assignTutor(Student s1); //!< Assign a tutor to s1. The algorithm should define the teacher
     
     void showRegistrations(Student s1); //!< Show unit(s) a specific student is registered in
 };
