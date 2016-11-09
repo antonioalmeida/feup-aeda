@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Utils.h"
 
 //Source file for Utils, a file with useful functions to use throughout the program

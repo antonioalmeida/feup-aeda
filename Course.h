@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <map>
 #include "Person.h"
 #include "Unit.h"
 
@@ -8,7 +9,7 @@
 
 class Course {
 private:
-    vector<Student> students;
+    /*vector<Student> students;
     vector<Teacher> teachers;
     
     map<string,Unit*> unitsYear;
@@ -17,11 +18,11 @@ private:
     map<string,Unit*> unitsYear2;
     map<string,Unit*> unitsYear3;
     map<string,Unit*> unitsYear4;
-    map<string,Unit*> unitsYear5;
+    map<string,Unit*> unitsYear5;*/
     
 public:
-    vector<Student> getStudents(); //!< Returns students vector
-    vector<Teacher> getTeachers(); //!< Returns teachers vector
+    std::vector<Student> getStudents(); //!< Returns students vector
+    std::vector<Teacher> getTeachers(); //!< Returns teachers vector
     
     void addStudent(Student s1); //!< Adds a student to the students vector. Not the same as registering him/her
     void removeStudent(Student s1); //!< Removes a student from the students vector

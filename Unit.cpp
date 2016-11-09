@@ -6,7 +6,7 @@ using namespace std;
 
 /* Base class Unit methods */
 
-Unit::Unit(ifstream &in) {
+Unit::Unit(istream &in) {
 	in >> abbreviation;
 	getline(in, name);
 	in >> curricularYear >> ECTS;
@@ -57,7 +57,7 @@ ostream& operator<<(ostream &out, const Unit &u1) {
 
 /* Derived class MandatoryUnit methods */
 
-MandatoryUnit::MandatoryUnit(ifstream &in): Unit(in) {
+MandatoryUnit::MandatoryUnit(istream &in): Unit(in) {
 }
 
 bool MandatoryUnit::isFull() const {
@@ -65,7 +65,7 @@ bool MandatoryUnit::isFull() const {
 }
 
 void MandatoryUnit::print(ostream &out) const { //May change display format later
-	out << name << "(" << abbreviation << ")" << endl << curricularYear;
+	out << name << "(" << abbreviation << ")" << " - " << curricularYear;
 	switch (curricularYear) {
 	case 1:
 		out << "st ";
@@ -80,7 +80,7 @@ void MandatoryUnit::print(ostream &out) const { //May change display format late
 		out << "th ";
 		break;
 	}
-	out << " year unit, worth " << ECTS << "ECTS" << endl << "Scientific area - " << scientificArea;
+	out << " year unit, worth " << ECTS << "ECTS. Scientific area - " << scientificArea;
 }
 
 void MandatoryUnit::save(ostream &out) const {
@@ -89,13 +89,9 @@ void MandatoryUnit::save(ostream &out) const {
 
 /* Derived class OptionUnit methods */
 
-OptionalUnit::OptionalUnit(ifstream &in):Unit(in) {
+OptionalUnit::OptionalUnit(istream &in):Unit(in) {
 	in >> fixedVacancies;
 	vacancies = fixedVacancies;
-}
-
-OptionalUnit::OptionalUnit(string name, string abbreviation, string scientificArea, float ects, unsigned int curricularYear, unsigned int fixedVacancies) : Unit(name, abbreviation, scientificArea, ects, curricularYear), fixedVacancies(fixedVacancies) {
-	//No exception handling needed (about the new member, (fixed)Vacancies), I think...
 }
 
 unsigned int OptionalUnit::getVacancies() const {

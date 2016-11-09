@@ -14,7 +14,7 @@ protected:
     unsigned int curricularYear;
 public:
 	Unit() {}; // Default constructor
-	Unit(std::ifstream &in); //!< Constructor that gets Unit information out of input file
+	Unit(std::istream &in); //!< Constructor that gets Unit information out of input file
       
     std::string getName() const; //!< Returns name
     std::string getAbbreviation() const; //!< Returns abbreviation
@@ -22,7 +22,7 @@ public:
     float getECTS() const; //!< Returns ECTS
     unsigned int getCurricularYear() const; //!< Returns curicularYear
     
-	virtual bool isFull() const {}; //!< Checks if curricular unit has a place for the student (always false in MandatoryUnit)
+	virtual bool isFull() const { return false; }; //!< Checks if curricular unit has a place for the student (always false in MandatoryUnit)
     
     void setName(std::string newName); //!< Sets unit's name to newName
     void setAbbreviation(std::string newAbbreviation); //!< Sets unit's abbreviation to newAbbreviation
@@ -38,7 +38,7 @@ public:
 class MandatoryUnit : public Unit {
 public:
 	MandatoryUnit() {}; // Default constructor
-	MandatoryUnit(std::ifstream &in);
+	MandatoryUnit(std::istream &in);
     
     virtual bool isFull() const;
 	virtual void print(std::ostream &out) const;
@@ -52,7 +52,7 @@ protected:
 	unsigned int vacancies;
 public:
 	OptionalUnit() {}; // Default constructor
-	OptionalUnit(std::ifstream &in);
+	OptionalUnit(std::istream &in);
 
 	unsigned int getVacancies() const; //!< Returns vacancies
 	unsigned int getFixedVacancies() const; //!< Returns fixedVacancies
