@@ -29,7 +29,7 @@ public:
     
     void showStudents(int curricularYear); //!< Show students from a specific curricular year
     void showStudents(Unit* unit); //!< Show a specific unit's students
-    void showAllStudent(); //!< Show all students alphabetically
+    void showAllStudents(); //!< Show all students alphabetically
     
     void assignTutor(Student s1); //!< Assign a tutor to s1. The algorithm should define the teacher
     

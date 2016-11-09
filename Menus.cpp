@@ -1,53 +1,81 @@
 #include "Menus.h"
 
-bool infoInicial(string & course, string & StudentsFile, string & TeachersFile, string & MandatoryUnitsFile,string & OptionalUnitsFile)
-{
-	cout << "Insert course's name: "; 
-	getline(cin, course);
-
-	ask_fileNames(StudentsFile, TeachersFile, MandatoryUnitsFile, OptionalUnitsFile);
-
-	return true;
-
+bool inicialInformation(string &course, string &studentsFile, string &teachersFile, string &mandatoryUnitsFile, string &optionalUnitsFile) {
+    
+    cout << "Insert the courses's name: " << endl;
+    getline(cin, course);
+    
+    cout << "Insert the students' filename: " << endl;
+    getline(cin, studentsFile);
+    ifstream studentsTestFile;
+    studentsTestFile.open(studentsFile);
+    if(!clientTestFile.is_open()) //If opening fails, then filename is not valid
+        return false;
+    
+    cout << "Insert the teachers' filename: " << endl;
+    getline(cin, teachersFile);
+    ifstream teachersTestFile;
+    teachersTestFile.open(teachersFile);
+    if(!teachersTestFile.is_open())
+        return false;
+    
+    cout << "Insert the Mandatory Units' filename: " << endl;
+    getline(cin, mandatoryUnitsFile);
+    ifstream mandatoryUnitsTestFile;
+    mandatoryUnitsTestFile.open(mandatoryUnitsFile);
+    if(!mandatoryUnitsTestFile.is_open())
+        return false;
+    
+    cout << "Insert the Optional Units' filename: " << endl;
+    getline(cin, optionalUnitsFile);
+    ifstream optionalUnitsTestFile;
+    optionalUnitsTestFile.open(optionalUnitsFile);
+    if(!optionalUnitsTestFile.is_open())
+        return false;
+    
+    //No failure in opening = good to go. Close temporary files to avoid unwanted trouble
+    studentsTestFile.close();
+    teachersTestFile.close();
+    mandatoryUnitsTestFile.close();
+    optionalUnitsTestFile.close();
+    return true;
 }
 
 
 /******************************************
-* Start Menu
+* Main Menu
 ******************************************/
 
-unsigned short int startMenu() {
+unsigned short int mainMenu() {
 	unsigned short int option;
 
 	clearScreen();
 
 	cout <<endl<< TAB_BIG << "MENU" << endl;
 	cout << endl;
-	cout << TAB<<"Welcome to students registration system"<<endl;
-	cout << TAB << "1 - Students Manager" << endl;
-	cout << TAB << "2 - Teachers Manager" << endl;
-	cout << TAB << "3 - Units Manager" << endl;
+    cout << TAB_BIG << "----------------------" << endl;
+    cout << TAB_BIG << "-----Main Menu------" << endl;
+    cout << TAB_BIG << "----------------------" << endl;
+	cout << TAB << "1 - Students menu" << endl;
+	cout << TAB << "2 - Teachers menu" << endl;
+	cout << TAB << "3 - Units menu" << endl;
 	cout << TAB << "0 - Exit" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = read_op(0, 3);
 
-	if (option == 0)
-		return 0;
-
 	return option;
 }
 
-void startOptions(Course & course) 
-{
-	unsigned int option;
+void mainOption(Course &course) {
+	unsigned short int option;
 
-	while ((option = startMenu()))
+	while ((option = mainMenu()))
 		switch (option) {
-		case 1: optionsStudents(course);
+		case 1: studentsOptions(course);
 			break;
-		case 2: optionsTeachers(course);
+		case 2: teachersOptions(course);
 			break;
-		case 3: optionsUnits(course);
+		case 3: unitsOptions(course);
 			break;
 		
 		}
@@ -57,13 +85,14 @@ void startOptions(Course & course)
 
 
 /******************************************
- * Students Manager
+ * Students Menu
  ******************************************/
-unsigned short int menuStudents() {
+
+unsigned short int studentsMenu() {
 	unsigned short int option;
 
 	clearScreen();
-	cout << TAB_BIG << "Students Manager Menu" << endl;
+	cout << TAB_BIG << "Students Menu" << endl;
 	cout << endl;
 	cout << TAB << "1 - Create Student" << endl;
 	cout << TAB << "2 - Edit Student" << endl;
@@ -72,7 +101,7 @@ unsigned short int menuStudents() {
 	cout << TAB << "5 - List Students" << endl;
 	cout << TAB << "6 - Assign Tutor" << endl;
 	cout << TAB << "7 - List Registrations" << endl;
-	cout << TAB << "0 - Return to menu." << endl << endl;
+	cout << TAB << "0 - Return to main menu." << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = read_op(0, 7);
 
@@ -84,35 +113,37 @@ unsigned short int menuStudents() {
 }
 
 
-void optionsStudents(Course & course) {
+void studentsOptions(Course & course) {
 	unsigned int option;
 
-
-	while ((option = menuStudents()))
+	while ((option = studentsMenu()))
 		switch (option) {
 		case 1: course.addStudent();
 			break;
 		case 2:
 			course.setStudent();
 			break;
-		case 3:
-			course.removeStudent();
-			break;
+        case 3:
+            course.removeStudent();
+            break;
 		case 4:
 			course.registrateStudent();
 			break;
 		case 5:
-			optionsListStudents(course);
+			listStudentsOptions(course);
 			break;
 		case 6:
 			course.assignTutor();
 			break;
 		case 7:
-			optionsListRegistrations(course);
+			listRegistrationsOptions(course);
 			break;
 		}
 }
-unsigned short int menuListStudents() {
+
+//LIST STUDENTS MENU
+
+unsigned short int listStudentsMenu() {
 	unsigned short int option;
 
 	clearScreen();
@@ -132,16 +163,15 @@ unsigned short int menuListStudents() {
 		return 0;
 
 	return option;
-
 }
 
 
-void optionsListStudents(Course & course) {
+void listStudentsOptions(Course & course) {
 	unsigned int option;
 
-	while ((option = menuListStudents()))
+	while ((option = listStudentsMenu()))
 		switch (option) {
-		case 1: course.showAllStudent();
+		case 1: course.showAllStudents();
 			break;
 		case 2:
 			course.showUnitStudents();
@@ -161,7 +191,9 @@ void optionsListStudents(Course & course) {
 		}
 }
 
-unsigned short int menuListRegistrations() {
+// LIST REGISTRATIONS MENU
+
+unsigned short int listRegistrationsMenu() {
 	unsigned short int option;
 
 	clearScreen();
@@ -185,12 +217,10 @@ unsigned short int menuListRegistrations() {
 
 }
 
-
-void optionsListRegistrations(Course & course) {
+void listRegistrationsOptions(Course & course) {
 	unsigned int option;
 
-
-	while ((option = menuListRegistrations()))
+	while ((option = listRegistrationsMenu()()))
 		switch (option) {
 		case 1: course.addStudent();
 			break;
