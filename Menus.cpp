@@ -9,7 +9,7 @@ bool inicialInformation(string &studentsFile, string &teachersFile, string &mand
     getline(cin, studentsFile);
     ifstream studentsTestFile;
     studentsTestFile.open(studentsFile);
-    if(!clientTestFile.is_open()) //If opening fails, then filename is not valid
+    if(!studentsTestFile.is_open()) //If opening fails, then filename is not valid
         return false;
     
     cout << "Insert the teachers' filename: " << endl;
@@ -58,7 +58,7 @@ unsigned short int mainMenu() {
 	cout << TAB << "3 - Units menu" << endl;
 	cout << TAB << "0 - Exit" << endl << endl; //Maybe show some statistics before exiting
 	cout << TAB << "Enter your option: ";
-	option = read_op(0, 3);
+	option = readOp(0, 3);
 
 	return option;
 }
@@ -74,7 +74,6 @@ void mainOption(Course &course) {
 			break;
 		case 3: unitsOptions(course);
 			break;
-		
 		}
 
 	course.save();
@@ -98,18 +97,18 @@ unsigned short int studentsMenu() {
 	cout << TAB << "1 - Create Student" << endl;
 	cout << TAB << "2 - Edit Student" << endl;
 	cout << TAB << "3 - Remove Student" << endl;
-	cout << TAB << "4 - Registrate Student" << endl; //No - loop to another looping menu that allows to choose to registrate a random student (the first one in the vector that's not registered) or a specific one. These two will converge to the single function registrateStudent
+	cout << TAB << "4 - Registrate Student" << endl;
 	cout << TAB << "5 - List Students" << endl;
-	cout << TAB << "6 - List Registrations" << endl; //Redirects to a menu exactly equal to Student Menu... ?!
+	cout << TAB << "6 - List Registrations" << endl;
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = read_op(0, 6);
+	option = readOp(0, 6);
 
 	return option;
 }
 
 
-void studentsOptions(Course & course) {
+void studentsOptions(Course &course) {
 	unsigned int option;
 
 	while ((option = studentsMenu()))
@@ -148,7 +147,7 @@ unsigned short int registrateStudentMenu() {
 	cout << TAB << "2 - Specific Student" << endl;
 	cout << TAB << "0 - Return to menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = read_op(0, 2);
+	option = readOp(0, 2);
 
 	return option;
 }
@@ -189,7 +188,7 @@ unsigned short int listStudentsMenu() {
 	cout << TAB << "8 - Show un-registered students" << endl;
 	cout << TAB << "0 - Return to students menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = read_op(0, 8);
+	option = readOp(0, 8);
 
 	return option;
 }
@@ -204,13 +203,20 @@ void listStudentsOptions(Course & course) {
 			course.showAllStudents();
 			break;
 		case 2:
-		//Redirects to a loop - ask for unit abbreviation (throw exception using invalidIdentification if doesn't exist)
-		//then call function with unit when valid
+            bool validInput = false;
+            string unitAbbreviation
+            cout << "Insert the course's unit : "
+            do {
+                getline(cin, unitAbbreviation);
+                deleteWhitespace(&unitAbbreviation);
+                validInput = verifyUnit(unitAbbreviation);
+            } while(!validInput);
+             
 			course.showUnitStudents();
 			break;
 		case 3:
-			cout << "Insert the curricular year: " << endl;
-			unsigned short int year= read_op(1,5);
+			cout << "Insert the curricular year: " ;
+			unsigned short int year= readOp(1,5);
 			course.showYearStudents(year);
 			break;
 		case 4:
@@ -243,7 +249,7 @@ unsigned short int showStudentMenu() {
 	cout << TAB << "2 - Search by code" << endl;
 	cout << TAB << "0 - Return to menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = read_op(0, 2);
+	option = readOp(0, 2);
 
 	return option;
 }
@@ -254,12 +260,17 @@ void showStudentOptions(Course & course) {
 	while ((option = showStudentMenu()()))
 		switch (option) {
 		case 1: 
-			// read name and check, and insert like a parameter
-			course.showStudent();
+            cout << "What is the student's name? : " << endl;
+            string studentName;
+            getline(cin, studentName);
+            deleteWhitespace(&studentName);
+ 			course.showStudent(studentName);
 			break;
 		case 2:
-			// read code and check, and insert like a parameter
-			course.showStudent();
+            cout << "What is the sudent's code? : " << endl;
+            unsigned long int studentCode;
+            cin >> studentCode;
+			course.showStudent(studentCode);
 			break;
 		}
 }
@@ -279,7 +290,7 @@ unsigned short int listRegistrationsMenu() {
 	cout << TAB << "4 - Show all Registrations" << endl;
 	cout << TAB << "0 - Return to menu." << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = read_op(0, 4);
+	option = readOp(0, 4);
 
 	return option;
 }
@@ -318,7 +329,7 @@ unsigned short int studentRegistrationsMenu() {
 	cout << TAB << "2 - Search by code" << endl;
 	cout << TAB << "0 - Return to menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = read_op(0, 2);
+	option = readOp(0, 2);
 
 	return option;
 }
@@ -346,7 +357,7 @@ void studentRegistrationsOptions(Course & course) {
  * Teachers Menu
  ******************************************/
 
-unsigned short int TeachersMenu() {
+unsigned short int teachersMenu() {
 	unsigned short int option;
 
 	clearScreen();
@@ -361,16 +372,16 @@ unsigned short int TeachersMenu() {
 	cout << TAB << "4 - List Teachers" << endl;
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = read_op(0, 4);
+	option = readOp(0, 4);
 
 	return option;
 }
 
 
-void TeachersOptions(Course & course) {
+void teachersOptions(Course & course) {
 	unsigned int option;
 
-	while ((option = TeachersMenu()))
+	while ((option = teachersMenu()))
 		switch (option) {
 		case 1: 
 			course.addTeacher();
@@ -399,7 +410,7 @@ unsigned short int listTeachersMenu() {
 	cout << TAB << "2 - Show a teacher" << endl; 
 	cout << TAB << "0 - Return to students menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = read_op(0, 2);
+	option = readOp(0, 2);
 
 	return option;
 }
@@ -433,7 +444,7 @@ unsigned short int showTeacherMenu() {
 	cout << TAB << "4 - Search by pupil" << endl; //It is correct here??
 	cout << TAB << "0 - Return to menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = read_op(0, 4);
+	option = readOp(0, 4);
 
 	return option;
 }
@@ -482,7 +493,7 @@ unsigned short int unitsMenu() {
 	cout << TAB << "4 - List Units" << endl;
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = read_op(0, 4);
+	option = readOp(0, 4);
 
 	return option;
 }
@@ -523,7 +534,7 @@ unsigned short int listUnitsMenu() {
 	cout << TAB << "5 - Show a unit" << endl;
 	cout << TAB << "0 - Return to students menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = read_op(0, 5);
+	option = readOp(0, 5);
 
 	return option;
 }
@@ -539,7 +550,7 @@ void listUnitsOptions(Course & course) {
 			break;
 		case 2:
 			cout << "Insert the curricular year: " << endl;
-			unsigned short int year= read_op(1,5);
+			unsigned short int year= readOp(1,5);
 			course.showYearUnit(year);
 			break;
 		case 3:

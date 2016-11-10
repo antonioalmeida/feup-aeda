@@ -50,3 +50,23 @@ void PressToContinue() {
 	getline(cin, trash);
 	cout << endl;
 }
+
+void deleteWhitespace(string &s){
+    while (s.find("  ") != string::npos)
+        s.erase(s.find("  "), 1);
+    if (s[0] == ' ')
+        s.erase(0, 1);
+    if (s[s.length() - 1] == ' ')
+        s.erase(s.length() -1, 1);
+}
+
+unsigned short int readOp(unsigned short int minValue, unsigned short int  maxValue){
+    unsigned short int number;
+    do{
+        cin >> number;
+        if(number < minValue || number > maxValue)
+            cout << "ERROR: Out of range value, please insert a value between " << minValue << "-" << maxValue << ": ";
+    }while(number < minValue || number > maxValue);
+    
+    return number;
+}
