@@ -124,3 +124,12 @@ vector<Unit*> Course::getUnitsFromSameScientificArea(Unit* u1) const {
 	}
 	return result;
 }
+
+bool Course::verifyUnit(string unitAbbreviation) const {
+    map<string, Unit*>::const_iterator it = abbreviationToUnit.find(unitAbbreviation);
+    
+    if(it != abbreviationToUnit.end())
+        return true;
+    
+    return false;
+}
