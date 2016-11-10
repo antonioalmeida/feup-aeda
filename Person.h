@@ -42,6 +42,7 @@ public:
 	Student() {}; //default constructor
 	Student(std::istream &in);
     Student(std::string name, std::string status, unsigned int curricularYear, std::vector<std::vector<std::pair<Unit*, unsigned int>>> unitsDone, std::vector<std::vector<std::pair<Unit*, unsigned int>>> unitsToDo, unsigned long int code = nextCode++);
+    
 	std::string getStatus() const;
 	float getECTSTaking() const;
 	unsigned long int getCode() const;
@@ -52,14 +53,20 @@ public:
 	std::vector<Unit*> getUnitsTaking() const;
 	Date getRegistrationDate() const; //If registrationComplete = false, do what?
 	void addUnitDone(std::pair<Unit*, unsigned int> p);
+    
 	void addUnitToDo(std::pair<Unit*, unsigned int> p);
 	void addUnitTaking(Unit* u);
 	bool isRegistered() const; //Check if student is already registered, if so he'll be ignored in the registration process
 	void setRegistration(); //The only state possible is to go from false to true so keeping it simple
 	void setStatus(std::string newStatus);
 	virtual void save(std::ostream &out) const;
+    
+    void showStudents(std::function<bool(Student, Student)>); //!< Prints all students information based on specific sort passed as argument
 
 	friend std::ostream& operator<<(std::ostream& out, const Student& s);
+    friend bool sortByName(const Student& s1, const Student& s2); //!< Returns true if s1.name < s2.name
+    friend bool sortByAverage(const Student& s1, const Student& s2); //!< Returns true if s1.average < s2.average
+    friend bool sortByCurricularYear(const Student& s1, const Student& s2); //!< Returns true if s1.curricularYear < s2.curricularYear
 };
 
 class Teacher : public Person {

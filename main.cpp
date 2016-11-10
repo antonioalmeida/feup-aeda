@@ -2,7 +2,7 @@
 
 int main(int argc, char **argv) {
     
-    string course, studentsFileName, teachersFileName, mandatoryUnitsFileName, optionalUnitsFileName;
+    std::string course, studentsFileName, teachersFileName, mandatoryUnitsFileName, optionalUnitsFileName;
     
     bool validState = initialInformation(course, studentsFileName, teachersFileName, mandatoryUnitsFileName, optionalUnitsFileName);
     if(!validState)

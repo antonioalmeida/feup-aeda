@@ -199,8 +199,8 @@ void listStudentsOptions(Course & course) {
 
 	while ((option = listStudentsMenu()))
 		switch (option) {
-		case 1: 
-			course.showAllStudents();
+		case 1:
+            course.showStudents(sortByName);
 			break;
 		case 2:
             bool validInput = false;
@@ -223,7 +223,7 @@ void listStudentsOptions(Course & course) {
 			course.showStatusStudents();
 			break;
 		case 5:
-			course.showAverageStudents();
+			course.showStudents(sortByAverage);
 			break;
 		case 6:
 			showStudentOptions(course);

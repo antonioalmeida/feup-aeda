@@ -4,17 +4,6 @@
 
 using namespace std;
 
-unsigned int readInteger(unsigned int minValue, unsigned int maxValue) {
-	int number;
-	do {
-		cin >> number;
-		if (number < minValue || number > maxValue)
-			cout << "ERROR: Out of range value, please insert a value between " << minValue << "-" << maxValue << ":";
-	} while (number < minValue || number > maxValue);
-
-	return number;
-}
-
 bool validDate(unsigned int day, unsigned int month, unsigned int year) {
 	bool leapYear = (year % 400) || (year % 100 != 0 && year % 4 == 0);
 	switch (month) {

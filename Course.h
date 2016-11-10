@@ -32,7 +32,6 @@ public:
     
     void showStudent(std::string studentName); //!< Finds a student by name and prints its information
     void showStudent(unsigned long int studentCode); //!< Finds a student by code and prints its information
-    //Make these two into a single template function?
-    
+   
     bool verifyUnit(std::string unitAbbreviation) const; //!< Returns true if unit with unitAbbreviation as abbreviation exists
 };
