@@ -127,9 +127,9 @@ void studentsOptions(Course &course) {
 			}
 			break;
 		case 2:
-			//course.editStudent();
+			//TO DO
 			break;
-        case 3: {
+		case 3: {
 			unsigned short choice;
 			cout << TAB << "1 - Identify student by name" << endl;
 			cout << TAB << "2 - Identify student by code" << endl << endl;
@@ -220,16 +220,15 @@ unsigned short int listStudentsMenu() {
 	cout << TAB_BIG << "List Students Menu" << endl;
 	cout << endl;
 	cout << TAB << "1 - Show students alphabetically" << endl;
-	cout << TAB << "2 - Show students by unit" << endl; 
-	cout << TAB << "3 - Show students by curricular year" << endl;
-	cout << TAB << "4 - Show students by status" << endl;
-	cout << TAB << "5 - Show students by average" << endl;
-	cout << TAB << "6 - Show a student" << endl;
-	cout << TAB << "7 - Show registered students" << endl;
-	cout << TAB << "8 - Show un-registered students" << endl;
+	cout << TAB << "2 - Show students by curricular year" << endl;
+	cout << TAB << "3 - Show students by status" << endl;
+	cout << TAB << "4 - Show students by average" << endl;
+	cout << TAB << "5 - Show a single student" << endl;
+	cout << TAB << "6 - Show registered students" << endl;
+	cout << TAB << "7 - Show un-registered students" << endl;
 	cout << TAB << "0 - Return to students menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = readOp(0, 8);
+	option = readOp(0, 7);
 
 	return option;
 }
@@ -244,38 +243,30 @@ void listStudentsOptions(Course & course) {
             course.showStudents(sortByName);
 			break;
 		case 2: {
-			bool validInput = false;
-			string unitAbbreviation;
-			cout << "Insert the course's unit : ";
-			do {
-				getline(cin, unitAbbreviation);
-				deleteWhitespace(unitAbbreviation);
-				validInput = course.verifyUnit(unitAbbreviation);
-			} while (!validInput);
-
-			course.showUnitStudents();
+			cout << "Insert the curricular year: ";
+			unsigned short int year = readOp(1, 5);
+			course.showStudents(sortByCurricularYear);
 			break;
 		}
 		case 3: {
-			cout << "Insert the curricular year: ";
-			unsigned short int year = readOp(1, 5);
-			course.showYearStudents(year);
+			string statusToShow;
+			cout << "Insert the status you wish to be listed: ";
+			getline(cin, statusToShow);
+			deleteWhitespace(statusToShow);
+			course.showStudentsStatus(statusToShow);
 			break;
 		}
 		case 4:
-			course.showStatusStudents();
-			break;
-		case 5:
 			course.showStudents(sortByAverage);
 			break;
-		case 6:
+		case 5:
 			showStudentOptions(course);
 			break;
-		case 7:
-			course.showRegisteredStudent();
+		case 6:
+			course.showRegisteredStudents();
 			break;
-		case 8:
-			course.showUnRegisteredStudent();
+		case 7:
+			course.showUnregisteredStudents();
 			break;
 		}
 }
@@ -303,18 +294,28 @@ void showStudentOptions(Course & course) {
 	while ((option = showStudentMenu()))
 		switch (option) {
 		case 1: {
-			cout << "What is the student's name? : " << endl;
+			cout << "Insert the sudent's name: " << endl;
 			string studentName;
 			getline(cin, studentName);
 			deleteWhitespace(studentName);
-			course.showStudent(studentName);
+			try {
+				course.showStudent(studentName);
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No student idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
 			break;
 		}
 		case 2: {
-			cout << "What is the sudent's code? : " << endl;
-			unsigned long int studentCode;
-			cin >> studentCode;
-			course.showStudent(studentCode);
+			cout << "Insert the sudent's code: " << endl;
+			unsigned long studentCode;
+			cin >> studentCode; //Check for invalid input (later)
+			try {
+				course.showStudent(studentCode);
+			}
+			catch (invalidIdentification<unsigned long> &s) {
+				cout << "ERROR: No student idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
 			break;
 		}
 		}

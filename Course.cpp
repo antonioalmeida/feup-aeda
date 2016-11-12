@@ -254,7 +254,7 @@ void Course::removeStudent(string studentName) {
 		teachers.at(i).removeStudent(oldStudent);
 }
 
-void Course::showStudent(string studentName) {
+void Course::showStudent(string studentName) const{
 	for (int i = 0; i < students.size(); i++) {
 		if (students.at(i).getName() == studentName) {
 			cout << students.at(i) << endl;
@@ -264,7 +264,7 @@ void Course::showStudent(string studentName) {
 	throw invalidIdentification<string>(studentName);
 }
 
-void Course::showStudent(unsigned long int studentCode) {
+void Course::showStudent(unsigned long int studentCode) const{
 	for (int i = 0; i < students.size(); i++) {
 		if (students.at(i).getCode() == studentCode) {
 			cout << students.at(i) << endl;
@@ -272,6 +272,50 @@ void Course::showStudent(unsigned long int studentCode) {
 		}
 	}
 	throw invalidIdentification<unsigned long>(studentCode);
+}
+
+void Course::showStudents(bool(*comparisonFunction)(Student, Student)) const{
+	vector<Student> studentsTemp = students;
+	sort(studentsTemp.begin(), studentsTemp.end(), *comparisonFunction);
+	for (int i = 0; i < studentsTemp.size(); i++)
+		cout << studentsTemp.at(i) << endl;
+	cout << endl;
+}
+
+void Course::showStudentsStatus(string status) const {
+	vector<Student> studentsToShow;
+	for (int i = 0; i < students.size(); i++) {
+		if (students.at(i).getStatus() == status)
+			studentsToShow.push_back(students.at(i));
+	}
+	sort(studentsToShow.begin(), studentsToShow.end(), sortByName);
+	for (int i = 0; i < studentsToShow.size(); i++)
+		cout << studentsToShow.at(i) << endl;
+	cout << endl;
+}
+
+void Course::showRegisteredStudents() const {
+	vector<Student> studentsToShow;
+	for (int i = 0; i < students.size(); i++) {
+		if (students.at(i).isRegistered())
+			studentsToShow.push_back(students.at(i));
+	}
+	sort(studentsToShow.begin(), studentsToShow.end(), sortByName);
+	for (int i = 0; i < studentsToShow.size(); i++)
+		cout << studentsToShow.at(i) << endl;
+	cout << endl;
+}
+
+void Course::showUnregisteredStudents() const {
+	vector<Student> studentsToShow;
+	for (int i = 0; i < students.size(); i++) {
+		if (!students.at(i).isRegistered())
+			studentsToShow.push_back(students.at(i));
+	}
+	sort(studentsToShow.begin(), studentsToShow.end(), sortByName);
+	for (int i = 0; i < studentsToShow.size(); i++)
+		cout << studentsToShow.at(i) << endl;
+	cout << endl;
 }
 
 void Course::save() const {

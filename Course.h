@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include <fstream>
+#include <algorithm>
 #include "Person.h"
 #include "Unit.h"
 
@@ -36,8 +37,12 @@ public:
 	void removeStudent(unsigned long studentCode); //!< Removes student (also removed from his mentor's vector if it is the case). Exception thrown is student does not exist
 	void removeStudent(std::string studentName); //!< Removes student (also removed from his mentor's vector if it is the case). Exception thrown is student does not exist
 
-    void showStudent(std::string studentName); //!< Finds a student by name and prints its information
-    void showStudent(unsigned long int studentCode); //!< Finds a student by code and prints its information
+    void showStudent(std::string studentName) const; //!< Finds a student by name and prints its information
+    void showStudent(unsigned long int studentCode) const; //!< Finds a student by code and prints its information
+	void showStudents(bool(*comparisonFunction)(Student, Student)) const; //!< Prints all students information based on specific sort passed as argument
+	void showStudentsStatus(std::string status) const; //!< Shows students whose status is 'status' alphabetically
+	void showRegisteredStudents() const; //!< Shows registered students
+	void showUnregisteredStudents() const; //!< Show unregistered students
 	void save() const; //!< Saves all information to respective files
    
     bool verifyUnit(std::string unitAbbreviation) const; //!< Returns true if unit with unitAbbreviation as abbreviation exists

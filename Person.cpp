@@ -160,6 +160,18 @@ ostream& operator<<(ostream& out, const Student& s) {
 	return out;
 }
 
+bool sortByName(Student s1, Student s2) {
+	return s1.name < s2.name;
+}
+
+bool sortByAverage(Student s1, Student s2) {
+	return s1.average < s2.average;
+}
+
+bool sortByCurricularYear(Student s1, Student s2) {
+	return s1.curricularYear < s2.curricularYear;
+}
+
 /*Teacher*/
 
 Teacher::Teacher(istream &in):Person(in) {
@@ -214,16 +226,4 @@ ostream& operator<<(ostream& out, const Teacher& s) { //Subject to change
 	for (int i = 0; i < s.getUnitsTaught().size(); i++)
 		cout << "- " << *(s.getUnitsTaught().at(i)) << endl;
 	return out;
-}
-
-bool sortByName(const Student& s1, const Student& s2) {
-	return s1.name < s2.name;
-}
-
-bool sortByAverage(const Student& s1, const Student& s2) {
-	return s1.average < s2.average;
-}
-
-bool sortByCurricularYear(const Student& s1, const Student& s2) {
-	return s1.curricularYear < s2.curricularYear;
 }

@@ -54,7 +54,6 @@ public:
 	std::vector<Unit*> getUnitsTaking() const;
 	Date getRegistrationDate() const; //If registrationComplete = false, do what?
 	void addUnitDone(std::pair<Unit*, unsigned int> p);
-    
 	void addUnitToDo(std::pair<Unit*, unsigned int> p);
 	void addUnitTaking(Unit* u);
 	bool isRegistered() const; //Check if student is already registered, if so he'll be ignored in the registration process
@@ -62,13 +61,11 @@ public:
 	void setStatus(std::string newStatus);
 	virtual void save(std::ostream &out) const;
 	bool operator==(const Student &s1); //!< Students are equal if they have the same code (= same person)
-    
-    //void showStudents(std::function<bool(Student, Student)>); //!< Prints all students information based on specific sort passed as argument
 
 	friend std::ostream& operator<<(std::ostream& out, const Student& s);
-    friend bool sortByName(const Student& s1, const Student& s2); //!< Returns true if s1.name < s2.name
-    friend bool sortByAverage(const Student& s1, const Student& s2); //!< Returns true if s1.average < s2.average
-    friend bool sortByCurricularYear(const Student& s1, const Student& s2); //!< Returns true if s1.curricularYear < s2.curricularYear
+    friend bool sortByName(Student s1, Student s2); //!< Returns true if s1.name < s2.name
+    friend bool sortByAverage(Student s1, Student s2); //!< Returns true if s1.average < s2.average
+    friend bool sortByCurricularYear(Student s1, Student s2); //!< Returns true if s1.curricularYear < s2.curricularYear
 };
 
 class Teacher : public Person {
