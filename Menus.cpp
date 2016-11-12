@@ -4,41 +4,40 @@
 
 using namespace std;
 
-bool inicialInformation(string &studentsFile, string &teachersFile, string &mandatoryUnitsFile, string &optionalUnitsFile) {
+void start(string &studentsFile, string &teachersFile, string &mandatoryUnitsFile, string &optionalUnitsFile) {
     cout << "Insert the students' filename: " << endl;
     getline(cin, studentsFile);
     ifstream studentsTestFile;
     studentsTestFile.open(studentsFile);
     if(!studentsTestFile.is_open()) //If opening fails, then filename is not valid
-        return false;
+        throw inexistentFile(studentsFile);
     
     cout << "Insert the teachers' filename: " << endl;
     getline(cin, teachersFile);
     ifstream teachersTestFile;
     teachersTestFile.open(teachersFile);
     if(!teachersTestFile.is_open())
-        return false;
+        throw inexistentFile(teachersFile);
     
     cout << "Insert the Mandatory Units' filename: " << endl;
     getline(cin, mandatoryUnitsFile);
     ifstream mandatoryUnitsTestFile;
     mandatoryUnitsTestFile.open(mandatoryUnitsFile);
-    if(!mandatoryUnitsTestFile.is_open())
-        return false;
+	if (!mandatoryUnitsTestFile.is_open())
+		throw inexistentFile(mandatoryUnitsFile);
     
     cout << "Insert the Optional Units' filename: " << endl;
     getline(cin, optionalUnitsFile);
     ifstream optionalUnitsTestFile;
     optionalUnitsTestFile.open(optionalUnitsFile);
-    if(!optionalUnitsTestFile.is_open())
-        return false;
+	if (!optionalUnitsTestFile.is_open())
+		throw inexistentFile(optionalUnitsFile);
     
     //No failure in opening = good to go. Close temporary files to avoid unwanted trouble
     studentsTestFile.close();
     teachersTestFile.close();
     mandatoryUnitsTestFile.close();
     optionalUnitsTestFile.close();
-    return true;
 }
 
 
@@ -155,15 +154,15 @@ unsigned short int registrateStudentMenu() {
 void registrateStudentOptions(Course & course) {
 	unsigned int option;
 
-	while ((option = registrateStudentMenu()()))
+	while ((option = registrateStudentMenu()))
 		switch (option) {
 		case 1: 
 			//Random Student
-			course.RegistrateStudent();
+			course.registrateStudent();
 			break;
 		case 2:
 		//This one with parameter to choose a specific student
-			course.RegistrateStudent();
+			course.registrateStudent();
 			break;
 			
 		}
@@ -204,12 +203,12 @@ void listStudentsOptions(Course & course) {
 			break;
 		case 2:
             bool validInput = false;
-            string unitAbbreviation
-            cout << "Insert the course's unit : "
+			string unitAbbreviation;
+			cout << "Insert the course's unit : ";
             do {
                 getline(cin, unitAbbreviation);
-                deleteWhitespace(&unitAbbreviation);
-                validInput = verifyUnit(unitAbbreviation);
+                deleteWhitespace(unitAbbreviation);
+                validInput = course.verifyUnit(unitAbbreviation);
             } while(!validInput);
              
 			course.showUnitStudents();

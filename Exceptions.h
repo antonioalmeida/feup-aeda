@@ -71,3 +71,15 @@ public:
 		return identification;
 	}
 };
+
+class inexistentFile { //When trying to open a file whose name is 'filename' and it does not exist
+private:
+	std::string filename;
+public:
+	inexistentFile(std::string file) {
+		filename = file;
+	}
+	std::string getInexistentFileName() const {
+		return filename;
+	}
+};

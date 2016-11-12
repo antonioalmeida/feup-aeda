@@ -42,13 +42,6 @@ Student::Student(string name, string status, unsigned int curricularYear, vector
 	this->status = status; //Can be anything
 	this->curricularYear = curricularYear; //Use function readInteger from utils to guarantee valid curricularYear!
 	this->code = code;
-	/*
-	if (curricularYear != 1) {
-		//Check if code given as parameter already exists and throw exception if it does
-	}
-	Instead of this being here ^
-	Verifications done in Course class respective function (where we have access to all data to compare)
-	We test in a different way: parameter code is only inserted if curricularYear != 1 and if it already exists, throw exception using repeatedIdentification<unsigned long>*/
     
 	email = "up" + to_string(code) + "@fe.up.pt";    
 	ectsTaking = 0;

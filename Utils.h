@@ -14,4 +14,6 @@ bool validDate(unsigned int day, unsigned int month, unsigned int year); //Check
 
 void clearScreen();
 
+void deleteWhitespace(string &s);
+
 void PressToContinue();

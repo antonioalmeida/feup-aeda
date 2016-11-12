@@ -84,6 +84,24 @@ vector<Unit*> Course::getAllUnits() const {
 	return result;
 }
 
+std::vector<Unit*> Course::getAllMandatoryUnits() const {
+	vector<Unit*> result;
+	for (map<string, Unit*>::const_iterator it = abbreviationToUnit.begin(); it != abbreviationToUnit.end(); it++) {
+		if(dynamic_cast<MandatoryUnit*>(it->second) != NULL)
+			result.push_back(it->second);
+	}
+	return result;
+}
+
+std::vector<Unit*> Course::getAllOptionalUnits() const {
+	vector<Unit*> result;
+	for (map<string, Unit*>::const_iterator it = abbreviationToUnit.begin(); it != abbreviationToUnit.end(); it++) {
+		if (dynamic_cast<OptionalUnit*>(it->second) != NULL)
+			result.push_back(it->second);
+	}
+	return result;
+}
+
 vector<Unit*> Course::getUnitsFromYear(unsigned int curricularYear) const {
 	vector<Unit*> result;
 	for (map<string, Unit*>::const_iterator it = abbreviationToUnit.begin(); it != abbreviationToUnit.end(); it++) {
@@ -123,6 +141,72 @@ vector<Unit*> Course::getUnitsFromSameScientificArea(Unit* u1) const {
 		}
 	}
 	return result;
+}
+
+void Course::showStudent(string studentName) {
+	for (int i = 0; i < students.size(); i++) {
+		if (students.at(i).getName() == studentName) {
+			cout << students.at(i) << endl;
+			return;
+		}
+	}
+	throw invalidIdentification<string>(studentName);
+}
+
+void Course::showStudent(unsigned long int studentCode) {
+	for (int i = 0; i < students.size(); i++) {
+		if (students.at(i).getCode() == studentCode) {
+			cout << students.at(i) << endl;
+			return;
+		}
+	}
+	throw invalidIdentification<unsigned long>(studentCode);
+}
+
+void Course::save() const {
+	string studentsFileName, teachersFileName, mandatoryUnitsFileName, optionalUnitsFileName;
+
+	cout << "Insert the filename where mandatory units will be saved: ";
+	getline(cin, mandatoryUnitsFileName);
+	ofstream mandatoryUnitsOut(mandatoryUnitsFileName);
+	vector<Unit*> manUnits = getAllMandatoryUnits();
+	mandatoryUnitsOut << manUnits.size() << endl;
+	for (int i = 0; i < manUnits.size(); i++) {
+		manUnits.at(i)->save(mandatoryUnitsOut);
+		mandatoryUnitsOut << endl << endl;
+	}
+	mandatoryUnitsOut.close();
+
+	cout << "Insert the filename where optional units will be saved: ";
+	getline(cin, optionalUnitsFileName);
+	ofstream optionalUnitsOut(optionalUnitsFileName);
+	vector<Unit*> optUnits = getAllOptionalUnits();
+	optionalUnitsOut << optUnits.size() << endl;
+	for (int i = 0; i < optUnits.size(); i++) {
+		optUnits.at(i)->save(optionalUnitsOut);
+		optionalUnitsOut << endl << endl;
+	}
+	optionalUnitsOut.close();
+
+	cout << "Insert the filename where students will be saved: ";
+	getline(cin, studentsFileName);
+	ofstream studentsOut(studentsFileName);
+	studentsOut << students.size() << endl;
+	for (int i = 0; i < students.size(); i++) {
+		students.at(i).save(studentsOut);
+		studentsOut << endl << endl;
+	}
+	studentsOut.close();
+
+	cout << "Insert the filename where teachers will be saved: ";
+	getline(cin, teachersFileName);
+	ofstream teachersOut(teachersFileName);
+	studentsOut << teachers.size() << endl;
+	for (int i = 0; i < teachers.size(); i++) {
+		teachers.at(i).save(teachersOut);
+		teachersOut << endl << endl;
+	}
+	teachersOut.close();
 }
 
 bool Course::verifyUnit(string unitAbbreviation) const {
