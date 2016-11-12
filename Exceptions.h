@@ -83,3 +83,8 @@ public:
 		return filename;
 	}
 };
+
+class tooManyECTS { //When user is trying to make student take more than 75 ECTS
+public:
+	tooManyECTS() {};
+};

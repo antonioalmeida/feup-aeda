@@ -8,8 +8,6 @@
 #include "Person.h"
 #include "Unit.h"
 
-#define MAX_ECTS 75
-
 //Header file for class Course, a class to handle a specific studies course
 
 class Course {
@@ -34,6 +32,10 @@ public:
 	std::vector<Unit*> getManUnitsFromYear(unsigned int curricularYear) const; //!< Returns vector with all mandatory units from curricular year specified
 	std::vector<Unit*> getUnitsFromSameScientificArea(Unit* u1) const; //!< Returns vector with all (optional) units with all optional units (not full!!) whose scientific area is the same as u1
     
+	void addStudent(); //!< Adds new student to students vector if all information provided is valid (if given code in case of student of curricularYear >= 2 already exists, exception is thrown)
+	void removeStudent(unsigned long studentCode); //!< Removes student (also removed from his mentor's vector if it is the case). Exception thrown is student does not exist
+	void removeStudent(std::string studentName); //!< Removes student (also removed from his mentor's vector if it is the case). Exception thrown is student does not exist
+
     void showStudent(std::string studentName); //!< Finds a student by name and prints its information
     void showStudent(unsigned long int studentCode); //!< Finds a student by code and prints its information
 	void save() const; //!< Saves all information to respective files

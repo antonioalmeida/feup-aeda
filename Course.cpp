@@ -143,6 +143,117 @@ vector<Unit*> Course::getUnitsFromSameScientificArea(Unit* u1) const {
 	return result;
 }
 
+void Course::addStudent() {
+	string newStudentName;
+	cout << "Insert the new student's name: ";
+	getline(cin, newStudentName);
+	deleteWhitespace(newStudentName);
+	for (int i = 0; i < students.size(); i++) {
+		if (students.at(i).getName() == newStudentName)
+			throw repeatedIdentification<string>(newStudentName);
+	}
+
+	string newStudentStatus;
+	cout << "Insert the new student's status: ";
+	getline(cin, newStudentStatus);
+
+	unsigned int newStudentCurricularYear;
+	cout << "Insert the new student's curricular year: ";
+	newStudentCurricularYear = readOp(1, 5);
+
+	unsigned long newStudentCode;
+	if (newStudentCurricularYear == 1) {
+		cout << "Insert the new student's code: ";
+		cin >> newStudentCode; //Verify for invalid input (later)
+		for (int i = 0; i < students.size(); i++) {
+			if (students.at(i).getCode() == newStudentCode)
+				throw repeatedIdentification<unsigned long>(newStudentCode);
+		}
+	}
+
+	vector<vector<pair<Unit*, unsigned int>>> newStudentUnitsDone(5);
+	vector<vector<pair<Unit*, unsigned int>>> newStudentUnitsToDo(5);
+	unsigned int grade; //Auxiliar variable that will store each grade obtained in units student has attended
+	for (int i = 0; i < newStudentCurricularYear - 1; i++) {
+		vector<Unit*> manUnitsFromCurrentYear = getManUnitsFromYear(i + 1);
+		for (int j = 0; j < manUnitsFromCurrentYear.size(); j++) {
+			cout << "Insert new student's final grade obtained at " << manUnitsFromCurrentYear.at(j)->getAbbreviation() << ": ";
+			grade = readOp(0, 20);
+			if (grade >= 10)
+				newStudentUnitsDone.at(manUnitsFromCurrentYear.at(j)->getCurricularYear() - 1).push_back(pair<Unit*, unsigned int>(manUnitsFromCurrentYear.at(j), grade));
+			else
+				newStudentUnitsToDo.at(manUnitsFromCurrentYear.at(j)->getCurricularYear() - 1).push_back(pair<Unit*, unsigned int>(manUnitsFromCurrentYear.at(j), grade));
+		}
+		if (i == 3) { //4th curricular year, which includes optional units (TO DO LATER)
+			vector<Unit*> optUnitsFromCurrentYear = getOptUnitsFromYear(i + 1);
+			//Show optional units available
+			for (int k = 0; k < optUnitsFromCurrentYear.size(); k++)
+				cout << optUnitsFromCurrentYear.at(k) << endl;
+			//COMPLETE...
+		}
+		if (i == 4) { //5th curricular year (should have ended studies but hasn't yet), which includes optinal units (TO DO LATER)
+			vector<Unit*> optUnitsFromCurrentYear = getOptUnitsFromYear(i + 1);
+			//Show optional units available
+			for (int k = 0; k < optUnitsFromCurrentYear.size(); k++)
+				cout << optUnitsFromCurrentYear.at(k) << endl;
+			//COMPLETE...
+		}
+	}
+	
+	if (newStudentCurricularYear == 1)
+		Student s(newStudentName, newStudentStatus, newStudentCurricularYear, newStudentUnitsDone, newStudentUnitsToDo);
+	else
+		Student s(newStudentName, newStudentStatus, newStudentCurricularYear, newStudentUnitsDone, newStudentUnitsToDo, newStudentCode);
+}
+
+void Course::removeStudent(unsigned long studentCode) {
+	bool found = false;
+	Student oldStudent;
+	for (int i = 0; i < students.size(); i++) {
+		if (students.at(i).getCode() == studentCode) {
+			found = true;
+			vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
+			for (int j = 0; j < unitsTaking.size(); j++) { //Update vacancies of possible optional units he's taking
+				if (dynamic_cast<OptionalUnit*>(unitsTaking.at(j)) != NULL)
+					unitsTaking.at(j)->incrementVacancies();
+			}
+			oldStudent = students.at(i);
+			students.erase(students.begin() + i);
+			break;
+		}
+	}
+
+	if (!found)
+		throw invalidIdentification<unsigned long>(studentCode);
+
+	for (int i = 0; i < teachers.size(); i++) //Remove student of his mentor's pupils vector (if he had one, otherwise this piece of code does nothing)
+		teachers.at(i).removeStudent(oldStudent);
+}
+
+void Course::removeStudent(string studentName) {
+	bool found = false;
+	Student oldStudent;
+	for (int i = 0; i < students.size(); i++) {
+		if (students.at(i).getName() == studentName) {
+			found = true;
+			vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
+			for (int j = 0; j < unitsTaking.size(); j++) { //Update vacancies of possible optional units he's taking
+				if (dynamic_cast<OptionalUnit*>(unitsTaking.at(j)) != NULL)
+					unitsTaking.at(j)->incrementVacancies();
+			}
+			oldStudent = students.at(i);
+			students.erase(students.begin() + i);
+			break;
+		}
+	}
+
+	if (!found)
+		throw invalidIdentification<string>(studentName);
+
+	for (int i = 0; i < teachers.size(); i++) //Remove student of his mentor's pupils vector (if he had one, otherwise this piece of code does nothing)
+		teachers.at(i).removeStudent(oldStudent);
+}
+
 void Course::showStudent(string studentName) {
 	for (int i = 0; i < students.size(); i++) {
 		if (students.at(i).getName() == studentName) {

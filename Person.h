@@ -6,6 +6,7 @@
 #include "Date.h"
 #include "Unit.h"
 
+#define MAX_ECTS 75
 
 //Header file for class Person and its derived classes (Student and Teacher, for now; to be implemented)
 
@@ -60,8 +61,9 @@ public:
 	void setRegistration(); //The only state possible is to go from false to true so keeping it simple
 	void setStatus(std::string newStatus);
 	virtual void save(std::ostream &out) const;
+	bool operator==(const Student &s1); //!< Students are equal if they have the same code (= same person)
     
-    void showStudents(std::function<bool(Student, Student)>); //!< Prints all students information based on specific sort passed as argument
+    //void showStudents(std::function<bool(Student, Student)>); //!< Prints all students information based on specific sort passed as argument
 
 	friend std::ostream& operator<<(std::ostream& out, const Student& s);
     friend bool sortByName(const Student& s1, const Student& s2); //!< Returns true if s1.name < s2.name
@@ -84,6 +86,7 @@ public:
 	std::vector<Student*> getPupils() const;
 	void addUnitTaught(Unit* newUnit);
 	void addStudent(Student* newStudent);
+	void removeStudent(Student oldStudent); //!< Removes student from pupils vector if he exists, otherwise does nothing
 	std::vector<Unit*> getUnitsTaught() const;
 	virtual void save(std::ostream &out) const;
 

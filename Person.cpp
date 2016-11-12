@@ -33,14 +33,17 @@ Student::Student(istream &in):Person(in) {
 	in >> curricularYear;
 	if (curricularYear > 1)
 		in >> code;
+	else
+		code = Student::nextCode++;
 	in.ignore(1000, '\n');
 	getline(in, status);
+	unitsDone = vector<vector<pair<Unit*, unsigned int>>>(5);
 	/* Units are read when read-from-files function is called! */
 }
 
 Student::Student(string name, string status, unsigned int curricularYear, vector<vector<pair<Unit*, unsigned int>>> unitsDone, vector<vector<pair<Unit*, unsigned int>>> unitsToDo, unsigned long int code = nextCode++) : Person(name) {
 	this->status = status; //Can be anything
-	this->curricularYear = curricularYear; //Use function readInteger from utils to guarantee valid curricularYear!
+	this->curricularYear = curricularYear;
 	this->code = code;
     
 	email = "up" + to_string(code) + "@fe.up.pt";    
@@ -115,6 +118,8 @@ void Student::addUnitToDo(std::pair<Unit*, unsigned int> p) {
 }
 
 void Student::addUnitTaking(Unit* u) {
+	if (ectsTaking + u->getECTS() > MAX_ECTS)
+		throw tooManyECTS();
 	unitsTaking.push_back(u);
 }
 
@@ -144,6 +149,10 @@ void Student::save(std::ostream &out) const{
 				out << unitsToDo.at(i).at(k).first->getAbbreviation() << " " << unitsDone.at(i).at(k).second << " ";
 		}
 	}
+}
+
+bool Student::operator==(const Student &s1) {
+	return code == s1.getCode();
 }
 
 ostream& operator<<(ostream& out, const Student& s) {
@@ -181,6 +190,15 @@ void Teacher::addStudent(Student* newStudent) {
 	pupils.push_back(newStudent);
 }
 
+void Teacher::removeStudent(Student oldStudent) {
+	for (vector<Student*>::iterator it = pupils.begin(); it != pupils.end(); it++) {
+		if (**it == oldStudent) {
+			pupils.erase(it);
+			break;
+		}
+	}
+}
+
 vector<Student*> Teacher::getPupils() const {
 	return pupils;
 }
@@ -196,4 +214,16 @@ ostream& operator<<(ostream& out, const Teacher& s) { //Subject to change
 	for (int i = 0; i < s.getUnitsTaught().size(); i++)
 		cout << "- " << *(s.getUnitsTaught().at(i)) << endl;
 	return out;
+}
+
+bool sortByName(const Student& s1, const Student& s2) {
+	return s1.name < s2.name;
+}
+
+bool sortByAverage(const Student& s1, const Student& s2) {
+	return s1.average < s2.average;
+}
+
+bool sortByCurricularYear(const Student& s1, const Student& s2) {
+	return s1.curricularYear < s2.curricularYear;
 }

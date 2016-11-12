@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "Menus.h"
 #include "Utils.h"
 #include "Course.h"
@@ -112,14 +114,54 @@ void studentsOptions(Course &course) {
 
 	while ((option = studentsMenu()))
 		switch (option) {
-		case 1: course.addStudent();
+		case 1:
+			try {
+				course.addStudent();
+				cout << "Student added successfully" << endl; //Only reaches here if exception is not thrown
+			}
+			catch (repeatedIdentification<unsigned long> &r) {
+				cout << "ERROR: A student is already identified by \"" << r.getRepIdentification() << "\"!" << endl;
+			}
+			catch (repeatedIdentification<string> &r) {
+				cout << "ERROR: A student is already identified by \"" << r.getRepIdentification() << "\"!" << endl;
+			}
 			break;
 		case 2:
-			course.setStudent();
+			//course.editStudent();
 			break;
-        case 3:
-            course.removeStudent();
-            break;
+        case 3: {
+			unsigned short choice;
+			cout << TAB << "1 - Identify student by name" << endl;
+			cout << TAB << "2 - Identify student by code" << endl << endl;
+			cout << TAB << "Enter your option: ";
+			choice = readOp(1, 2);
+			if (choice == 1) {
+				string studentName;
+				cout << "Insert the student's full name: ";
+				getline(cin, studentName);
+				deleteWhitespace(studentName);
+				try {
+					course.removeStudent(studentName);
+					cout << "Student removed successfully" << endl; //Only reaches here if exception is not thrown
+				}
+				catch (invalidIdentification<string> &s) {
+					cout << "ERROR: No student idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+				}
+			}
+			else { //choice == 2
+				unsigned long studentCode;
+				cout << "Insert the student's code: ";
+				cin >> studentCode; //Check for invalid input (later)
+				try {
+					course.removeStudent(studentCode);
+					cout << "Student removed successfully" << endl;
+				}
+				catch (invalidIdentification<unsigned long> &s) {
+					cout << "ERROR: No student idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+				}
+			}
+			break;
+		}
 		case 4:
 			registrateStudentOptions(course);
 			break;
@@ -201,23 +243,25 @@ void listStudentsOptions(Course & course) {
 		case 1:
             course.showStudents(sortByName);
 			break;
-		case 2:
-            bool validInput = false;
+		case 2: {
+			bool validInput = false;
 			string unitAbbreviation;
 			cout << "Insert the course's unit : ";
-            do {
-                getline(cin, unitAbbreviation);
-                deleteWhitespace(unitAbbreviation);
-                validInput = course.verifyUnit(unitAbbreviation);
-            } while(!validInput);
-             
+			do {
+				getline(cin, unitAbbreviation);
+				deleteWhitespace(unitAbbreviation);
+				validInput = course.verifyUnit(unitAbbreviation);
+			} while (!validInput);
+
 			course.showUnitStudents();
 			break;
-		case 3:
-			cout << "Insert the curricular year: " ;
-			unsigned short int year= readOp(1,5);
+		}
+		case 3: {
+			cout << "Insert the curricular year: ";
+			unsigned short int year = readOp(1, 5);
 			course.showYearStudents(year);
 			break;
+		}
 		case 4:
 			course.showStatusStudents();
 			break;
@@ -256,21 +300,23 @@ unsigned short int showStudentMenu() {
 void showStudentOptions(Course & course) {
 	unsigned int option;
 
-	while ((option = showStudentMenu()()))
+	while ((option = showStudentMenu()))
 		switch (option) {
-		case 1: 
-            cout << "What is the student's name? : " << endl;
-            string studentName;
-            getline(cin, studentName);
-            deleteWhitespace(&studentName);
- 			course.showStudent(studentName);
+		case 1: {
+			cout << "What is the student's name? : " << endl;
+			string studentName;
+			getline(cin, studentName);
+			deleteWhitespace(studentName);
+			course.showStudent(studentName);
 			break;
-		case 2:
-            cout << "What is the sudent's code? : " << endl;
-            unsigned long int studentCode;
-            cin >> studentCode;
+		}
+		case 2: {
+			cout << "What is the sudent's code? : " << endl;
+			unsigned long int studentCode;
+			cin >> studentCode;
 			course.showStudent(studentCode);
 			break;
+		}
 		}
 }
 
@@ -297,7 +343,7 @@ unsigned short int listRegistrationsMenu() {
 void listRegistrationsOptions(Course & course) {
 	unsigned int option;
 
-	while ((option = listRegistrationsMenu()()))
+	while ((option = listRegistrationsMenu()))
 		switch (option) {
 		case 1: 
 		//read and check Unit
@@ -336,7 +382,7 @@ unsigned short int studentRegistrationsMenu() {
 void studentRegistrationsOptions(Course & course) {
 	unsigned int option;
 
-	while ((option = studentRegistrationsMenu()()))
+	while ((option = studentRegistrationsMenu()))
 		switch (option) {
 		case 1: 
 			// read name and check, and insert like a parameter
@@ -451,7 +497,7 @@ unsigned short int showTeacherMenu() {
 void showTeacherOptions(Course & course) {
 	unsigned int option;
 
-	while ((option = showTeacherMenu()()))
+	while ((option = showTeacherMenu()))
 		switch (option) {
 		case 1: 
 			// read name and check, and insert like a parameter
@@ -461,11 +507,11 @@ void showTeacherOptions(Course & course) {
 			// read code and check, and insert like a parameter
 			course.showTeacher();
 			break;
-		case 2:
+		case 3:
 			// read unit and check, and insert like a parameter
 			course.showTeacher();
 			break;
-		case 2:
+		case 4:
 			// read pupil and check if exist, and insert like a parameter
 			course.showTeacher();
 			break;

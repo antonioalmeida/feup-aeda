@@ -28,6 +28,8 @@ public:
     void setAbbreviation(std::string newAbbreviation); //!< Sets unit's abbreviation to newAbbreviation
 	void setScientificArea(std::string newScientificArea); //!< Sets unit's scientificArea to newScientificArea
     
+	virtual void updateVacancies() {}; //!< Does nothing. Only here so it can be used later with Unit* type
+	virtual void incrementVacancies() {}; //!< Does nothing. Only here so it can be used later with Unit* type
 	virtual void print(std::ostream &out) const {}; //!< Auxiliar funciton for indirect polymorphism. Will be called in operator << overload
 	virtual void save(std::ostream &out) const {}; //!< Writes object to file
 
@@ -39,7 +41,7 @@ class MandatoryUnit : public Unit {
 public:
 	MandatoryUnit() {}; // Default constructor
 	MandatoryUnit(std::istream &in);
-    
+
     virtual bool isFull() const;
 	virtual void print(std::ostream &out) const;
 	virtual void save(std::ostream &out) const;
@@ -57,7 +59,8 @@ public:
 	unsigned int getVacancies() const; //!< Returns vacancies
 	unsigned int getFixedVacancies() const; //!< Returns fixedVacancies
     
-	void updateVacancies(); //!< Decrements vacancies. Only run if isFull() returns false
+	virtual void updateVacancies(); //!< Decrements vacancies. Only run if isFull() returns false
+	virtual void incrementVacancies(); //!< Increments vacancies (when a student that's taking the unit is removed)
    
 	virtual bool isFull() const; //!< Checks if curricular unit has a place for the student
 	virtual void print(std::ostream &out) const;

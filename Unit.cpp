@@ -106,12 +106,16 @@ void OptionalUnit::updateVacancies() {
 	vacancies--; //No need to check if it is already 0 if we make sure it isn't called unless isFull() returns false
 }
 
+void OptionalUnit::incrementVacancies() {
+	vacancies++;
+}
+
 bool OptionalUnit::isFull() const {
 	return vacancies == 0;
 }
 
 void OptionalUnit::print(ostream &out) const {
-	out << name << "(" << abbreviation << ")" << endl << curricularYear;
+	out << name << "(" << abbreviation << ") | " << curricularYear;
 	switch (curricularYear) {
 	case 1:
 		out << "st ";
@@ -126,7 +130,7 @@ void OptionalUnit::print(ostream &out) const {
 		out << "th ";
 		break;
 	}
-	out << " year unit, worth " << ECTS << "ECTS" << endl << "Scientific area - " << scientificArea << endl << "Total of " << fixedVacancies << "vacancies, currently has place for " << vacancies << " students" << endl;
+	out << " year unit, worth " << ECTS << "ECTS | Scientific area - " << scientificArea << " | Currently has " << vacancies << " places left";
 }
 
 void OptionalUnit::save(ostream &out) const {
