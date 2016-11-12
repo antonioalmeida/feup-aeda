@@ -95,12 +95,12 @@ unsigned short int studentsMenu() {
 	cout << TAB_BIG << "---Student Main Menu---" << endl;
 	cout << TAB_BIG << "----------------------" << endl;
 	cout << endl;
-	cout << TAB << "1 - Create Student" << endl;
-	cout << TAB << "2 - Edit Student" << endl;
-	cout << TAB << "3 - Remove Student" << endl;
-	cout << TAB << "4 - Registrate Student" << endl;
-	cout << TAB << "5 - List Students" << endl;
-	cout << TAB << "6 - List Registrations" << endl;
+	cout << TAB << "1 - Create Student" << endl; //PARTIALLY DONE (I'LL FINISH IT - CYRIL)
+	cout << TAB << "2 - Edit Student" << endl; //TO DO
+	cout << TAB << "3 - Remove Student" << endl; //DONE
+	cout << TAB << "4 - Registrate Student" << endl; //TO DO
+	cout << TAB << "5 - List Students" << endl; //DONE
+	cout << TAB << "6 - List Registrations" << endl; //PARTIALLY DONE (I'LL FINISH IT - CYRIL)
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 6);
@@ -330,10 +330,10 @@ unsigned short int listRegistrationsMenu() {
 	clearScreen();
 	cout << TAB_BIG << "List Registrations Menu" << endl;
 	cout << endl;
-	cout << TAB << "1 - Show Registrations by Unit" << endl;
-	cout << TAB << "2 - Show Registrations by Student" << endl; 
-	cout << TAB << "3 - Show Registrations by Year" << endl;
-	cout << TAB << "4 - Show all Registrations" << endl;
+	cout << TAB << "1 - Show registrations by unit" << endl;
+	cout << TAB << "2 - Show registrations by student" << endl; 
+	cout << TAB << "3 - Show registrations by year" << endl;
+	cout << TAB << "4 - Show registrations of all students" << endl;
 	cout << TAB << "0 - Return to menu." << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 4);
@@ -346,20 +346,25 @@ void listRegistrationsOptions(Course & course) {
 
 	while ((option = listRegistrationsMenu()))
 		switch (option) {
-		case 1: 
-		//read and check Unit
-			course.showUnitRegistrations();
+		case 1:
+			try {
+				course.showUnitRegistrations();
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No unit idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
 			break;
 		case 2:
 			studentRegistrationsOptions(course);
 			break;
-		case 3:
-		//read and check year
-			course.showYearRegistrations();
+		case 3: {
+			unsigned long yearToShow = readOp(1, 5);
+			course.showYearRegistrations(yearToShow);
 			break;
 		case 4:
-			course.showRegistrations();
+			course.showAllRegistrations();
 			break;
+		}
 		}
 }
 

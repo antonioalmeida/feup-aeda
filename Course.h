@@ -43,6 +43,7 @@ public:
 	void showStudentsStatus(std::string status) const; //!< Shows students whose status is 'status' alphabetically
 	void showRegisteredStudents() const; //!< Shows registered students
 	void showUnregisteredStudents() const; //!< Show unregistered students
+	void showUnitRegistrations() const; //!< Shows students registered to a specific unit. Throws exception if unit specified does not exist
 	void save() const; //!< Saves all information to respective files
    
     bool verifyUnit(std::string unitAbbreviation) const; //!< Returns true if unit with unitAbbreviation as abbreviation exists

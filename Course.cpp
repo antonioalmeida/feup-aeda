@@ -318,6 +318,31 @@ void Course::showUnregisteredStudents() const {
 	cout << endl;
 }
 
+void Course::showUnitRegistrations() const {
+	string unitToShow;
+	cout << "Insert the unit's abbreviation: ";
+	getline(cin, unitToShow);
+	deleteWhitespace(unitToShow);
+	map<string, Unit*>::const_iterator it = abbreviationToUnit.find(unitToShow);
+	if (it == abbreviationToUnit.end()) //Not found
+		throw invalidIdentification<string>(unitToShow);
+
+	vector<Student> result;
+	for (int i = 0; i < students.size(); i++) {
+		for (int j = 0; j < students.at(i).getUnitsTaking().size(); j++) {
+			if (students.at(i).getUnitsTaking().at(j)->getAbbreviation() == unitToShow) {
+				result.push_back(students.at(i));
+				break;
+			}
+		}
+	}
+
+	sort(result.begin(), result.end(), sortByName);
+	for (int i = 0; i < result.size(); i++)
+		cout << result.at(i) << endl;
+	cout << endl;
+}
+
 void Course::save() const {
 	string studentsFileName, teachersFileName, mandatoryUnitsFileName, optionalUnitsFileName;
 
