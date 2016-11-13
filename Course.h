@@ -8,6 +8,7 @@
 #include <algorithm>
 #include "Person.h"
 #include "Unit.h"
+#include "Utils.h"
 
 //Header file for class Course, a class to handle a specific studies course
 
@@ -49,9 +50,14 @@ public:
 	void showStudentUnits(unsigned long studentCode) const; //!< Show units a student is taking. Throws exception if student does not exist
 	void showYearRegistrations(unsigned int yearToShow) const; //!< Show all students of a curricular year's registrations
 	void showAllStudentsRegistrations() const; //!< Show all students' registrations
+	void editStudentName(); //!< Edits a given student's name. Throws exception if specified student does not exist or new name is already taken
+	void editStudentStatus(); //!< Edits a given student's name. Throws exception if specified student does not exist
 
+	void addTeacher();
+	void editTeacherName();
+	void editTeacherCode();
+	void teacherAddUnitTaught();
 	void removeTeacher(std::string teacherName);
-
 	void showTeachers(bool(*comparisonFunction)(Teacher, Teacher)) const;
 	void showTeacher(std::string teacherID) const;
 	void showTeacher(Unit* u1) const;

@@ -96,7 +96,7 @@ unsigned short int studentsMenu() {
 	cout << TAB_BIG << "----------------------" << endl;
 	cout << endl;
 	cout << TAB << "1 - Create Student" << endl; //PARTIALLY DONE (I'LL FINISH IT - CYRIL)
-	cout << TAB << "2 - Edit Student" << endl; //TO DO
+	cout << TAB << "2 - Edit Student" << endl; //DONE
 	cout << TAB << "3 - Remove Student" << endl; //DONE
 	cout << TAB << "4 - Registrate Student" << endl; //TO DO
 	cout << TAB << "5 - List Students" << endl; //DONE
@@ -127,7 +127,7 @@ void studentsOptions(Course &course) {
 			}
 			break;
 		case 2:
-			//TO DO
+			editStudentOptions(course);
 			break;
 		case 3: {
 			unsigned short choice;
@@ -174,6 +174,53 @@ void studentsOptions(Course &course) {
 		}
 }
 
+// Edit Student Menu
+
+unsigned short int editStudentMenu() {
+	unsigned short int option;
+
+	clearScreen();
+	cout << TAB_BIG << "Edit Student Menu" << endl;
+	cout << endl;
+	cout << TAB << "1 - Edit a student's name" << endl;
+	cout << TAB << "2 - Edit a student's status" << endl;
+	cout << TAB << "0 - Return to previous menu" << endl << endl;
+	cout << TAB << "Enter your option: ";
+	option = readOp(0, 2);
+
+	return option;
+}
+
+void editStudentOptions(Course & course) {
+	unsigned int option;
+
+	while ((option = editStudentMenu()))
+		switch (option) {
+		case 1:
+			try {
+				course.editStudentName();
+				cout << "Student name successfully edited" << endl; //Only reaches here if exception is not thrown
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			catch (repeatedIdentification<string> &s) {
+				cout << "ERROR: There's already a student identified by \"" << s.getRepIdentification() << "\"!" << endl;
+			}
+			break;
+		case 2:
+			try {
+				course.editStudentStatus();
+				cout << "Student name successfully edited" << endl; //Only reaches here if exception is not thrown
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			break;
+
+		}
+}
+
 
 // Registrate Student MENU
 
@@ -184,9 +231,9 @@ unsigned short int registrateStudentMenu() {
 	clearScreen();
 	cout << TAB_BIG << "Registrate Student Menu" << endl;
 	cout << endl;
-	cout << TAB << "1 - Random Student" << endl;
-	cout << TAB << "2 - Specific Student" << endl;
-	cout << TAB << "0 - Return to menu" << endl << endl;
+	cout << TAB << "1 - Register a random student" << endl;
+	cout << TAB << "2 - Register a specific student" << endl;
+	cout << TAB << "0 - Return to previous menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 2);
 
@@ -200,11 +247,11 @@ void registrateStudentOptions(Course & course) {
 		switch (option) {
 		case 1: 
 			//Random Student
-			course.registrateStudent();
+			//course.registrateStudent();
 			break;
 		case 2:
 		//This one with parameter to choose a specific student
-			course.registrateStudent();
+			//course.registrateStudent();
 			break;
 			
 		}
@@ -346,7 +393,7 @@ void listRegistrationsOptions(Course & course) {
 
 	while ((option = listRegistrationsMenu()))
 		switch (option) {
-		case 1:
+		case 1: {
 			try {
 				course.showUnitRegistrations();
 			}
@@ -354,19 +401,22 @@ void listRegistrationsOptions(Course & course) {
 				cout << "ERROR: No unit identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
 			break;
+		}
 		case 2:
 			studentRegistrationsOptions(course);
 			break;
 		case 3: {
-			unsigned long yearToShow = readOp(1, 5);
+			unsigned long yearToShow;
+			yearToShow = readOp(1, 5);
 			course.showYearRegistrations(yearToShow);
 			break;
+		}
 		case 4:
 			course.showAllStudentsRegistrations();
 			break;
 		}
-		}
 }
+
 
 // Registration for one student MENU
 
@@ -432,8 +482,8 @@ unsigned short int teachersMenu() {
 	cout << TAB_BIG << "---Teacher Main Menu---" << endl;
 	cout << TAB_BIG << "----------------------" << endl;
 	cout << endl;
-	cout << TAB << "1 - Create Teacher" << endl; //TO DO
-	cout << TAB << "2 - Edit Teacher" << endl; //TO DO
+	cout << TAB << "1 - Create Teacher" << endl; //DONE
+	cout << TAB << "2 - Edit Teacher" << endl; //DONE
 	cout << TAB << "3 - Remove Teacher" << endl; //DONE
 	cout << TAB << "4 - List Teachers" << endl; //DONE
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
@@ -450,10 +500,16 @@ void teachersOptions(Course & course) {
 	while ((option = teachersMenu()))
 		switch (option) {
 		case 1:
-			course.addTeacher();
+			try {
+				course.addTeacher();
+				cout << "Teacher successfully created" << endl;
+			}
+			catch(repeatedIdentification<string> &s){
+				cout << "ERROR: There's a teacher identified by \"" << s.getRepIdentification() << "\" already!" << endl;
+			}
 			break;
 		case 2:
-			course.setTeacher();
+			editTeacherOptions(course);
 			break;
 		case 3: {
 			string teacherID;
@@ -473,6 +529,65 @@ void teachersOptions(Course & course) {
 			listTeachersOptions(course);
 			break;
 	}
+}
+
+// Edit Teacher Menu
+
+unsigned short int editTeacherMenu() {
+	unsigned short int option;
+
+	clearScreen();
+	cout << TAB_BIG << "Edit Teacher Menu" << endl;
+	cout << endl;
+	cout << TAB << "1 - Edit a teacher's name" << endl;
+	cout << TAB << "2 - Edit a teacher's code" << endl;
+	cout << TAB << "3 - Add a new unit taught by a teacher" << endl;
+	cout << TAB << "0 - Return to previous menu" << endl << endl;
+	cout << TAB << "Enter your option: ";
+	option = readOp(0, 3);
+
+	return option;
+}
+
+void editTeacherOptions(Course & course) {
+	unsigned int option;
+
+	while ((option = editTeacherMenu()))
+		switch (option) {
+		case 1:
+			try {
+				course.editTeacherName();
+				cout << "Teacher edited successfully" << endl;
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No teacher identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			catch (repeatedIdentification<string> &s) {
+				cout << "ERROR: There's a teacher identified by \"" << s.getRepIdentification() << "\" already!" << endl;
+			}
+			break;
+		case 2:
+			try {
+				course.editTeacherCode();
+				cout << "Teacher edited successfully" << endl;
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No teacher identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			catch (repeatedIdentification<string> &s) {
+				cout << "ERROR: There's a teacher identified by \"" << s.getRepIdentification() << "\" already!" << endl;
+			}
+			break;
+		case 3:
+			try {
+				course.teacherAddUnitTaught();
+				cout << "Teacher edited successfully" << endl;
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No teacher identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			break;
+		}
 }
 
 //LIST Teachers MENU
@@ -632,7 +747,7 @@ void unitsOptions(Course & course) {
 	while ((option = unitsMenu()))
 		switch (option) {
 		case 1:
-			course.setUnit();
+			//course.setUnit();
 			break;
 		case 2:
 			listUnitsOptions(course);
@@ -671,11 +786,13 @@ void listUnitsOptions(Course & course) {
 		case 1: 
 			course.showUnits();
 			break;
-		case 2:
+		case 2: {
 			cout << "Insert the curricular year: " << endl;
-			unsigned short int year= readOp(1,5);
+			unsigned short int year;
+			year = readOp(1, 5);
 			course.showYearUnit(year);
 			break;
+		}
 		case 3:
 			course.showMandatoryUnit();
 			break;

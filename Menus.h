@@ -12,6 +12,10 @@ void mainOption(Course &course);
 unsigned short int studentsMenu();
 void studentsOptions(Course &course);
 
+//Edit Students Menu
+unsigned short int editStudentMenu();
+void editStudentOptions(Course & course);
+
 //Registrate Students Menu
 unsigned short int registrateStudentMenu();
 void registrateStudentOptions(Course & course);
@@ -35,6 +39,10 @@ void studentRegistrationsOptions(Course & course);
 /* Teachers Menu */
 unsigned short int teachersMenu();
 void teachersOptions(Course & course);
+
+//Edit Teacher Menu
+unsigned short int editTeacherMenu();
+void editTeacherOptions(Course & course);
 
 //List Teachers Menu
 unsigned short int listTeachersMenu();

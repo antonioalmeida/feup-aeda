@@ -81,6 +81,7 @@ public:
 
 	std::string getCode() const;
 	std::vector<Student*> getPupils() const;
+	void setCode(std::string newCode);
 	void addUnitTaught(Unit* newUnit);
 	void addStudent(Student* newStudent);
 	void removeStudent(Student oldStudent); //!< Removes student from pupils vector if he exists, otherwise does nothing

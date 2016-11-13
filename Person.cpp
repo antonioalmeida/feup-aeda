@@ -41,7 +41,7 @@ Student::Student(istream &in):Person(in) {
 	/* Units are read when read-from-files function is called! */
 }
 
-Student::Student(string name, string status, unsigned int curricularYear, vector<vector<pair<Unit*, unsigned int>>> unitsDone, vector<vector<pair<Unit*, unsigned int>>> unitsToDo, unsigned long int code = nextCode++) : Person(name) {
+Student::Student(string name, string status, unsigned int curricularYear, vector<vector<pair<Unit*, unsigned int>>> unitsDone, vector<vector<pair<Unit*, unsigned int>>> unitsToDo, unsigned long int code) : Person(name) {
 	this->status = status; //Can be anything
 	this->curricularYear = curricularYear;
 	this->code = code;
@@ -182,12 +182,16 @@ Teacher::Teacher(istream &in):Person(in) {
 
 Teacher::Teacher(string name, string code, vector<Unit*> unitsTaught) : Person(name) {
 	this->code = code;
-	email = to_string(code) + "@fe.up.pt";
+	email = code + "@fe.up.pt";
 	this->unitsTaught = unitsTaught;
 }
 
 string Teacher::getCode() const {
 	return code;
+}
+
+void Teacher::setCode(std::string newCode) {
+	code = newCode;
 }
 
 void Teacher::addUnitTaught(Unit* newUnit) {
@@ -209,6 +213,8 @@ void Teacher::removeStudent(Student oldStudent) {
 			break;
 		}
 	}
+	if (pupils.size() < Teacher::lessStudents)
+		Teacher::lessStudents = pupils.size();
 }
 
 vector<Student*> Teacher::getPupils() const {

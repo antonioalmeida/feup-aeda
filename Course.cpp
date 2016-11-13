@@ -400,8 +400,167 @@ void Course::showAllStudentsRegistrations() const {
 }
 
 
+void Course::editStudentName() {
+	string studentName;
+	cout << "Insert the student's old full name: ";
+	getline(cin, studentName);
+	deleteWhitespace(studentName);
+	vector<Student>::iterator it = students.begin();
+	for (it; it != students.end(); it++) {
+		if (it->getName() == studentName)
+			break;
+	}
+
+	if (it == students.end())
+		throw invalidIdentification<string>(studentName);
+
+	string newName;
+	cout << "Insert the student's new full name: ";
+	getline(cin, newName);
+	vector<Student>::iterator second_it = students.begin();
+	for (second_it; second_it != students.end(); second_it++) {
+		if (second_it->getName() == newName)
+			throw repeatedIdentification<string>(newName);
+	}
+
+	it->setName(newName);
+}
+
+void Course::editStudentStatus() {
+	string studentName;
+	cout << "Insert the student's full name: ";
+	getline(cin, studentName);
+	deleteWhitespace(studentName);
+	vector<Student>::iterator it = students.begin();
+	for (it; it != students.end(); it++) {
+		if (it->getName() == studentName)
+			break;
+	}
+
+	if (it == students.end())
+		throw invalidIdentification<string>(studentName);
+
+	string newStatus;
+	cout << "Insert the student's new status: ";
+	getline(cin, newStatus);
+	it->setStatus(newStatus);
+}
+
 //Teachers
 
+
+void Course::addTeacher() {
+	string newTeacherName;
+	cout << "Insert the new teacher's name: ";
+	getline(cin, newTeacherName);
+
+	string newTeacherCode;
+	cout << "Insert the new teacher's code: ";
+	getline(cin, newTeacherCode);
+
+	for (vector<Teacher>::const_iterator it = teachers.begin(); it != teachers.end(); it++) {
+		if (it->getName() == newTeacherName)
+			throw repeatedIdentification<string>(newTeacherName);
+		else if (it->getCode() == newTeacherCode)
+			throw repeatedIdentification<string>(newTeacherCode);
+	}
+
+	string abbreviation;
+	vector<Unit*> newTeacherUnitsTaught;
+	do {
+		cout << "Insert the abbreviation of a unit taught by \"" << newTeacherName << "\" (0 to finish): ";
+		getline(cin, abbreviation);
+		deleteWhitespace(abbreviation);
+		if (!verifyUnit(abbreviation) && abbreviation != "0")
+			cout << "Unit \"" << abbreviation << "\" does not exist! Please insert a valid abbreviation" << endl;
+		else
+			newTeacherUnitsTaught.push_back(abbreviationToUnit.find(abbreviation)->second);
+	} while (abbreviation != "0");
+
+	Teacher t1(newTeacherName, newTeacherCode, newTeacherUnitsTaught);
+	teachers.push_back(t1);
+}
+
+void Course::editTeacherName() {
+	string oldTeacherName;
+	cout << "Insert the teacher's old full name: ";
+	deleteWhitespace(oldTeacherName);
+	getline(cin, oldTeacherName);
+
+	vector<Teacher>::iterator it = teachers.begin();
+	for (it; it != teachers.end(); it++) {
+		if (it->getName() == oldTeacherName)
+			break;
+	}
+
+	if (it == teachers.end())
+		throw invalidIdentification<string>(oldTeacherName);
+
+	string newTeacherName;
+	cout << "Insert the teacher's new full name: ";
+	getline(cin, newTeacherName);
+
+	for (vector<Teacher>::iterator second_it = teachers.begin(); second_it != teachers.end(); second_it++) {
+		if (second_it->getName() == newTeacherName)
+			throw repeatedIdentification<string>(newTeacherName);
+	}
+
+	it->setName(newTeacherName);
+}
+
+void Course::editTeacherCode() {
+	string oldTeacherCode;
+	cout << "Insert the teacher's old code: ";
+	deleteWhitespace(oldTeacherCode);
+	getline(cin, oldTeacherCode);
+
+	vector<Teacher>::iterator it = teachers.begin();
+	for (it; it != teachers.end(); it++) {
+		if (it->getCode() == oldTeacherCode)
+			break;
+	}
+
+	if (it == teachers.end())
+		throw invalidIdentification<string>(oldTeacherCode);
+
+	string newTeacherCode;
+	cout << "Insert the teacher's new code: ";
+	getline(cin, newTeacherCode);
+
+	for (vector<Teacher>::iterator second_it = teachers.begin(); second_it != teachers.end(); second_it++) {
+		if (second_it->getCode() == newTeacherCode)
+			throw repeatedIdentification<string>(newTeacherCode);
+	}
+
+	it->setCode(newTeacherCode);
+}
+
+void Course::teacherAddUnitTaught() {
+	string teacherName;
+	cout << "Insert the teacher's full name: ";
+	deleteWhitespace(teacherName);
+	getline(cin, teacherName);
+
+	vector<Teacher>::iterator it = teachers.begin();
+	for (it; it != teachers.end(); it++) {
+		if (it->getName() == teacherName)
+			break;
+	}
+
+	if (it == teachers.end())
+		throw invalidIdentification<string>(teacherName);
+
+	string abbreviation;
+	do {
+		cout << "Insert the abbreviation of a unit taught by \"" << teacherName << "\" (0 if you changed your mind): ";
+		getline(cin, abbreviation);
+		deleteWhitespace(abbreviation);
+		if (!verifyUnit(abbreviation) && abbreviation != "0")
+			cout << "Unit \"" << abbreviation << "\" does not exist! Please insert a valid abbreviation" << endl;
+		else
+			it->addUnitTaught(abbreviationToUnit.find(abbreviation)->second);
+	} while (abbreviation != "0" || !verifyUnit(abbreviation));
+}
 
 void Course::removeTeacher(string teacherID) {
 	bool found = false;

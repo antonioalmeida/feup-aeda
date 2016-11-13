@@ -12,11 +12,13 @@ int main(int argc, char **argv) {
 	}
 	catch(inexistentFile &s){
 		cout << "ERROR: File \"" << s.getInexistentFileName() << "\" not found! Exiting..." << endl;
+		PressToContinue();
 		return 1;
 	}
 	
 	Course mieic(studentsFileName, teachersFileName, mandatoryUnitsFileName, optionalUnitsFileName);
 	mainOption(mieic);
+	PressToContinue();
     
 	return 0;
     
