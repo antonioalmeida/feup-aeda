@@ -4,8 +4,8 @@
 #include <string>
 
 #define WINDOW_SIZE 24
-#define TAB_BIG 24
-#define TAB	5
+#define TAB_BIG "                        "
+#define TAB	"     "
 //Header file for Utils, a file with useful functions to use throughout the program
 
 unsigned short int readOp(unsigned short int minValue, unsigned short int  maxValue); //!< Reads integer value in range [minValue, maxValue]

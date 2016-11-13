@@ -37,9 +37,13 @@ Course::Course(string studentsFile, string teachersFile, string manUnitsFile, st
 	for (numberOfTeachers; numberOfTeachers > 0; numberOfTeachers--) {
 		Teacher t1(teachersIn);
 		string abbreviation;
-		while (teachersIn >> abbreviation)
+		while (teachersIn >> abbreviation) {
+			if (abbreviation == "|")
+				break;
 			t1.addUnitTaught(abbreviationToUnit.find(abbreviation)->second);
+		}
 		teachers.push_back(t1);
+		teachersIn.ignore(1000, '\n');
 		teachersIn.ignore(1000, '\n'); //Not sure but I think Teacher constructor does not skip blank line between teachers
 	}
 	teachersIn.close(); //To avoid conflict
@@ -52,17 +56,18 @@ Course::Course(string studentsFile, string teachersFile, string manUnitsFile, st
 		Student s1(studentsIn);
 		string abbreviation;
 		unsigned int grade;
-		for (unsigned int i = 0; i < s1.getCurricularYear() - 1; i++) {
-			while (studentsIn >> abbreviation) {
-				Unit* u1 = abbreviationToUnit.find(abbreviation)->second;
-				studentsIn >> grade;
-				if (grade >= 10)
-					s1.addUnitDone(pair<Unit*, unsigned int>(u1, grade));
-				else //grade < 10
-					s1.addUnitToDo(pair<Unit*, unsigned int>(u1, grade));
-			}
+		while (studentsIn >> abbreviation) {
+			if (abbreviation == "|")
+				break;
+			Unit* u1 = abbreviationToUnit.find(abbreviation)->second;
+			studentsIn >> grade;
+			if (grade >= 10)
+				s1.addUnitDone(pair<Unit*, unsigned int>(u1, grade));
+			else //grade < 10
+				s1.addUnitToDo(pair<Unit*, unsigned int>(u1, grade));
 		}
 		students.push_back(s1);
+		studentsIn.ignore(1000, '\n');
 		studentsIn.ignore(1000, '\n'); //Not sure but I think Student constructor does not skip blank line between students
 	}
 	studentsIn.close(); //To avoid conflict

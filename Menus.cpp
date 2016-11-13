@@ -810,10 +810,11 @@ void listUnitsOptions(Course & course) {
 		case 6: {
 			string scientificArea;
 			cout << "Insert the scientific area: ";
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			getline(cin, scientificArea);
 			deleteWhitespace(scientificArea);
 			course.showUnitsofScientificArea(scientificArea);
+			break;
 		}
-			
 		}
 }

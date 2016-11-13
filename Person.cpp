@@ -38,6 +38,7 @@ Student::Student(istream &in):Person(in) {
 	in.ignore(1000, '\n');
 	getline(in, status);
 	unitsDone = vector<vector<pair<Unit*, unsigned int>>>(5);
+	unitsToDo = vector<vector<pair<Unit*, unsigned int>>>(5);
 	/* Units are read when read-from-files function is called! */
 }
 
@@ -45,7 +46,7 @@ Student::Student(string name, string status, unsigned int curricularYear, vector
 	this->status = status; //Can be anything
 	this->curricularYear = curricularYear;
 	this->code = code;
-    
+   
 	email = "up" + to_string(code) + "@fe.up.pt";    
 	ectsTaking = 0;
 	this->unitsDone = unitsDone;
@@ -114,7 +115,7 @@ void Student::addUnitDone(std::pair<Unit*, unsigned int> p) {
 
 void Student::addUnitToDo(std::pair<Unit*, unsigned int> p) {
 	int index = p.first->getCurricularYear();
-	unitsDone.at(index - 1).push_back(p);
+	unitsToDo.at(index - 1).push_back(p);
 }
 
 void Student::addUnitTaking(Unit* u) {
@@ -156,7 +157,13 @@ bool Student::operator==(const Student &s1) {
 }
 
 ostream& operator<<(ostream& out, const Student& s) {
-	/* To decide when implementing Course/Menus */
+	out << s.getName() << " | " << s.getCode() << " | Current Average: " << s.getAverage();
+	if (s.getUnitsTaking().size() != 0) {
+		out << " | Taking: ";
+		for (int i = 0; i < s.getUnitsTaking().size(); i++)
+			out << s.getUnitsTaking().at(i)->getAbbreviation() << " ";
+	}
+	out << endl;
 	return out;
 }
 
@@ -228,9 +235,10 @@ void Teacher::save(ostream &out) const{
 }
 
 ostream& operator<<(ostream& out, const Teacher& s) { //Subject to change
-	out << s.getName() << endl << "Teaches:" << endl;
+	out << s.getName() << "(" << s.getCode() << ")" << "| Teaches:";
 	for (int i = 0; i < s.getUnitsTaught().size(); i++)
-		cout << "- " << *(s.getUnitsTaught().at(i)) << endl;
+		out << s.getUnitsTaught().at(i)->getAbbreviation() << " ";
+	out << endl;
 	return out;
 }
 
