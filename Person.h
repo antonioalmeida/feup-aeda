@@ -27,7 +27,6 @@ public:
 
 class Student : public Person {
 protected:
-	static unsigned long int nextCode; //Sequential code used for 1st timers (unsigned int may not have enough memory, unsigned long should hold easily)
 	unsigned long int code;
 	std::string status;
 	float ectsTaking; //Automatically 0 when object is created
@@ -40,6 +39,7 @@ protected:
 	Date registrationDate; //Not sure how it'll be handled, but needs to be here since it's stated in the paper...
 
 public:
+	static unsigned long int nextCode; //Sequential code used for 1st timers (unsigned int may not have enough memory, unsigned long should hold easily)
 	Student() {}; //default constructor
 	Student(std::istream &in);
     Student(std::string name, std::string status, unsigned int curricularYear, std::vector<std::vector<std::pair<Unit*, unsigned int>>> unitsDone, std::vector<std::vector<std::pair<Unit*, unsigned int>>> unitsToDo, unsigned long int code = nextCode++);
@@ -70,11 +70,11 @@ public:
 
 class Teacher : public Person {
 protected:
-	static unsigned int lessStudents; //One (or more) teacher(s) will have the least amount of students as pupils. It is to those that should be assigned students first. This variable holds that minimum
 	std::string code;
 	std::vector<Unit*> unitsTaught;
 	std::vector<Student*> pupils;
 public:
+	static unsigned int lessStudents; //One (or more) teacher(s) will have the least amount of students as pupils. It is to those that should be assigned students first. This variable holds that minimum
 	Teacher() {}; //default constructor
 	Teacher(std::istream &in);
 	Teacher(std::string name, std::string code, std::vector<Unit*> unitsTaught);

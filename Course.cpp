@@ -588,7 +588,14 @@ void Course::removeTeacher(string teacherID) {
 	for (int i = 0; i < teachers.size(); i++) {
 		if (teachers.at(i).getName() == teacherID || teachers.at(i).getCode() == teacherID) {
 			found = true;
-			//update global variable lessStudents
+			if (teachers.at(i).getPupils().size() == Teacher::lessStudents) {
+				unsigned int newMinimum = numeric_limits<unsigned int>::max();
+				for (int j = 0; j < teachers.size(); i++) {
+					if (j != i && teachers.at(j).getPupils().size() < newMinimum)
+						newMinimum = teachers.at(j).getPupils().size();
+				}
+				Teacher::lessStudents = newMinimum;
+			}
 			teachers.erase(teachers.begin() + i);
 			break;
 		}
@@ -599,7 +606,7 @@ void Course::removeTeacher(string teacherID) {
 }
 
 void Course::showTeachers(bool(*comparisonFunction)(Teacher, Teacher)) const {
-	vector<Teacher> teachersTemp =teachers;
+	vector<Teacher> teachersTemp = teachers;
 	sort(teachersTemp.begin(), teachersTemp.end(), *comparisonFunction);
 	for (int i = 0; i < teachersTemp.size(); i++)
 		cout << teachersTemp.at(i) << endl;

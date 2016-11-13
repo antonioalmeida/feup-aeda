@@ -150,6 +150,7 @@ void Student::save(std::ostream &out) const{
 				out << unitsToDo.at(i).at(k).first->getAbbreviation() << " " << unitsDone.at(i).at(k).second << " ";
 		}
 	}
+	out << "|";
 }
 
 bool Student::operator==(const Student &s1) {
@@ -232,6 +233,7 @@ void Teacher::save(ostream &out) const{
 	out << name << endl << code << endl;
 	for (unsigned int i = 0; i < unitsTaught.size(); i++)
 		out << unitsTaught.at(i)->getAbbreviation() << " ";
+	out << "|";
 }
 
 ostream& operator<<(ostream& out, const Teacher& s) { //Subject to change
