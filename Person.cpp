@@ -180,13 +180,13 @@ Teacher::Teacher(istream &in):Person(in) {
 	//Reads units after creating object (goes to the line and searches map for unit, adding it to the vector)
 }
 
-Teacher::Teacher(string name, unsigned long int code, vector<Unit*> unitsTaught) : Person(name) {
+Teacher::Teacher(string name, string code, vector<Unit*> unitsTaught) : Person(name) {
 	this->code = code;
 	email = to_string(code) + "@fe.up.pt";
 	this->unitsTaught = unitsTaught;
 }
 
-unsigned long int Teacher::getCode() const {
+string Teacher::getCode() const {
 	return code;
 }
 
@@ -228,6 +228,6 @@ ostream& operator<<(ostream& out, const Teacher& s) { //Subject to change
 	return out;
 }
 
-bool sortByName(Teacher t1, Teacher t2) {
+bool sortTByName(Teacher t1, Teacher t2) {
 	return t1.name < t2.name;
 }

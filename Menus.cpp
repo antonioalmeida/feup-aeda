@@ -100,7 +100,7 @@ unsigned short int studentsMenu() {
 	cout << TAB << "3 - Remove Student" << endl; //DONE
 	cout << TAB << "4 - Registrate Student" << endl; //TO DO
 	cout << TAB << "5 - List Students" << endl; //DONE
-	cout << TAB << "6 - List Registrations" << endl; //PARTIALLY DONE (I'LL FINISH IT - CYRIL)
+	cout << TAB << "6 - List Registrations" << endl; //DONE
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 6);
@@ -145,7 +145,7 @@ void studentsOptions(Course &course) {
 					cout << "Student removed successfully" << endl; //Only reaches here if exception is not thrown
 				}
 				catch (invalidIdentification<string> &s) {
-					cout << "ERROR: No student idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+					cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
 				}
 			}
 			else { //choice == 2
@@ -157,7 +157,7 @@ void studentsOptions(Course &course) {
 					cout << "Student removed successfully" << endl;
 				}
 				catch (invalidIdentification<unsigned long> &s) {
-					cout << "ERROR: No student idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+					cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
 				}
 			}
 			break;
@@ -302,7 +302,7 @@ void showStudentOptions(Course & course) {
 				course.showStudent(studentName);
 			}
 			catch (invalidIdentification<string> &s) {
-				cout << "ERROR: No student idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
 			break;
 		}
@@ -314,7 +314,7 @@ void showStudentOptions(Course & course) {
 				course.showStudent(studentCode);
 			}
 			catch (invalidIdentification<unsigned long> &s) {
-				cout << "ERROR: No student idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
 			break;
 		}
@@ -351,7 +351,7 @@ void listRegistrationsOptions(Course & course) {
 				course.showUnitRegistrations();
 			}
 			catch (invalidIdentification<string> &s) {
-				cout << "ERROR: No unit idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+				cout << "ERROR: No unit identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
 			break;
 		case 2:
@@ -362,7 +362,7 @@ void listRegistrationsOptions(Course & course) {
 			course.showYearRegistrations(yearToShow);
 			break;
 		case 4:
-			course.showAllRegistrations();
+			course.showAllStudentsRegistrations();
 			break;
 		}
 		}
@@ -378,7 +378,7 @@ unsigned short int studentRegistrationsMenu() {
 	cout << endl;
 	cout << TAB << "1 - Search by name" << endl;
 	cout << TAB << "2 - Search by code" << endl;
-	cout << TAB << "0 - Return to menu" << endl << endl;
+	cout << TAB << "0 - Return to list registrations menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 2);
 
@@ -390,16 +390,31 @@ void studentRegistrationsOptions(Course & course) {
 
 	while ((option = studentRegistrationsMenu()))
 		switch (option) {
-		case 1: 
-			// read name and check, and insert like a parameter
-			//find here and insert direct a pointer to a student?
-			course.showRegistration();
+		case 1: {
+			cout << "Insert the student's name: " << endl;
+			string studentName;
+			getline(cin, studentName);
+			deleteWhitespace(studentName);
+			try {
+				course.showStudentUnits(studentName);
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
 			break;
-		case 2:
-			// read code and check, and insert like a parameter
-			//same above
-			course.showRegistration();
+		}
+		case 2: {
+			cout << "Insert the student's code: " << endl;
+			unsigned long studentCode;
+			cin >> studentCode; //Check for invalid input (later)
+			try {
+				course.showStudentUnits(studentCode);
+			}
+			catch (invalidIdentification<unsigned long> &s) {
+				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
 			break;
+		}
 		}
 }
 
@@ -417,10 +432,10 @@ unsigned short int teachersMenu() {
 	cout << TAB_BIG << "---Teacher Main Menu---" << endl;
 	cout << TAB_BIG << "----------------------" << endl;
 	cout << endl;
-	cout << TAB << "1 - Create Teacher" << endl;
-	cout << TAB << "2 - Edit Teacher" << endl;
-	cout << TAB << "3 - Remove Teacher" << endl; //Need to review the condition
-	cout << TAB << "4 - List Teachers" << endl; //Almost done needed to add some exceptions
+	cout << TAB << "1 - Create Teacher" << endl; //TO DO
+	cout << TAB << "2 - Edit Teacher" << endl; //TO DO
+	cout << TAB << "3 - Remove Teacher" << endl; //DONE
+	cout << TAB << "4 - List Teachers" << endl; //DONE
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 4);
@@ -434,44 +449,26 @@ void teachersOptions(Course & course) {
 
 	while ((option = teachersMenu()))
 		switch (option) {
-		case 1: 
+		case 1:
 			course.addTeacher();
 			break;
 		case 2:
 			course.setTeacher();
 			break;
-        case 3:
-			unsigned short choice;
-			cout << TAB << "1 - Identify teacher by name" << endl;
-			cout << TAB << "2 - Identify teacher by code" << endl << endl;
-			cout << TAB << "Enter your option: ";
-			choice = readOp(1, 2);
-			if (choice == 1) {
-				string teacherName;
-				cout << "Insert the teacher's full name: ";
-				getline(cin, teacherName);
-				deleteWhitespace(teacherName);
-				try {
-					course.removeTeacher(teacherName);
-					cout << "Teacher removed successfully" << endl; //Only reaches here if exception is not thrown
-				}
-				catch (invalidIdentification<string> &s) {
-					cout << "ERROR: No teacher idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
-				}
+		case 3: {
+			string teacherID;
+			cout << "Insert the teacher's full name or his/her code: ";
+			getline(cin, teacherID);
+			deleteWhitespace(teacherID);
+			try {
+				course.removeTeacher(teacherID);
+				cout << "Teacher removed successfully" << endl; //Only reaches here if exception is not thrown
 			}
-			else { //choice == 2
-				unsigned long teacherCode;
-				cout << "Insert the teacher's code: ";
-				cin >> teacherCode; //Check for invalid input (later)
-				try {
-					course.removeTeacher(teacherCode);
-					cout << "Teacher removed successfully" << endl;
-				}
-				catch (invalidIdentification<unsigned long> &s) {
-					cout << "ERROR: No teacher idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
-				}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No teacher identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
-            break;
+			break;
+		}
 		case 4:
 			listTeachersOptions(course);
 			break;
@@ -487,7 +484,7 @@ unsigned short int listTeachersMenu() {
 	cout << TAB_BIG << "List Teachers Menu" << endl;
 	cout << endl;
 	cout << TAB << "1 - Show teachers alphabetically" << endl; //Done
-	cout << TAB << "2 - Show a teacher" << endl;  //Almost done
+	cout << TAB << "2 - Show a teacher" << endl;  //Done
 	cout << TAB << "0 - Return to students menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 2);
@@ -502,7 +499,7 @@ void listTeachersOptions(Course & course) {
 	while ((option = listTeachersMenu()))
 		switch (option) {
 		case 1: 
-			course.showTeachers(sortByName);
+			course.showTeachers(sortTByName);
 			break;
 		case 2:
 			showTeacherOptions(course);
@@ -518,13 +515,12 @@ unsigned short int showTeacherMenu() {
 	clearScreen();
 	cout << TAB_BIG << "Show a Specific Teacher Menu" << endl;
 	cout << endl;
-	cout << TAB << "1 - Search by name" << endl; //done
-	cout << TAB << "2 - Search by code" << endl; //done
-	cout << TAB << "3 - Search by unit" << endl; //done
-	cout << TAB << "4 - Search by pupil" << endl; //Problem with pointers
-	cout << TAB << "0 - Return to menu" << endl << endl;
+	cout << TAB << "1 - Show teacher specified by name or code" << endl; //done
+	cout << TAB << "2 - Show teacher responsible for specified unit" << endl; //done
+	cout << TAB << "3 - Show teacher that mentors specified student" << endl; //done
+	cout << TAB << "0 - Return to previous menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = readOp(0, 4);
+	option = readOp(0, 3);
 
 	return option;
 }
@@ -535,46 +531,33 @@ void showTeacherOptions(Course & course) {
 	while ((option = showTeacherMenu()))
 		switch (option) {
 		case 1: {
-			cout << "Insert the teacher's name: " << endl;
-			string teacherName;
-			getline(cin, teacherName);
-			deleteWhitespace(teacherName);
+			cout << "Insert the teacher's full name or code: " << endl;
+			string teacherID;
+			getline(cin, teacherID);
+			deleteWhitespace(teacherID);
 			try {
-				course.showTeacher(teacherName);
+				course.showTeacher(teacherID);
 			}
 			catch (invalidIdentification<string> &s) {
-				cout << "ERROR: No teacher idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+				cout << "ERROR: No teacher identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
 			break;
 		}
 		case 2: {
-			cout << "Insert the teacher's code: " << endl;
-			unsigned long teacherCode;
-			cin >> teacherCode; //Check for invalid input (later)
-			try {
-				course.showTeacher(teacherCode);
-			}
-			catch (invalidIdentification<unsigned long> &s) {
-				cout << "ERROR: No teacher idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
-			}
+			cout << "Insert the unit's abbreviation: " << endl;
+			string unitAbbreviation;
+			getline(cin, unitAbbreviation);
+			deleteWhitespace(unitAbbreviation);
+			map<string, Unit*>::const_iterator it = course.getMap().find(unitAbbreviation);
+			if (it == course.getMap().end())
+				cout << "ERROR: No unit identified by \"" << unitAbbreviation << "\"!" << endl;
+			else
+				course.showTeacher(it->second);
 			break;
 		}
 		case 3: {
-			cout << "Insert the teacher's unit: " << endl;
-			unsigned long teacherCode;
-			cin >> teacherCode; //Check for invalid input (later)
-			try {
-				course.showTeacher(teacherCode);
-			}
-			catch (invalidIdentification<unsigned long> &s) {
-				cout << "ERROR: No teacher idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
-			}
-			break;
-		}
-		case 4: {
 			showTeacherPupilOptions(course);
 		}
-
 		}
 }
 
@@ -586,9 +569,9 @@ unsigned short int showTeacherPupilMenu() {
 	clearScreen();
 	cout << TAB_BIG << "Show a Teacher by Pupil Menu" << endl;
 	cout << endl;
-	cout << TAB << "1 - Search by name" << endl; //done
-	cout << TAB << "2 - Search by code" << endl; //done
-	cout << TAB << "0 - Return to menu" << endl << endl;
+	cout << TAB << "1 - Specify pupil by name" << endl; //done
+	cout << TAB << "2 - Specify pupil by code" << endl; //done
+	cout << TAB << "0 - Return to previous menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 2);
 
@@ -605,24 +588,14 @@ void showTeacherPupilOptions(Course & course) {
 			string pupilName;
 			getline(cin, pupilName);
 			deleteWhitespace(pupilName);
-			try {
-				course.showTeacherPupil(pupilName);
-			}
-			catch (invalidIdentification<string> &s) {
-				cout << "ERROR: No pupil idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
-			}
+			course.showTeacherPupil(pupilName);
 			break;
 		}
 		case 2: {
 			cout << "Insert the pupil's code: " << endl;
 			unsigned long pupilCode;
 			cin >> pupilCode; //Check for invalid input (later)
-			try {
-				course.showTeacherPupil(pupilCode);
-			}
-			catch (invalidIdentification<unsigned long> &s) {
-				cout << "ERROR: No pupil idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
-			}
+			course.showTeacherPupil(pupilCode);
 			break;
 		}
 		}
@@ -633,7 +606,6 @@ void showTeacherPupilOptions(Course & course) {
 /******************************************
  * Units Menu
  ******************************************/
-// CREATE, EDIT AND REMOVE -> Can cause conflicts with teachers and students?
 
 unsigned short int unitsMenu() {
 	unsigned short int option;
@@ -644,8 +616,8 @@ unsigned short int unitsMenu() {
 	cout << TAB_BIG << "---Units Main Menu---" << endl;
 	cout << TAB_BIG << "----------------------" << endl;
 	cout << endl;
-	cout << TAB << "1 - Edit Unit" << endl;
-	cout << TAB << "2 - List Units" << endl;
+	cout << TAB << "1 - Edit Unit" << endl; //TO DO (Is it really necessary though? Might want to have it not implemented at first and then later might put it in)
+	cout << TAB << "2 - List Units" << endl; //DONE
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 2);
@@ -678,13 +650,14 @@ unsigned short int listUnitsMenu() {
 	cout << TAB_BIG << "List Units Menu" << endl;
 	cout << endl;
 	cout << TAB << "1 - Show all units" << endl; //done
-	cout << TAB << "2 - Show units by year" << endl;  //done
+	cout << TAB << "2 - Show units of a specific year" << endl;  //done
 	cout << TAB << "3 - Show mandatory units" << endl; //done
 	cout << TAB << "4 - Show optional units" << endl; //done
-	cout << TAB << "5 - Show a unit" << endl;
-	cout << TAB << "0 - Return to students menu" << endl << endl;
+	cout << TAB << "5 - Show a specific unit" << endl; //done
+	cout << TAB << "6 - Show units of a specific scientific area" << endl; //done
+	cout << TAB << "0 - Return to previous menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = readOp(0, 5);
+	option = readOp(0, 6);
 
 	return option;
 }
@@ -710,8 +683,20 @@ void listUnitsOptions(Course & course) {
 			course.showOptionalUnit();
 			break;
 		case 5:
-		//read code 
-			course.showUnit();
+			try {
+				course.showSpecificUnit();
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No unit identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
 			break;
+		case 6: {
+			string scientificArea;
+			cout << "Insert the scientific area: ";
+			getline(cin, scientificArea);
+			deleteWhitespace(scientificArea);
+			course.showUnitsofScientificArea(scientificArea);
+		}
+			
 		}
 }

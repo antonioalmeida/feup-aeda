@@ -76,6 +76,10 @@ vector<Teacher> Course::getTeachers() const {
 	return teachers;
 }
 
+std::map<std::string, Unit*> Course::getMap() const {
+	return abbreviationToUnit;
+}
+
 vector<Unit*> Course::getAllUnits() const {
 	vector<Unit*> result;
 	for (map<string, Unit*>::const_iterator it = abbreviationToUnit.begin(); it != abbreviationToUnit.end(); it++)
@@ -343,38 +347,75 @@ void Course::showUnitRegistrations() const {
 	cout << endl;
 }
 
+void Course::showStudentUnits(std::string studentName) const {
+	for (int i = 0; i < students.size(); i++) {
+		if (students.at(i).getName() == studentName) {
+			vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
+			cout << "Student identified by \"" << studentName << "\" is taking:" << endl;
+			for (int j = 0; j < unitsTaking.size(); j++) {
+				cout << unitsTaking.at(j) << endl;
+			}
+		}
+		cout << endl;
+		return;
+	}
+	throw invalidIdentification<string>(studentName);
+}
+
+void Course::showStudentUnits(unsigned long studentCode) const {
+	for (int i = 0; i < students.size(); i++) {
+		if (students.at(i).getCode() == studentCode) {
+			vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
+			cout << "Student identified by \"" << studentCode << "\" is taking:" << endl;
+			for (int j = 0; j < unitsTaking.size(); j++) {
+				cout << unitsTaking.at(j) << endl;
+			}
+		}
+		cout << endl;
+		return;
+	}
+	throw invalidIdentification<unsigned long>(studentCode);
+}
+
+void Course::showYearRegistrations(unsigned int yearToShow) const {
+	for (int i = 0; i < students.size(); i++) {
+		if (students.at(i).getCurricularYear() == yearToShow) {
+			vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
+			cout << "Student \"" << students.at(i).getName() << "\" is taking: ";
+			for (int j = 0; j < unitsTaking.size(); j++)
+				cout << unitsTaking.at(j)->getAbbreviation() << " ";
+			cout << endl;
+		}
+	}
+}
+
+void Course::showAllStudentsRegistrations() const {
+	for (int i = 0; i < students.size(); i++) {
+		vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
+		cout << "Student \"" << students.at(i).getName() << "\" is taking: ";
+		for (int j = 0; j < unitsTaking.size(); j++)
+			cout << unitsTaking.at(j)->getAbbreviation() << " ";
+		cout << endl;
+	}
+}
+
 
 //Teachers
 
 
-void Course::removeTeacher(string teacherName) {
+void Course::removeTeacher(string teacherID) {
 	bool found = false;
 	for (int i = 0; i < teachers.size(); i++) {
-		if (teachers.at(i).getName() == teacherName) {
+		if (teachers.at(i).getName() == teacherID || teachers.at(i).getCode() == teacherID) {
 			found = true;
-			//it's necessary update global variable lessStudents?
+			//update global variable lessStudents
 			teachers.erase(teachers.begin() + i);
 			break;
 		}
 	}
 
 	if (!found)
-		throw invalidIdentification<string>(teacherName);
-}
-
-void Course::removeTeacher(unsigned long teacherCode) {
-	bool found = false;
-	for (int i = 0; i < teachers.size(); i++) {
-		if (teachers.at(i).getCode() == teacherCode) {
-			found = true;
-			//it's necessary update global variable lessStudents?
-			teachers.erase(teachers.begin() + i);
-			break;
-		}
-	}
-
-	if (!found)
-		throw invalidIdentification<unsigned long>(teacherCode);
+		throw invalidIdentification<string>(teacherID);
 }
 
 void Course::showTeachers(bool(*comparisonFunction)(Teacher, Teacher)) const {
@@ -385,37 +426,26 @@ void Course::showTeachers(bool(*comparisonFunction)(Teacher, Teacher)) const {
 	cout << endl;
 }
 
-void Course::showTeacher(string teacherName) const {
+void Course::showTeacher(string teacherID) const {
 	for (int i = 0; i < teachers.size(); i++) {
-		if (teachers.at(i).getName() == teacherName) {
+		if (teachers.at(i).getName() == teacherID) {
 			cout << teachers.at(i) << endl;
 			return;
 		}
 	}
-	throw invalidIdentification<string>(teacherName);
+	throw invalidIdentification<string>(teacherID);
 }
 
-void Course::showTeacher(unsigned long int teacherCode) const {
-	for (int i = 0; i < teachers.size(); i++) {
-		if (teachers.at(i).getCode() == teacherCode) {
-			cout << teachers.at(i) << endl;
-			return;
-		}
-	}
-	throw invalidIdentification<unsigned long>(teacherCode);
-}
-
-void Course::showTeacher(string unitAbreviation) const {
+void Course::showTeacher(Unit* u1) const {
 	for (int i = 0; i < teachers.size(); i++) {
 		vector<Unit*> unitsTaughtTemp = teachers.at(i).getUnitsTaught();
 		for (vector<Unit*>::iterator it = unitsTaughtTemp.begin(); it != unitsTaughtTemp.end(); it++) {
-			if ((*it)->getAbbreviation() == unitAbreviation) {
+			if ((*it)->getAbbreviation() == u1->getAbbreviation()) {
 				cout << teachers.at(i) << endl;
 				return;
 			}
 		}
 	}
-	throw invalidIdentification<string>(unitAbreviation);
 }
 
 void Course::showTeacherPupil(string pupilName) const {
@@ -428,7 +458,7 @@ void Course::showTeacherPupil(string pupilName) const {
 			}
 		}
 	}
-	throw invalidIdentification<string>(pupilName);
+	cout << "Student identified by \"" << pupilName << "\" does not exist or has not been assigned a mentor yet!" << endl;
 }
 
 void Course::showTeacherPupil(unsigned long int pupilCode) const {
@@ -441,7 +471,7 @@ void Course::showTeacherPupil(unsigned long int pupilCode) const {
 			}
 		}
 	}
-	throw invalidIdentification<unsigned long>(pupilCode);
+	cout << "Student identified by \"" << pupilCode << "\" does not exist or has not been assigned a mentor yet!" << endl;
 }
 
 //Units
@@ -456,10 +486,21 @@ void Course::showUnits() const {
 	cout << endl;
 }
 
+void Course::showSpecificUnit() const {
+	string abbreviation;
+	cout << "Insert the unit's abbreviation: ";
+	getline(cin, abbreviation);
+	map<string, Unit*>::const_iterator it = abbreviationToUnit.find(abbreviation);
+	if (it == abbreviationToUnit.end())
+		throw invalidIdentification<string>(abbreviation);
+	else
+		cout << it->second;
+}
+
 void Course::showYearUnit(unsigned short int year) const {
 	vector<Unit*> unitTemp = getUnitsFromYear(year);
 
-	sort(unitTemp.begin(), unitTemp.end());
+	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
 	
 	for (int i = 0; i < unitTemp.size();i++)
 		cout << *unitTemp.at(i) << endl;
@@ -469,7 +510,7 @@ void Course::showYearUnit(unsigned short int year) const {
 void Course::showMandatoryUnit() const {
 	vector<Unit*> unitTemp = getAllMandatoryUnits();
 	
-	sort(unitTemp.begin(), unitTemp.end());
+	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
 
 	for (int i = 0; i < unitTemp.size(); i++)
 		cout << *unitTemp.at(i) << endl;
@@ -479,14 +520,25 @@ void Course::showMandatoryUnit() const {
 void Course::showOptionalUnit() const {
 	vector<Unit*> unitTemp = getAllOptionalUnits();
 
-	sort(unitTemp.begin(), unitTemp.end());
+	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
 
 	for (int i = 0; i < unitTemp.size(); i++)
 		cout << *unitTemp.at(i) << endl;
 	cout << endl;
 }
 
+void Course::showUnitsofScientificArea(std::string scientificArea) const {
+	vector<Unit*> result;
+	for (map<string, Unit*>::const_iterator it = abbreviationToUnit.begin(); it != abbreviationToUnit.end(); it++) {
+		if (it->second->getScientificArea() == scientificArea)
+			result.push_back(it->second);
+	}
 
+	sort(result.begin(), result.end(), compareUnitPointers);
+	for (int i = 0; i < result.size(); i++)
+		cout << *(result.at(i)) << endl;
+	cout << endl;
+}
 
 //Save
 void Course::save() const {

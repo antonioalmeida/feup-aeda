@@ -25,6 +25,7 @@ public:
     std::vector<Teacher> getTeachers() const; //!< Returns teachers vector
     
 	/* Different kinds of get to work with units throughout program */
+	std::map<std::string, Unit*> getMap() const; //!< Returns map used
 	std::vector<Unit*> getAllUnits() const; //!< Returns vector with all units
 	std::vector<Unit*> getAllMandatoryUnits() const; //!< Returns vector with all mandatory units
 	std::vector<Unit*> getAllOptionalUnits() const; //!< Returns vector with all optional units
@@ -44,21 +45,25 @@ public:
 	void showRegisteredStudents() const; //!< Shows registered students
 	void showUnregisteredStudents() const; //!< Show unregistered students
 	void showUnitRegistrations() const; //!< Shows students registered to a specific unit. Throws exception if unit specified does not exist
+	void showStudentUnits(std::string studentName) const; //!< Show units a student is taking. Throws exception if student does not exist
+	void showStudentUnits(unsigned long studentCode) const; //!< Show units a student is taking. Throws exception if student does not exist
+	void showYearRegistrations(unsigned int yearToShow) const; //!< Show all students of a curricular year's registrations
+	void showAllStudentsRegistrations() const; //!< Show all students' registrations
 
 	void removeTeacher(std::string teacherName);
-	void removeTeacher(unsigned long teacherCode);
 
 	void showTeachers(bool(*comparisonFunction)(Teacher, Teacher)) const;
-	void showTeacher(std::string teacherName) const;
-	void showTeacher(unsigned long int teacherCode) const;
-	void showTeacher(std::string unitAbreviation) const;
+	void showTeacher(std::string teacherID) const;
+	void showTeacher(Unit* u1) const;
 	void showTeacherPupil(std::string pupilName) const;
 	void showTeacherPupil(unsigned long int pupilCode) const;
 
 	void showUnits() const;
+	void showSpecificUnit() const;
 	void showYearUnit(unsigned short int year) const;
 	void showMandatoryUnit() const;
 	void showOptionalUnit() const;
+	void showUnitsofScientificArea(std::string scientificArea) const;
 
 	void save() const; //!< Saves all information to respective files
    

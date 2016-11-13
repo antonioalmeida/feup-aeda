@@ -71,15 +71,15 @@ public:
 class Teacher : public Person {
 protected:
 	static unsigned int lessStudents; //One (or more) teacher(s) will have the least amount of students as pupils. It is to those that should be assigned students first. This variable holds that minimum
-	unsigned long int code;
+	std::string code;
 	std::vector<Unit*> unitsTaught;
 	std::vector<Student*> pupils;
 public:
 	Teacher() {}; //default constructor
 	Teacher(std::istream &in);
-	Teacher(std::string name, unsigned long int code, std::vector<Unit*> unitsTaught);
+	Teacher(std::string name, std::string code, std::vector<Unit*> unitsTaught);
 
-	unsigned long int getCode() const;
+	std::string getCode() const;
 	std::vector<Student*> getPupils() const;
 	void addUnitTaught(Unit* newUnit);
 	void addStudent(Student* newStudent);
@@ -88,5 +88,5 @@ public:
 	virtual void save(std::ostream &out) const;
 
 	friend std::ostream& operator<<(std::ostream& out, const Teacher& s);
-	friend bool sortByName(Teacher t1, Teacher t2); //!< Returns true if t1.name < t2.name
+	friend bool sortTByName(Teacher t1, Teacher t2); //!< Returns true if t1.name < t2.name
 };
