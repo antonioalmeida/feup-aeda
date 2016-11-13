@@ -138,6 +138,7 @@ void studentsOptions(Course &course) {
 			if (choice == 1) {
 				string studentName;
 				cout << "Insert the student's full name: ";
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				getline(cin, studentName);
 				deleteWhitespace(studentName);
 				try {
@@ -298,6 +299,7 @@ void listStudentsOptions(Course & course) {
 		case 3: {
 			string statusToShow;
 			cout << "Insert the status you wish to be listed: ";
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			getline(cin, statusToShow);
 			deleteWhitespace(statusToShow);
 			course.showStudentsStatus(statusToShow);
@@ -343,6 +345,7 @@ void showStudentOptions(Course & course) {
 		case 1: {
 			cout << "Insert the student's name: " << endl;
 			string studentName;
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			getline(cin, studentName);
 			deleteWhitespace(studentName);
 			try {
@@ -443,6 +446,7 @@ void studentRegistrationsOptions(Course & course) {
 		case 1: {
 			cout << "Insert the student's name: " << endl;
 			string studentName;
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			getline(cin, studentName);
 			deleteWhitespace(studentName);
 			try {
@@ -514,6 +518,7 @@ void teachersOptions(Course & course) {
 		case 3: {
 			string teacherID;
 			cout << "Insert the teacher's full name or his/her code: ";
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			getline(cin, teacherID);
 			deleteWhitespace(teacherID);
 			try {
@@ -648,6 +653,7 @@ void showTeacherOptions(Course & course) {
 		case 1: {
 			cout << "Insert the teacher's full name or code: " << endl;
 			string teacherID;
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			getline(cin, teacherID);
 			deleteWhitespace(teacherID);
 			try {
@@ -661,6 +667,7 @@ void showTeacherOptions(Course & course) {
 		case 2: {
 			cout << "Insert the unit's abbreviation: " << endl;
 			string unitAbbreviation;
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			getline(cin, unitAbbreviation);
 			deleteWhitespace(unitAbbreviation);
 			map<string, Unit*>::const_iterator it = course.getMap().find(unitAbbreviation);
@@ -699,8 +706,9 @@ void showTeacherPupilOptions(Course & course) {
 	while ((option = showTeacherPupilMenu()))
 		switch (option) {
 		case 1: {
-			cout << "Insert the pupil's name: " << endl;
+			cout << "Insert the pupil's full name: " << endl;
 			string pupilName;
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			getline(cin, pupilName);
 			deleteWhitespace(pupilName);
 			course.showTeacherPupil(pupilName);

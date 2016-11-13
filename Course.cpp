@@ -155,6 +155,7 @@ vector<Unit*> Course::getUnitsFromSameScientificArea(Unit* u1) const {
 void Course::addStudent() {
 	string newStudentName;
 	cout << "Insert the new student's name: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, newStudentName);
 	deleteWhitespace(newStudentName);
 	for (int i = 0; i < students.size(); i++) {
@@ -164,6 +165,7 @@ void Course::addStudent() {
 
 	string newStudentStatus;
 	cout << "Insert the new student's status: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, newStudentStatus);
 
 	unsigned int newStudentCurricularYear;
@@ -330,6 +332,7 @@ void Course::showUnregisteredStudents() const {
 void Course::showUnitRegistrations() const {
 	string unitToShow;
 	cout << "Insert the unit's abbreviation: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, unitToShow);
 	deleteWhitespace(unitToShow);
 	map<string, Unit*>::const_iterator it = abbreviationToUnit.find(unitToShow);
@@ -408,6 +411,7 @@ void Course::showAllStudentsRegistrations() const {
 void Course::editStudentName() {
 	string studentName;
 	cout << "Insert the student's old full name: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, studentName);
 	deleteWhitespace(studentName);
 	vector<Student>::iterator it = students.begin();
@@ -421,6 +425,7 @@ void Course::editStudentName() {
 
 	string newName;
 	cout << "Insert the student's new full name: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, newName);
 	vector<Student>::iterator second_it = students.begin();
 	for (second_it; second_it != students.end(); second_it++) {
@@ -434,6 +439,7 @@ void Course::editStudentName() {
 void Course::editStudentStatus() {
 	string studentName;
 	cout << "Insert the student's full name: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, studentName);
 	deleteWhitespace(studentName);
 	vector<Student>::iterator it = students.begin();
@@ -447,6 +453,7 @@ void Course::editStudentStatus() {
 
 	string newStatus;
 	cout << "Insert the student's new status: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, newStatus);
 	it->setStatus(newStatus);
 }
@@ -457,10 +464,12 @@ void Course::editStudentStatus() {
 void Course::addTeacher() {
 	string newTeacherName;
 	cout << "Insert the new teacher's name: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, newTeacherName);
 
 	string newTeacherCode;
 	cout << "Insert the new teacher's code: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, newTeacherCode);
 
 	for (vector<Teacher>::const_iterator it = teachers.begin(); it != teachers.end(); it++) {
@@ -474,6 +483,7 @@ void Course::addTeacher() {
 	vector<Unit*> newTeacherUnitsTaught;
 	do {
 		cout << "Insert the abbreviation of a unit taught by \"" << newTeacherName << "\" (0 to finish): ";
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		getline(cin, abbreviation);
 		deleteWhitespace(abbreviation);
 		if (!verifyUnit(abbreviation) && abbreviation != "0")
@@ -490,6 +500,7 @@ void Course::editTeacherName() {
 	string oldTeacherName;
 	cout << "Insert the teacher's old full name: ";
 	deleteWhitespace(oldTeacherName);
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, oldTeacherName);
 
 	vector<Teacher>::iterator it = teachers.begin();
@@ -503,6 +514,7 @@ void Course::editTeacherName() {
 
 	string newTeacherName;
 	cout << "Insert the teacher's new full name: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, newTeacherName);
 
 	for (vector<Teacher>::iterator second_it = teachers.begin(); second_it != teachers.end(); second_it++) {
@@ -516,8 +528,9 @@ void Course::editTeacherName() {
 void Course::editTeacherCode() {
 	string oldTeacherCode;
 	cout << "Insert the teacher's old code: ";
-	deleteWhitespace(oldTeacherCode);
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, oldTeacherCode);
+	deleteWhitespace(oldTeacherCode);
 
 	vector<Teacher>::iterator it = teachers.begin();
 	for (it; it != teachers.end(); it++) {
@@ -530,6 +543,7 @@ void Course::editTeacherCode() {
 
 	string newTeacherCode;
 	cout << "Insert the teacher's new code: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, newTeacherCode);
 
 	for (vector<Teacher>::iterator second_it = teachers.begin(); second_it != teachers.end(); second_it++) {
@@ -543,8 +557,9 @@ void Course::editTeacherCode() {
 void Course::teacherAddUnitTaught() {
 	string teacherName;
 	cout << "Insert the teacher's full name: ";
-	deleteWhitespace(teacherName);
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, teacherName);
+	deleteWhitespace(teacherName);
 
 	vector<Teacher>::iterator it = teachers.begin();
 	for (it; it != teachers.end(); it++) {
@@ -558,6 +573,7 @@ void Course::teacherAddUnitTaught() {
 	string abbreviation;
 	do {
 		cout << "Insert the abbreviation of a unit taught by \"" << teacherName << "\" (0 if you changed your mind): ";
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		getline(cin, abbreviation);
 		deleteWhitespace(abbreviation);
 		if (!verifyUnit(abbreviation) && abbreviation != "0")
@@ -653,7 +669,9 @@ void Course::showUnits() const {
 void Course::showSpecificUnit() const {
 	string abbreviation;
 	cout << "Insert the unit's abbreviation: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, abbreviation);
+	deleteWhitespace(abbreviation);
 	map<string, Unit*>::const_iterator it = abbreviationToUnit.find(abbreviation);
 	if (it == abbreviationToUnit.end())
 		throw invalidIdentification<string>(abbreviation);
@@ -709,6 +727,7 @@ void Course::save() const {
 	string studentsFileName, teachersFileName, mandatoryUnitsFileName, optionalUnitsFileName;
 
 	cout << "Insert the filename where mandatory units will be saved: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, mandatoryUnitsFileName);
 	ofstream mandatoryUnitsOut(mandatoryUnitsFileName);
 	vector<Unit*> manUnits = getAllMandatoryUnits();
@@ -720,6 +739,7 @@ void Course::save() const {
 	mandatoryUnitsOut.close();
 
 	cout << "Insert the filename where optional units will be saved: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, optionalUnitsFileName);
 	ofstream optionalUnitsOut(optionalUnitsFileName);
 	vector<Unit*> optUnits = getAllOptionalUnits();
@@ -731,6 +751,7 @@ void Course::save() const {
 	optionalUnitsOut.close();
 
 	cout << "Insert the filename where students will be saved: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, studentsFileName);
 	ofstream studentsOut(studentsFileName);
 	studentsOut << students.size() << endl;
@@ -741,6 +762,7 @@ void Course::save() const {
 	studentsOut.close();
 
 	cout << "Insert the filename where teachers will be saved: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, teachersFileName);
 	ofstream teachersOut(teachersFileName);
 	studentsOut << teachers.size() << endl;
