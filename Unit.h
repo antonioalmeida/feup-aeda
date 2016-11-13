@@ -34,6 +34,7 @@ public:
 	virtual void save(std::ostream &out) const {}; //!< Writes object to file
 
     friend bool operator<(const Unit &u1, const Unit &u2); //!< Overload of < operator to compare units. Returns true if curricularYear(u1) < curricularYear(u2) or if curricularYear is equal and abbreviation(u1) < abbreviation(u2)
+	friend bool operator<(Unit* u1, Unit* u2);
 	friend std::ostream& operator<<(std::ostream &out, const Unit &u1); //!< Overload of << operator so it can be sent to cout
 };
 

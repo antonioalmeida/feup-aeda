@@ -294,7 +294,7 @@ void showStudentOptions(Course & course) {
 	while ((option = showStudentMenu()))
 		switch (option) {
 		case 1: {
-			cout << "Insert the sudent's name: " << endl;
+			cout << "Insert the student's name: " << endl;
 			string studentName;
 			getline(cin, studentName);
 			deleteWhitespace(studentName);
@@ -307,7 +307,7 @@ void showStudentOptions(Course & course) {
 			break;
 		}
 		case 2: {
-			cout << "Insert the sudent's code: " << endl;
+			cout << "Insert the student's code: " << endl;
 			unsigned long studentCode;
 			cin >> studentCode; //Check for invalid input (later)
 			try {
@@ -419,8 +419,8 @@ unsigned short int teachersMenu() {
 	cout << endl;
 	cout << TAB << "1 - Create Teacher" << endl;
 	cout << TAB << "2 - Edit Teacher" << endl;
-	cout << TAB << "3 - Remove Teacher" << endl;
-	cout << TAB << "4 - List Teachers" << endl;
+	cout << TAB << "3 - Remove Teacher" << endl; //Need to review the condition
+	cout << TAB << "4 - List Teachers" << endl; //Almost done needed to add some exceptions
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 4);
@@ -441,7 +441,36 @@ void teachersOptions(Course & course) {
 			course.setTeacher();
 			break;
         case 3:
-            course.removeTeacher();
+			unsigned short choice;
+			cout << TAB << "1 - Identify teacher by name" << endl;
+			cout << TAB << "2 - Identify teacher by code" << endl << endl;
+			cout << TAB << "Enter your option: ";
+			choice = readOp(1, 2);
+			if (choice == 1) {
+				string teacherName;
+				cout << "Insert the teacher's full name: ";
+				getline(cin, teacherName);
+				deleteWhitespace(teacherName);
+				try {
+					course.removeTeacher(teacherName);
+					cout << "Teacher removed successfully" << endl; //Only reaches here if exception is not thrown
+				}
+				catch (invalidIdentification<string> &s) {
+					cout << "ERROR: No teacher idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+				}
+			}
+			else { //choice == 2
+				unsigned long teacherCode;
+				cout << "Insert the teacher's code: ";
+				cin >> teacherCode; //Check for invalid input (later)
+				try {
+					course.removeTeacher(teacherCode);
+					cout << "Teacher removed successfully" << endl;
+				}
+				catch (invalidIdentification<unsigned long> &s) {
+					cout << "ERROR: No teacher idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+				}
+			}
             break;
 		case 4:
 			listTeachersOptions(course);
@@ -457,8 +486,8 @@ unsigned short int listTeachersMenu() {
 	clearScreen();
 	cout << TAB_BIG << "List Teachers Menu" << endl;
 	cout << endl;
-	cout << TAB << "1 - Show teachers alphabetically" << endl;
-	cout << TAB << "2 - Show a teacher" << endl; 
+	cout << TAB << "1 - Show teachers alphabetically" << endl; //Done
+	cout << TAB << "2 - Show a teacher" << endl;  //Almost done
 	cout << TAB << "0 - Return to students menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 2);
@@ -473,7 +502,7 @@ void listTeachersOptions(Course & course) {
 	while ((option = listTeachersMenu()))
 		switch (option) {
 		case 1: 
-			course.showAllTeachers();
+			course.showTeachers(sortByName);
 			break;
 		case 2:
 			showTeacherOptions(course);
@@ -489,10 +518,10 @@ unsigned short int showTeacherMenu() {
 	clearScreen();
 	cout << TAB_BIG << "Show a Specific Teacher Menu" << endl;
 	cout << endl;
-	cout << TAB << "1 - Search by name" << endl;
-	cout << TAB << "2 - Search by code" << endl;
-	cout << TAB << "3 - Search by unit" << endl;
-	cout << TAB << "4 - Search by pupil" << endl; //It is correct here??
+	cout << TAB << "1 - Search by name" << endl; //done
+	cout << TAB << "2 - Search by code" << endl; //done
+	cout << TAB << "3 - Search by unit" << endl; //done
+	cout << TAB << "4 - Search by pupil" << endl; //Problem with pointers
 	cout << TAB << "0 - Return to menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 4);
@@ -505,24 +534,101 @@ void showTeacherOptions(Course & course) {
 
 	while ((option = showTeacherMenu()))
 		switch (option) {
-		case 1: 
-			// read name and check, and insert like a parameter
-			course.showTeacher();
-			break;
-		case 2:
-			// read code and check, and insert like a parameter
-			course.showTeacher();
-			break;
-		case 3:
-			// read unit and check, and insert like a parameter
-			course.showTeacher();
-			break;
-		case 4:
-			// read pupil and check if exist, and insert like a parameter
-			course.showTeacher();
+		case 1: {
+			cout << "Insert the teacher's name: " << endl;
+			string teacherName;
+			getline(cin, teacherName);
+			deleteWhitespace(teacherName);
+			try {
+				course.showTeacher(teacherName);
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No teacher idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
 			break;
 		}
+		case 2: {
+			cout << "Insert the teacher's code: " << endl;
+			unsigned long teacherCode;
+			cin >> teacherCode; //Check for invalid input (later)
+			try {
+				course.showTeacher(teacherCode);
+			}
+			catch (invalidIdentification<unsigned long> &s) {
+				cout << "ERROR: No teacher idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			break;
+		}
+		case 3: {
+			cout << "Insert the teacher's unit: " << endl;
+			unsigned long teacherCode;
+			cin >> teacherCode; //Check for invalid input (later)
+			try {
+				course.showTeacher(teacherCode);
+			}
+			catch (invalidIdentification<unsigned long> &s) {
+				cout << "ERROR: No teacher idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			break;
+		}
+		case 4: {
+			showTeacherPupilOptions(course);
+		}
+
+		}
 }
+
+// Show a Teacher by Pupil MENU
+
+unsigned short int showTeacherPupilMenu() {
+	unsigned short int option;
+
+	clearScreen();
+	cout << TAB_BIG << "Show a Teacher by Pupil Menu" << endl;
+	cout << endl;
+	cout << TAB << "1 - Search by name" << endl; //done
+	cout << TAB << "2 - Search by code" << endl; //done
+	cout << TAB << "0 - Return to menu" << endl << endl;
+	cout << TAB << "Enter your option: ";
+	option = readOp(0, 2);
+
+	return option;
+}
+
+void showTeacherPupilOptions(Course & course) {
+	unsigned int option;
+
+	while ((option = showTeacherPupilMenu()))
+		switch (option) {
+		case 1: {
+			cout << "Insert the pupil's name: " << endl;
+			string pupilName;
+			getline(cin, pupilName);
+			deleteWhitespace(pupilName);
+			try {
+				course.showTeacherPupil(pupilName);
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No pupil idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			break;
+		}
+		case 2: {
+			cout << "Insert the pupil's code: " << endl;
+			unsigned long pupilCode;
+			cin >> pupilCode; //Check for invalid input (later)
+			try {
+				course.showTeacherPupil(pupilCode);
+			}
+			catch (invalidIdentification<unsigned long> &s) {
+				cout << "ERROR: No pupil idenfitied by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			break;
+		}
+		}
+}
+
+
 
 /******************************************
  * Units Menu
@@ -538,13 +644,11 @@ unsigned short int unitsMenu() {
 	cout << TAB_BIG << "---Units Main Menu---" << endl;
 	cout << TAB_BIG << "----------------------" << endl;
 	cout << endl;
-	cout << TAB << "1 - Create Unit" << endl;
-	cout << TAB << "2 - Edit Unit" << endl;
-	cout << TAB << "3 - Remove Unit" << endl;
-	cout << TAB << "4 - List Units" << endl;
+	cout << TAB << "1 - Edit Unit" << endl;
+	cout << TAB << "2 - List Units" << endl;
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = readOp(0, 4);
+	option = readOp(0, 2);
 
 	return option;
 }
@@ -555,15 +659,10 @@ void unitsOptions(Course & course) {
 
 	while ((option = unitsMenu()))
 		switch (option) {
-		case 1: course.addUnit();
-			break;
-		case 2:
+		case 1:
 			course.setUnit();
 			break;
-        case 3:
-            course.removeUnit();
-            break;
-		case 4:
+		case 2:
 			listUnitsOptions(course);
 			break;
 		}
@@ -578,10 +677,10 @@ unsigned short int listUnitsMenu() {
 	clearScreen();
 	cout << TAB_BIG << "List Units Menu" << endl;
 	cout << endl;
-	cout << TAB << "1 - Show units alphabetically" << endl; //no interest i think
-	cout << TAB << "2 - Show units by year" << endl; 
-	cout << TAB << "3 - Show mandatory units" << endl;
-	cout << TAB << "4 - Show optional units" << endl;
+	cout << TAB << "1 - Show all units" << endl; //done
+	cout << TAB << "2 - Show units by year" << endl;  //done
+	cout << TAB << "3 - Show mandatory units" << endl; //done
+	cout << TAB << "4 - Show optional units" << endl; //done
 	cout << TAB << "5 - Show a unit" << endl;
 	cout << TAB << "0 - Return to students menu" << endl << endl;
 	cout << TAB << "Enter your option: ";

@@ -44,6 +44,10 @@ void listTeachersOptions(Course & course);
 unsigned short int showTeacherMenu();
 void showTeacherOptions(Course & course);
 
+//Show Teacher Pupil Menu
+unsigned short int showTeacherPupilMenu();
+void showTeacherPupilOptions(Course & course);
+
 /* Units Menu */
 unsigned short int unitsMenu();
 void unitsOptions(Course & course);

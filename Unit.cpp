@@ -50,6 +50,10 @@ bool operator<(const Unit &u1, const Unit &u2) {
 	return (u1.getCurricularYear() < u2.getCurricularYear() || (u1.getCurricularYear() == u2.getCurricularYear() && u1.getAbbreviation() < u2.getAbbreviation()));
 }
 
+bool operator<(Unit* u1, Unit* u2) {
+	return (u1->getCurricularYear() < u2->getCurricularYear() || (u1->getCurricularYear() == u2->getCurricularYear() && u1->getName() < u2->getName()));
+}
+
 ostream& operator<<(ostream &out, const Unit &u1) {
 	u1.print(out);
 	return out;

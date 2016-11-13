@@ -44,6 +44,22 @@ public:
 	void showRegisteredStudents() const; //!< Shows registered students
 	void showUnregisteredStudents() const; //!< Show unregistered students
 	void showUnitRegistrations() const; //!< Shows students registered to a specific unit. Throws exception if unit specified does not exist
+
+	void removeTeacher(std::string teacherName);
+	void removeTeacher(unsigned long teacherCode);
+
+	void showTeachers(bool(*comparisonFunction)(Teacher, Teacher)) const;
+	void showTeacher(std::string teacherName) const;
+	void showTeacher(unsigned long int teacherCode) const;
+	void showTeacher(std::string unitAbreviation) const;
+	void showTeacherPupil(std::string pupilName) const;
+	void showTeacherPupil(unsigned long int pupilCode) const;
+
+	void showUnits() const;
+	void showYearUnit(unsigned short int year) const;
+	void showMandatoryUnit() const;
+	void showOptionalUnit() const;
+
 	void save() const; //!< Saves all information to respective files
    
     bool verifyUnit(std::string unitAbbreviation) const; //!< Returns true if unit with unitAbbreviation as abbreviation exists

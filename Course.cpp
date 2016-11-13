@@ -343,6 +343,152 @@ void Course::showUnitRegistrations() const {
 	cout << endl;
 }
 
+
+//Teachers
+
+
+void Course::removeTeacher(string teacherName) {
+	bool found = false;
+	for (int i = 0; i < teachers.size(); i++) {
+		if (teachers.at(i).getName() == teacherName) {
+			found = true;
+			//it's necessary update global variable lessStudents?
+			teachers.erase(teachers.begin() + i);
+			break;
+		}
+	}
+
+	if (!found)
+		throw invalidIdentification<string>(teacherName);
+}
+
+void Course::removeTeacher(unsigned long teacherCode) {
+	bool found = false;
+	for (int i = 0; i < teachers.size(); i++) {
+		if (teachers.at(i).getCode() == teacherCode) {
+			found = true;
+			//it's necessary update global variable lessStudents?
+			teachers.erase(teachers.begin() + i);
+			break;
+		}
+	}
+
+	if (!found)
+		throw invalidIdentification<unsigned long>(teacherCode);
+}
+
+void Course::showTeachers(bool(*comparisonFunction)(Teacher, Teacher)) const {
+	vector<Teacher> teachersTemp =teachers;
+	sort(teachersTemp.begin(), teachersTemp.end(), *comparisonFunction);
+	for (int i = 0; i < teachersTemp.size(); i++)
+		cout << teachersTemp.at(i) << endl;
+	cout << endl;
+}
+
+void Course::showTeacher(string teacherName) const {
+	for (int i = 0; i < teachers.size(); i++) {
+		if (teachers.at(i).getName() == teacherName) {
+			cout << teachers.at(i) << endl;
+			return;
+		}
+	}
+	throw invalidIdentification<string>(teacherName);
+}
+
+void Course::showTeacher(unsigned long int teacherCode) const {
+	for (int i = 0; i < teachers.size(); i++) {
+		if (teachers.at(i).getCode() == teacherCode) {
+			cout << teachers.at(i) << endl;
+			return;
+		}
+	}
+	throw invalidIdentification<unsigned long>(teacherCode);
+}
+
+void Course::showTeacher(string unitAbreviation) const {
+	for (int i = 0; i < teachers.size(); i++) {
+		vector<Unit*> unitsTaughtTemp = teachers.at(i).getUnitsTaught();
+		for (vector<Unit*>::iterator it = unitsTaughtTemp.begin(); it != unitsTaughtTemp.end(); it++) {
+			if ((*it)->getAbbreviation() == unitAbreviation) {
+				cout << teachers.at(i) << endl;
+				return;
+			}
+		}
+	}
+	throw invalidIdentification<string>(unitAbreviation);
+}
+
+void Course::showTeacherPupil(string pupilName) const {
+	for (int i = 0; i < teachers.size(); i++) {
+		vector<Student*> pupilsTemp = teachers.at(i).getPupils();
+		for (vector<Student*>::iterator it = pupilsTemp.begin(); it != pupilsTemp.end(); it++) {
+			if ((*it)->getName() == pupilName) {
+				cout << teachers.at(i) << endl;
+				return;
+			}
+		}
+	}
+	throw invalidIdentification<string>(pupilName);
+}
+
+void Course::showTeacherPupil(unsigned long int pupilCode) const {
+	for (int i = 0; i < teachers.size(); i++) {
+		vector<Student*> pupilsTemp = teachers.at(i).getPupils();
+		for (vector<Student*>::iterator it = pupilsTemp.begin(); it != pupilsTemp.end(); it++) {
+			if ((*it)->getCode() == pupilCode) {
+				cout << teachers.at(i) << endl;
+				return;
+			}
+		}
+	}
+	throw invalidIdentification<unsigned long>(pupilCode);
+}
+
+//Units
+
+void Course::showUnits() const {
+	vector<Unit*> unitTemp= getAllUnits();
+
+	sort(unitTemp.begin(), unitTemp.end());
+
+	for (int i = 0; i < unitTemp.size(); i++)
+		cout << *unitTemp.at(i) << endl;
+	cout << endl;
+}
+
+void Course::showYearUnit(unsigned short int year) const {
+	vector<Unit*> unitTemp = getUnitsFromYear(year);
+
+	sort(unitTemp.begin(), unitTemp.end());
+	
+	for (int i = 0; i < unitTemp.size();i++)
+		cout << *unitTemp.at(i) << endl;
+	cout << endl;
+}
+
+void Course::showMandatoryUnit() const {
+	vector<Unit*> unitTemp = getAllMandatoryUnits();
+	
+	sort(unitTemp.begin(), unitTemp.end());
+
+	for (int i = 0; i < unitTemp.size(); i++)
+		cout << *unitTemp.at(i) << endl;
+	cout << endl;
+}
+
+void Course::showOptionalUnit() const {
+	vector<Unit*> unitTemp = getAllOptionalUnits();
+
+	sort(unitTemp.begin(), unitTemp.end());
+
+	for (int i = 0; i < unitTemp.size(); i++)
+		cout << *unitTemp.at(i) << endl;
+	cout << endl;
+}
+
+
+
+//Save
 void Course::save() const {
 	string studentsFileName, teachersFileName, mandatoryUnitsFileName, optionalUnitsFileName;
 
