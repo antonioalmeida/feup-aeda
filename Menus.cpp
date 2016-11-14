@@ -671,13 +671,15 @@ void showTeacherOptions(Course & course) {
 			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			getline(cin, unitAbbreviation);
 			deleteWhitespace(unitAbbreviation);
-			map<string, Unit*>::const_iterator it = course.getMap().find(unitAbbreviation);
-			if (it == course.getMap().end())
+			if (!course.verifyUnit(unitAbbreviation))
 				cout << "ERROR: No unit identified by \"" << unitAbbreviation << "\"!" << endl;
-			else
+            else {
+                map<string, Unit*>::const_iterator it = course.getMap().find(unitAbbreviation);
 				course.showTeacher(it->second);
+            }
 			break;
 		}
+                
 		case 3: {
 			showTeacherPupilOptions(course);
 		}
@@ -740,8 +742,8 @@ unsigned short int unitsMenu() {
 	cout << TAB_BIG << "---Units Main Menu---" << endl;
 	cout << TAB_BIG << "----------------------" << endl;
 	cout << endl;
-	cout << TAB << "1 - Edit Unit" << endl; //TO DO (Is it really necessary though? Might want to have it not implemented at first and then later might put it in)
-	cout << TAB << "2 - List Units" << endl; //DONE
+	cout << TAB << "1 - Edit Unit" << endl; //done
+	cout << TAB << "2 - List Units" << endl; //done
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 2);
@@ -836,9 +838,9 @@ unsigned short int editUnitsMenu() {
 	clearScreen();
 	cout << TAB_BIG << "Edit Units Menu" << endl;
 	cout << endl;
-	cout << TAB << "1 - Edit a unit's name" << endl; //TO DO
-	cout << TAB << "2 - Edit a unit's abbreviation" << endl;  //TO DO
-	cout << TAB << "3 - Edit a unit's scientific area" << endl; //TO DO
+	cout << TAB << "1 - Edit a unit's name" << endl; //Done
+	cout << TAB << "2 - Edit a unit's abbreviation" << endl;  //Done
+	cout << TAB << "3 - Edit a unit's scientific area" << endl; //Done
 	cout << TAB << "0 - Return to previous menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 3);
@@ -853,14 +855,14 @@ void editUnitsOptions(Course & course) {
 	while ((option = editUnitsMenu()))
 		switch (option) {
 		case 1: 
-			//course.editUnitName();
+			course.editUnitName();
 			break;
 		case 2: {
-			//course.editUnitAbbreviation();
+			course.editUnitAbbreviation();
 			break;
 		}
 		case 3:
-			//course.editUnitScientificArea();
+			course.editUnitScientificArea();
 			break;
 		}
 }

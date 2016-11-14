@@ -810,11 +810,52 @@ void Course::editUnitName() {
     
     map<string, Unit*>::iterator it = abbreviationToUnit.find(abbreviation);
     it->second->setName(newName);
-
 }
-//void Course::editUnitAbbreviation();
-//void Course::editUnitScientificArea();
+void Course::editUnitAbbreviation() {
+    string abbreviation;
+    cout << "Insert the unit's abbreviation: ";
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    getline(cin, abbreviation);
+    deleteWhitespace(abbreviation);
+    
+    if(!verifyUnit(abbreviation))
+        throw invalidIdentification<string>(abbreviation);
+   
+    string newAbbreviation;
+    cout << "Insert the unit's new abbreviation: ";
+    getline(cin, newAbbreviation);
+    deleteWhitespace(newAbbreviation);
+    
+    if(!verifyUnit(newAbbreviation))
+        throw invalidIdentification<string>(newAbbreviation);
+    
+    map<string, Unit*>::iterator it = abbreviationToUnit.find(abbreviation);
+    it->second->setAbbreviation(newAbbreviation);
+    
+    //Changing element in abbreviationToUnit map
+    Unit* temp = it->second;
+    abbreviationToUnit.erase(it);
+    abbreviationToUnit[newAbbreviation] = temp;
+}
 
+void Course::editUnitScientificArea() {
+    string abbreviation;
+    cout << "Insert the unit's abbreviation: ";
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    getline(cin, abbreviation);
+    deleteWhitespace(abbreviation);
+    
+    if(!verifyUnit(abbreviation))
+        throw invalidIdentification<string>(abbreviation);
+   
+    string newScientificArea;
+    cout << "Insert the unit's new scientific area: ";
+    getline(cin, newScientificArea);
+    deleteWhitespace(newScientificArea);
+    
+    map<string, Unit*>::iterator it = abbreviationToUnit.find(abbreviation);
+    it->second->setScientificArea(newScientificArea);
+}
 
 
 //Save
