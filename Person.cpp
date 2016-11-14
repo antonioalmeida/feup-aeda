@@ -177,15 +177,15 @@ ostream& operator<<(ostream& out, const Student& s) {
 }
 
 bool sortByName(Student s1, Student s2) {
-	return s1.name < s2.name;
+	return s1.getName() < s2.getName();
 }
 
 bool sortByAverage(Student s1, Student s2) {
-	return s1.average < s2.average;
+	return s1.getAverage() < s2.getAverage();
 }
 
 bool sortByCurricularYear(Student s1, Student s2) {
-	return s1.curricularYear < s2.curricularYear;
+	return s1.getCurricularYear() < s2.getCurricularYear();
 }
 
 /*Teacher*/
@@ -253,5 +253,5 @@ ostream& operator<<(ostream& out, const Teacher& s) { //Subject to change
 }
 
 bool sortTByName(Teacher t1, Teacher t2) {
-	return t1.name < t2.name;
+	return t1.getName() < t2.getName();
 }

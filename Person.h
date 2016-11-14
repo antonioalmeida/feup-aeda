@@ -64,9 +64,7 @@ public:
 	bool operator==(const Student &s1); //!< Students are equal if they have the same code (= same person)
 
 	friend std::ostream& operator<<(std::ostream& out, const Student& s);
-    friend bool sortByName(Student s1, Student s2); //!< Returns true if s1.name < s2.name
-    friend bool sortByAverage(Student s1, Student s2); //!< Returns true if s1.average < s2.average
-    friend bool sortByCurricularYear(Student s1, Student s2); //!< Returns true if s1.curricularYear < s2.curricularYear
+
 };
 
 class Teacher : public Person {
@@ -90,5 +88,10 @@ public:
 	virtual void save(std::ostream &out) const;
 
 	friend std::ostream& operator<<(std::ostream& out, const Teacher& s);
-	friend bool sortTByName(Teacher t1, Teacher t2); //!< Returns true if t1.name < t2.name
 };
+
+bool sortByName(Student s1, Student s2); //!< Returns true if s1.name < s2.name
+bool sortByAverage(Student s1, Student s2); //!< Returns true if s1.average < s2.average
+bool sortByCurricularYear(Student s1, Student s2); //!< Returns true if s1.curricularYear < s2.curricularYear
+
+bool sortTByName(Teacher t1, Teacher t2); //!< Returns true if t1.name < t2.name
