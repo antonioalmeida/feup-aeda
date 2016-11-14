@@ -39,6 +39,9 @@ Student::Student(istream &in):Person(in) {
 	getline(in, status);
 	unitsDone = vector<vector<pair<Unit*, unsigned int>>>(5);
 	unitsToDo = vector<vector<pair<Unit*, unsigned int>>>(5);
+	email = "up" + to_string(code) + "@fe.up.pt";
+	ectsTaking = 0;
+	registrationComplete = false;
 	/* Units are read when read-from-files function is called! */
 }
 
@@ -51,24 +54,7 @@ Student::Student(string name, string status, unsigned int curricularYear, vector
 	ectsTaking = 0;
 	this->unitsDone = unitsDone;
 	this->unitsToDo = unitsToDo;
-	if(curricularYear == 1)
-		average = 0.0;
-	else {
-		double number_of_ects = 0.0;
-		for (int i = 0; i < unitsDone.size(); i++) {
-			for (int j = 0; j < unitsDone.at(i).size(); j++) {
-				number_of_ects += unitsDone.at(i).at(j).first->getECTS();
-				average += unitsDone.at(i).at(j).second;
-			}
-		}
-		for (int i = 0; i < unitsToDo.size(); i++) {
-			for (int j = 0; j < unitsToDo.at(i).size(); j++) {
-				number_of_ects += unitsToDo.at(i).at(j).first->getECTS();
-				average += unitsToDo.at(i).at(j).second;
-			}
-		}
-		average /= number_of_ects;
-	}
+	calculateAverage();
     registrationComplete = false;
 }
 
@@ -111,17 +97,39 @@ Date Student::getRegistrationDate() const {
 void Student::addUnitDone(std::pair<Unit*, unsigned int> p) {
 	int index = p.first->getCurricularYear();
 	unitsDone.at(index-1).push_back(p);
+	calculateAverage();
 }
 
 void Student::addUnitToDo(std::pair<Unit*, unsigned int> p) {
 	int index = p.first->getCurricularYear();
 	unitsToDo.at(index - 1).push_back(p);
+	calculateAverage();
 }
 
 void Student::addUnitTaking(Unit* u) {
 	if (ectsTaking + u->getECTS() > MAX_ECTS)
 		throw tooManyECTS();
 	unitsTaking.push_back(u);
+}
+
+void Student::calculateAverage() {
+	average = 0.0;
+	if(curricularYear != 1){
+		double number_of_ects = 0.0;
+		for (int i = 0; i < unitsDone.size(); i++) {
+			for (int j = 0; j < unitsDone.at(i).size(); j++) {
+				number_of_ects += unitsDone.at(i).at(j).first->getECTS();
+				average += (unitsDone.at(i).at(j).second*unitsDone.at(i).at(j).first->getECTS());
+			}
+		}
+		for (int i = 0; i < unitsToDo.size(); i++) {
+			for (int j = 0; j < unitsToDo.at(i).size(); j++) {
+				number_of_ects += unitsToDo.at(i).at(j).first->getECTS();
+				average += (unitsToDo.at(i).at(j).second*unitsToDo.at(i).at(j).first->getECTS());
+			}
+		}
+		average /= number_of_ects;
+	}
 }
 
 bool Student::isRegistered() const {

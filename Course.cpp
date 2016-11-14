@@ -165,7 +165,6 @@ void Course::addStudent() {
 
 	string newStudentStatus;
 	cout << "Insert the new student's status: ";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, newStudentStatus);
 
 	unsigned int newStudentCurricularYear;
@@ -173,7 +172,7 @@ void Course::addStudent() {
 	newStudentCurricularYear = readOp(1, 5);
 
 	unsigned long newStudentCode;
-	if (newStudentCurricularYear == 1) {
+	if (newStudentCurricularYear > 1) {
 		cout << "Insert the new student's code: ";
 		cin >> newStudentCode; //Verify for invalid input (later)
 		for (int i = 0; i < students.size(); i++) {
@@ -195,26 +194,91 @@ void Course::addStudent() {
 			else
 				newStudentUnitsToDo.at(manUnitsFromCurrentYear.at(j)->getCurricularYear() - 1).push_back(pair<Unit*, unsigned int>(manUnitsFromCurrentYear.at(j), grade));
 		}
-		if (i == 3) { //4th curricular year, which includes optional units (TO DO LATER)
+		if (i == 3) { //4th curricular year, which includes optional units
 			vector<Unit*> optUnitsFromCurrentYear = getOptUnitsFromYear(i + 1);
 			//Show optional units available
+			cout << endl << "Which of the following did \"" << newStudentName << "\" take?" << endl;
 			for (int k = 0; k < optUnitsFromCurrentYear.size(); k++)
-				cout << optUnitsFromCurrentYear.at(k) << endl;
-			//COMPLETE...
+				cout << optUnitsFromCurrentYear.at(k)->getAbbreviation() << " " << optUnitsFromCurrentYear.at(k)->getName() << " | " << optUnitsFromCurrentYear.at(k)->getECTS() << "ECTS | Area: " << optUnitsFromCurrentYear.at(k)->getScientificArea() << endl;
+			float ects_from_opt_units = 0; //Must be <= 33 to respect the 75ECTS per year limit (the other 42 are from mandatory units)
+			string abbreviation;
+			do {
+				cout << "Insert the abbreviation of a unit \"" << newStudentName << "\" has taken (0 to finish): ";
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				cin >> abbreviation;
+				deleteWhitespace(abbreviation);
+				if (abbreviation == "0")
+					break;
+				bool found = false;
+				for (int l = 0; l < optUnitsFromCurrentYear.size(); l++) {
+					if (optUnitsFromCurrentYear.at(l)->getAbbreviation() == abbreviation) {
+						found = true;
+						break;
+					}
+				}
+				if(!found)
+					cout << "Unit \"" << abbreviation << "\" does not exist! Please insert a valid abbreviation" << endl;
+				else if((ects_from_opt_units+abbreviationToUnit.find(abbreviation)->second->getECTS()) > 33) //Exceeded limit of 75ECTS
+					cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
+				else {
+					ects_from_opt_units += abbreviationToUnit.find(abbreviation)->second->getECTS();
+					cout << "Insert new student's final grade obtained at " << abbreviation << ": ";
+					grade = readOp(0, 20);
+					if (grade >= 10)
+						newStudentUnitsDone.at(abbreviationToUnit.find(abbreviation)->second->getCurricularYear() - 1).push_back(pair<Unit*, unsigned int>(abbreviationToUnit.find(abbreviation)->second, grade));
+					else
+						newStudentUnitsToDo.at(abbreviationToUnit.find(abbreviation)->second->getCurricularYear() - 1).push_back(pair<Unit*, unsigned int>(abbreviationToUnit.find(abbreviation)->second, grade));
+				}
+			} while (true); //If abbreviation == "0" break is called
 		}
-		if (i == 4) { //5th curricular year (should have ended studies but hasn't yet), which includes optinal units (TO DO LATER)
+		//Given that newStudentCurricularYear must be in range [1,5] we'll never reach this case below... so, will remove later I think
+		/*if (i == 4) { //5th curricular year (should have ended studies but hasn't yet), which includes optinal units
 			vector<Unit*> optUnitsFromCurrentYear = getOptUnitsFromYear(i + 1);
 			//Show optional units available
+			cout << endl << "Which of the following did \"" << newStudentName << "\" take?" << endl;
 			for (int k = 0; k < optUnitsFromCurrentYear.size(); k++)
-				cout << optUnitsFromCurrentYear.at(k) << endl;
-			//COMPLETE...
-		}
+				cout << optUnitsFromCurrentYear.at(k)->getAbbreviation() << " " << optUnitsFromCurrentYear.at(k)->getName() << " | " << optUnitsFromCurrentYear.at(k)->getECTS() << "ECTS | Area: " << optUnitsFromCurrentYear.at(k)->getScientificArea() << endl;
+			float ects_from_opt_units = 0; //Must be <= 39 to respect the 75ECTS per year limit (the other 36 are from dissertation preparation and the dissertation itself)
+			string abbreviation;
+			do {
+				cout << "Insert the abbreviation of a unit \"" << newStudentName << "\" has taken (0 to finish): ";
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				cin >> abbreviation;
+				deleteWhitespace(abbreviation);
+				if (abbreviation == "0")
+					break;
+				bool found = false;
+				for (int l = 0; l < optUnitsFromCurrentYear.size(); l++) {
+					if (optUnitsFromCurrentYear.at(l)->getAbbreviation() == abbreviation) {
+						found = true;
+						break;
+					}
+				}
+				if (!found)
+					cout << "Unit \"" << abbreviation << "\" does not exist! Please insert a valid abbreviation" << endl;
+				else if ((ects_from_opt_units + abbreviationToUnit.find(abbreviation)->second->getECTS()) > 39) //Exceeded limit of 75ECTS
+					cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
+				else {
+					ects_from_opt_units += abbreviationToUnit.find(abbreviation)->second->getECTS();
+					cout << "Insert new student's final grade obtained at " << abbreviation << ": ";
+					grade = readOp(0, 20);
+					if (grade >= 10)
+						newStudentUnitsDone.at(abbreviationToUnit.find(abbreviation)->second->getCurricularYear() - 1).push_back(pair<Unit*, unsigned int>(abbreviationToUnit.find(abbreviation)->second, grade));
+					else
+						newStudentUnitsToDo.at(abbreviationToUnit.find(abbreviation)->second->getCurricularYear() - 1).push_back(pair<Unit*, unsigned int>(abbreviationToUnit.find(abbreviation)->second, grade));
+				}
+			} while (true); //If abbreviation == "0" break is called
+		}*/
 	}
 	
-	if (newStudentCurricularYear == 1)
+	if (newStudentCurricularYear == 1) {
 		Student s(newStudentName, newStudentStatus, newStudentCurricularYear, newStudentUnitsDone, newStudentUnitsToDo);
-	else
+		students.push_back(s);
+	}
+	else {
 		Student s(newStudentName, newStudentStatus, newStudentCurricularYear, newStudentUnitsDone, newStudentUnitsToDo, newStudentCode);
+		students.push_back(s);
+	}
 }
 
 void Course::removeStudent(unsigned long studentCode) {

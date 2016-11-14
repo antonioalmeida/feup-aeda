@@ -95,10 +95,10 @@ unsigned short int studentsMenu() {
 	cout << TAB_BIG << "---Student Main Menu---" << endl;
 	cout << TAB_BIG << "----------------------" << endl;
 	cout << endl;
-	cout << TAB << "1 - Create Student" << endl; //PARTIALLY DONE (I'LL FINISH IT - CYRIL)
+	cout << TAB << "1 - Create Student" << endl; //DONE
 	cout << TAB << "2 - Edit Student" << endl; //DONE
 	cout << TAB << "3 - Remove Student" << endl; //DONE
-	cout << TAB << "4 - Registrate Student" << endl; //TO DO
+	cout << TAB << "4 - Register Student" << endl; //TO DO
 	cout << TAB << "5 - List Students" << endl; //DONE
 	cout << TAB << "6 - List Registrations" << endl; //DONE
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;

@@ -56,6 +56,7 @@ public:
 	void addUnitDone(std::pair<Unit*, unsigned int> p);
 	void addUnitToDo(std::pair<Unit*, unsigned int> p);
 	void addUnitTaking(Unit* u);
+	void calculateAverage();
 	bool isRegistered() const; //Check if student is already registered, if so he'll be ignored in the registration process
 	void setRegistration(); //The only state possible is to go from false to true so keeping it simple
 	void setStatus(std::string newStatus);
