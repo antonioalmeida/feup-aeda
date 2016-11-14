@@ -1,0 +1,152 @@
+38
+MDIS Matematica Discreta
+1 6
+Matematica
+
+AOCO Arquitetura e Organizacao de Computadores
+1 6
+Arquitetura de Computadores
+
+FPRO Fundamentos da Programacao
+1 6
+Fundamentos da Programacao
+
+AMAT Analise Matematica
+1 6
+Matematica
+
+ALGE Algebra
+1 4.5
+Matematica
+
+PF Projeto Feup
+1 1.5
+Aspectos Sociais e Profissionais 
+
+MEST Metodos Estatisticos
+1 4.5
+Matematica
+
+PROG Programacao
+1 7.5 
+Programacao
+
+FISI1 Fisica I
+1 6
+Fisica
+
+CMAT Complementos de Matematica
+1 6
+Matematica
+
+MPCP Microprocessadores e Computadores Pessoais
+1 6
+Arquitetura de Computadores
+
+TCOM Teoria da Computacao
+2 6
+Fundamentos da Programacao
+
+MNUM Metodos Numericos
+2 4.5
+Matematica
+
+FISI2 Fisica II
+2 6
+Fisica
+
+AEDA Algoritmos e Estruturas de Dados
+2 7.5
+Programacao
+
+LCOM Laboratorio de Computadores
+2 6
+Arquitetura de Computadores
+
+BDAD Bases de Dados
+2 6
+Sistemas de Informacao
+
+CAL Concecao e Analise de Algoritmos
+2 6
+Programacao
+
+CGRA Computacao Grafica
+2 6
+Interacao e Multimedia
+
+SOPE Sistemas Operativos
+2 6
+Sistemas Operativos e Redes
+
+LPOO Laboratorio de Programacao Orientada por Objetos
+2 6
+Programacao
+
+PLOG Programacao em Logica
+3 4.5
+Programacao
+
+LAIG Laboratorio de Aplicacoes com Interface Grafica
+3 7.5
+Interacao e Multimedia
+
+ESOF Engenharia de Software
+3 6
+Engenharia de Software
+
+RCOM Redes de Computadores
+3 6
+Sistemas operativos e Redes
+
+LBAW Laboratorio de Bases de Dados e Aplicacoes Web
+3 7.5
+Sistemas de Informacao
+
+LTW Linguagens e Tecnologias Web
+3 6
+Sistemas de Informacao
+
+IART Inteligencia Artificial
+3 6
+Inteligencia Artificial
+
+COMP Compiladores
+3 6
+Programacao
+
+SDIS Sistemas Distribuidos
+3 6
+Sistemas Operativos e Redes
+
+PPIN Proficiencia Pessoal e Interpessoal
+3 4.5
+Aspetos Sociais e Professionais
+
+SINF Sistemas de informacao
+4 6
+Sistemas de Informacao
+
+LDSO Laboratorio de Desenvolvimento de Software
+4 7.5
+Engenharia de Software
+
+GEMP Gestao de Empresas
+4 4.5
+Metodos Quantitativos e Gestao
+
+AIAD Agentes e Inteligencia Artificial Distribuida
+4 6
+Inteligencia Artificial
+
+MFES Metodos Formais em Engenharia de Software
+4 6
+Engenharia de Software
+
+IOPE Investigacao Operacional
+4 4.5
+Metodos Quantitativos e Gestao
+
+LGPR Laboratorio de Gestao de Projetos
+4 7.5
+Engenharia de Software

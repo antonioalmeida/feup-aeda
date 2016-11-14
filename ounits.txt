@@ -1,0 +1,125 @@
+25
+APSI Algoritmos de Processamento de Sinal
+4 6
+Interacao e Multimedia
+100
+
+DJCO Desenvolvimento de Jogos de Computador
+4 6
+Interacao e Multimedia
+100
+
+MNSE Multimedia e Novos Servicos
+4 6
+Interacao e Multimedia
+100
+
+ASSO Arquitetura de Sistemas de Software
+4 6
+Engenharia de Software
+100
+
+ERSS Engenharia de Requisitos de Sistemas de Software
+4 6
+Engenharia de Software
+100
+
+CPAR Computacao Paralela
+4 6
+Programacao
+100
+
+PPRO Paradigmas da Progracao
+4 6
+Programacao
+100
+
+GOLO Gestao de Operacoes e Logistica
+4 6
+Metodos Quantitativos e Gestao
+100
+
+MARK Marketing
+4 6
+Metodos Quantitativos e Gestao
+100
+
+LAPD Linguagens de Anotacaoo e Processamento de Documentos
+4 6
+Sistemas de Informacao
+100
+
+TBDA Tecnologias de Bases de Dados
+4 6
+Sistemas de Informacao
+100
+
+MPES Metodologias de Planeamento e Escalonamento
+4 6 
+Inteligencia Artificial 
+100
+
+TNEL Tecnologias para Negocio Eletronico
+4 6
+Inteligencia Artificial 
+100
+
+APIN Analise de Projetos de Investimento
+5 6
+Metodos Quantitativos e Gestao
+100
+
+SADE Sistemas de Apoio a Decisao
+5 6
+Metodos Quantitativos e Gestao
+100
+
+ADAD Armazens de Dados
+5 6
+Sistemas de Informacao
+100
+
+DAPI Descricao, Armazenamento e Pesquisa de Informacao
+5 6
+Sistemas de Informacao
+100
+
+CMOV Computacao Movel
+5 6
+Sistemas Operativos e Redes
+100
+
+SSIN Seguranca em Sistemas Informaticos
+5 6
+Sistemas Operativos e Redes
+100
+
+ECAC Extracao de Conhecimento e Aprendizagem Computacional
+5 6
+Inteligencia Artificial
+100
+
+ROBO Robotica
+5 6
+Inteligencia Artificial
+100
+
+PFAL Processamento da Fala
+5 6
+Interecao e Multimedia
+100
+
+VCOM Visao por Computador
+5 6
+Interacao e Multimedia
+100
+
+MADS Metodologias Ageis de Desenvolvimento de Software
+5 6
+Engenharia de Software
+100
+
+TQSO Teste e Qualidade de Software
+5 6
+Engenharia de Software
+100
