@@ -3,6 +3,7 @@
 #include "Menus.h"
 #include "Utils.h"
 #include "Course.h"
+#include "Person.h"
 
 using namespace std;
 
@@ -755,7 +756,7 @@ void unitsOptions(Course & course) {
 	while ((option = unitsMenu()))
 		switch (option) {
 		case 1:
-			//course.setUnit();
+            editUnitsOptions(course);
 			break;
 		case 2:
 			listUnitsOptions(course);
@@ -824,5 +825,42 @@ void listUnitsOptions(Course & course) {
 			course.showUnitsofScientificArea(scientificArea);
 			break;
 		}
+		}
+}
+
+// Edit Units Menu
+
+unsigned short int editUnitsMenu() {
+	unsigned short int option;
+
+	clearScreen();
+	cout << TAB_BIG << "Edit Units Menu" << endl;
+	cout << endl;
+	cout << TAB << "1 - Edit a unit's name" << endl; //TO DO
+	cout << TAB << "2 - Edit a unit's abbreviation" << endl;  //TO DO
+	cout << TAB << "3 - Edit a unit's scientific area" << endl; //TO DO
+	cout << TAB << "0 - Return to previous menu" << endl << endl;
+	cout << TAB << "Enter your option: ";
+	option = readOp(0, 3);
+
+	return option;
+}
+
+
+void editUnitsOptions(Course & course) {
+	unsigned int option;
+
+	while ((option = editUnitsMenu()))
+		switch (option) {
+		case 1: 
+			//course.editUnitName();
+			break;
+		case 2: {
+			//course.editUnitAbbreviation();
+			break;
+		}
+		case 3:
+			//course.editUnitScientificArea();
+			break;
 		}
 }

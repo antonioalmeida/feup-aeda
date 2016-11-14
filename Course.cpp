@@ -747,7 +747,7 @@ void Course::showSpecificUnit() const {
 	if (it == abbreviationToUnit.end())
 		throw invalidIdentification<string>(abbreviation);
 	else
-		cout << it->second;
+		cout << *(it->second);
 }
 
 void Course::showYearUnit(unsigned short int year) const {
@@ -792,6 +792,30 @@ void Course::showUnitsofScientificArea(std::string scientificArea) const {
 		cout << *(result.at(i)) << endl;
 	cout << endl;
 }
+
+void Course::editUnitName() {
+    string abbreviation;
+    cout << "Insert the unit's abbreviation: ";
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    getline(cin, abbreviation);
+    deleteWhitespace(abbreviation);
+    
+    if(!verifyUnit(abbreviation))
+        throw invalidIdentification<string>(abbreviation);
+   
+    string newName;
+    cout << "Insert the unit's new name: ";
+    getline(cin, newName);
+    deleteWhitespace(newName);
+    
+    map<string, Unit*>::iterator it = abbreviationToUnit.find(abbreviation);
+    it->second->setName(newName);
+
+}
+//void Course::editUnitAbbreviation();
+//void Course::editUnitScientificArea();
+
+
 
 //Save
 void Course::save() const {

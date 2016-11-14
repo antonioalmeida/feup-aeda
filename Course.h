@@ -56,6 +56,9 @@ public:
 	void addTeacher();
 	void editTeacherName();
 	void editTeacherCode();
+	void editUnitName();
+	void editUnitAbbreviation();
+	void editUnitScientificArea();
 	void teacherAddUnitTaught();
 	void removeTeacher(std::string teacherName);
 	void showTeachers(bool(*comparisonFunction)(Teacher, Teacher)) const;
