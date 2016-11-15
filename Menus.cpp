@@ -858,7 +858,15 @@ void editUnitsOptions(Course & course) {
 			course.editUnitName();
 			break;
 		case 2: {
-			course.editUnitAbbreviation();
+            try {
+                course.editUnitAbbreviation();
+            }
+            catch (invalidIdentification<string> &s) {
+                cout << "ERROR: No unit identified by \"" << s.getInvIdentification() << "\"!" << endl;
+            }
+            catch (repeatedIdentification<string> &s) {
+                cout << "ERROR: Unit with abbreviation \"" << s.getRepIdentification() << "\" already exists!" << endl;
+            }
 			break;
 		}
 		case 3:

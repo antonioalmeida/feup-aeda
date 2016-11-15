@@ -826,8 +826,8 @@ void Course::editUnitAbbreviation() {
     getline(cin, newAbbreviation);
     deleteWhitespace(newAbbreviation);
     
-    if(!verifyUnit(newAbbreviation))
-        throw invalidIdentification<string>(newAbbreviation);
+    if(verifyUnit(newAbbreviation))
+        throw repeatedIdentification<string>(newAbbreviation);
     
     map<string, Unit*>::iterator it = abbreviationToUnit.find(abbreviation);
     it->second->setAbbreviation(newAbbreviation);
