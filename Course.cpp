@@ -73,7 +73,7 @@ Course::Course(string studentsFile, string teachersFile, string manUnitsFile, st
 	studentsIn.close(); //To avoid conflict
 }
 
-vector<Student> Course::getStudents() const{
+vector<Student> Course::getStudents() const {
 	return students;
 }
 
@@ -96,7 +96,7 @@ vector<Unit*> Course::getAllUnits() const {
 std::vector<Unit*> Course::getAllMandatoryUnits() const {
 	vector<Unit*> result;
 	for (map<string, Unit*>::const_iterator it = abbreviationToUnit.begin(); it != abbreviationToUnit.end(); it++) {
-		if(dynamic_cast<MandatoryUnit*>(it->second) != NULL)
+		if (dynamic_cast<MandatoryUnit*>(it->second) != NULL)
 			result.push_back(it->second);
 	}
 	return result;
@@ -114,7 +114,7 @@ std::vector<Unit*> Course::getAllOptionalUnits() const {
 vector<Unit*> Course::getUnitsFromYear(unsigned int curricularYear) const {
 	vector<Unit*> result;
 	for (map<string, Unit*>::const_iterator it = abbreviationToUnit.begin(); it != abbreviationToUnit.end(); it++) {
-		if(it->second->getCurricularYear() == curricularYear)
+		if (it->second->getCurricularYear() == curricularYear)
 			result.push_back(it->second);
 	}
 
@@ -216,9 +216,9 @@ void Course::addStudent() {
 						break;
 					}
 				}
-				if(!found)
+				if (!found)
 					cout << "Unit \"" << abbreviation << "\" does not exist! Please insert a valid abbreviation" << endl;
-				else if((ects_from_opt_units+abbreviationToUnit.find(abbreviation)->second->getECTS()) > 33) //Exceeded limit of 75ECTS
+				else if ((ects_from_opt_units + abbreviationToUnit.find(abbreviation)->second->getECTS()) > 33) //Exceeded limit of 75ECTS
 					cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
 				else {
 					ects_from_opt_units += abbreviationToUnit.find(abbreviation)->second->getECTS();
@@ -270,7 +270,7 @@ void Course::addStudent() {
 			} while (true); //If abbreviation == "0" break is called
 		}*/
 	}
-	
+
 	if (newStudentCurricularYear == 1) {
 		Student s(newStudentName, newStudentStatus, newStudentCurricularYear, newStudentUnitsDone, newStudentUnitsToDo);
 		students.push_back(s);
@@ -329,7 +329,7 @@ void Course::removeStudent(string studentName) {
 		teachers.at(i).removeStudent(oldStudent);
 }
 
-void Course::showStudent(string studentName) const{
+void Course::showStudent(string studentName) const {
 	for (int i = 0; i < students.size(); i++) {
 		if (students.at(i).getName() == studentName) {
 			cout << students.at(i) << endl;
@@ -339,7 +339,7 @@ void Course::showStudent(string studentName) const{
 	throw invalidIdentification<string>(studentName);
 }
 
-void Course::showStudent(unsigned long int studentCode) const{
+void Course::showStudent(unsigned long int studentCode) const {
 	for (int i = 0; i < students.size(); i++) {
 		if (students.at(i).getCode() == studentCode) {
 			cout << students.at(i) << endl;
@@ -349,7 +349,7 @@ void Course::showStudent(unsigned long int studentCode) const{
 	throw invalidIdentification<unsigned long>(studentCode);
 }
 
-void Course::showStudents(bool(*comparisonFunction)(Student, Student)) const{
+void Course::showStudents(bool(*comparisonFunction)(Student, Student)) const {
 	vector<Student> studentsTemp = students;
 	sort(studentsTemp.begin(), studentsTemp.end(), *comparisonFunction);
 	for (int i = 0; i < studentsTemp.size(); i++)
@@ -728,7 +728,7 @@ void Course::showTeacherPupil(unsigned long int pupilCode) const {
 //Units
 
 void Course::showUnits() const {
-	vector<Unit*> unitTemp= getAllUnits();
+	vector<Unit*> unitTemp = getAllUnits();
 
 	sort(unitTemp.begin(), unitTemp.end());
 
@@ -754,15 +754,15 @@ void Course::showYearUnit(unsigned short int year) const {
 	vector<Unit*> unitTemp = getUnitsFromYear(year);
 
 	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
-	
-	for (int i = 0; i < unitTemp.size();i++)
+
+	for (int i = 0; i < unitTemp.size(); i++)
 		cout << *unitTemp.at(i) << endl;
 	cout << endl;
 }
 
 void Course::showMandatoryUnit() const {
 	vector<Unit*> unitTemp = getAllMandatoryUnits();
-	
+
 	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
 
 	for (int i = 0; i < unitTemp.size(); i++)
@@ -794,67 +794,67 @@ void Course::showUnitsofScientificArea(std::string scientificArea) const {
 }
 
 void Course::editUnitName() {
-    string abbreviation;
-    cout << "Insert the unit's abbreviation: ";
-    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    getline(cin, abbreviation);
-    deleteWhitespace(abbreviation);
-    
-    if(!verifyUnit(abbreviation))
-        throw invalidIdentification<string>(abbreviation);
-   
-    string newName;
-    cout << "Insert the unit's new name: ";
-    getline(cin, newName);
-    deleteWhitespace(newName);
-    
-    map<string, Unit*>::iterator it = abbreviationToUnit.find(abbreviation);
-    it->second->setName(newName);
+	string abbreviation;
+	cout << "Insert the unit's abbreviation: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	getline(cin, abbreviation);
+	deleteWhitespace(abbreviation);
+
+	if (!verifyUnit(abbreviation))
+		throw invalidIdentification<string>(abbreviation);
+
+	string newName;
+	cout << "Insert the unit's new name: ";
+	getline(cin, newName);
+	deleteWhitespace(newName);
+
+	map<string, Unit*>::iterator it = abbreviationToUnit.find(abbreviation);
+	it->second->setName(newName);
 }
 void Course::editUnitAbbreviation() {
-    string abbreviation;
-    cout << "Insert the unit's abbreviation: ";
-    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    getline(cin, abbreviation);
-    deleteWhitespace(abbreviation);
-    
-    if(!verifyUnit(abbreviation))
-        throw invalidIdentification<string>(abbreviation);
-   
-    string newAbbreviation;
-    cout << "Insert the unit's new abbreviation: ";
-    getline(cin, newAbbreviation);
-    deleteWhitespace(newAbbreviation);
-    
-    if(verifyUnit(newAbbreviation))
-        throw repeatedIdentification<string>(newAbbreviation);
-    
-    map<string, Unit*>::iterator it = abbreviationToUnit.find(abbreviation);
-    it->second->setAbbreviation(newAbbreviation);
-    
-    //Changing element in abbreviationToUnit map
-    Unit* temp = it->second;
-    abbreviationToUnit.erase(it);
-    abbreviationToUnit[newAbbreviation] = temp;
+	string abbreviation;
+	cout << "Insert the unit's abbreviation: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	getline(cin, abbreviation);
+	deleteWhitespace(abbreviation);
+
+	if (!verifyUnit(abbreviation))
+		throw invalidIdentification<string>(abbreviation);
+
+	string newAbbreviation;
+	cout << "Insert the unit's new abbreviation: ";
+	getline(cin, newAbbreviation);
+	deleteWhitespace(newAbbreviation);
+
+	if (verifyUnit(newAbbreviation))
+		throw repeatedIdentification<string>(newAbbreviation);
+
+	map<string, Unit*>::iterator it = abbreviationToUnit.find(abbreviation);
+	it->second->setAbbreviation(newAbbreviation);
+
+	//Changing element in abbreviationToUnit map
+	Unit* temp = it->second;
+	abbreviationToUnit.erase(it);
+	abbreviationToUnit[newAbbreviation] = temp;
 }
 
 void Course::editUnitScientificArea() {
-    string abbreviation;
-    cout << "Insert the unit's abbreviation: ";
-    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    getline(cin, abbreviation);
-    deleteWhitespace(abbreviation);
-    
-    if(!verifyUnit(abbreviation))
-        throw invalidIdentification<string>(abbreviation);
-   
-    string newScientificArea;
-    cout << "Insert the unit's new scientific area: ";
-    getline(cin, newScientificArea);
-    deleteWhitespace(newScientificArea);
-    
-    map<string, Unit*>::iterator it = abbreviationToUnit.find(abbreviation);
-    it->second->setScientificArea(newScientificArea);
+	string abbreviation;
+	cout << "Insert the unit's abbreviation: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	getline(cin, abbreviation);
+	deleteWhitespace(abbreviation);
+
+	if (!verifyUnit(abbreviation))
+		throw invalidIdentification<string>(abbreviation);
+
+	string newScientificArea;
+	cout << "Insert the unit's new scientific area: ";
+	getline(cin, newScientificArea);
+	deleteWhitespace(newScientificArea);
+
+	map<string, Unit*>::iterator it = abbreviationToUnit.find(abbreviation);
+	it->second->setScientificArea(newScientificArea);
 }
 
 
@@ -910,10 +910,10 @@ void Course::save() const {
 }
 
 bool Course::verifyUnit(string unitAbbreviation) const {
-    map<string, Unit*>::const_iterator it = abbreviationToUnit.find(unitAbbreviation);
-    
-    if(it != abbreviationToUnit.end())
-        return true;
-    
-    return false;
+	map<string, Unit*>::const_iterator it = abbreviationToUnit.find(unitAbbreviation);
+
+	if (it != abbreviationToUnit.end())
+		return true;
+
+	return false;
 }

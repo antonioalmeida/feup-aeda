@@ -2,7 +2,7 @@
 
 //Header file for custom made exceptions to be caught and treated throughout program execution (to be implemented)
 
-class invalidDay{ //Invalid day regardless of other date specifications (day == 0 or day > 31)
+class invalidDay { //Invalid day regardless of other date specifications (day == 0 or day > 31)
 private:
 	unsigned int day;
 public:
@@ -14,7 +14,7 @@ public:
 	}
 };
 
-class invalidMonth{ //Invalid month regardless of other date specifications (month == 0 or month > 12)
+class invalidMonth { //Invalid month regardless of other date specifications (month == 0 or month > 12)
 private:
 	unsigned int month;
 public:
@@ -25,7 +25,7 @@ public:
 		return month;
 	}
 };
-    
+
 class invalidDate { //When day and month are in a valid range but are wrongly used (ex: 30th February, 29th February on a non-leap year, 31st November, ...)
 private:
 	unsigned int day;

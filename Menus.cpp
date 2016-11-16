@@ -8,39 +8,39 @@
 using namespace std;
 
 void start(string &studentsFile, string &teachersFile, string &mandatoryUnitsFile, string &optionalUnitsFile) {
-    cout << "Insert the students' filename: " << endl;
-    getline(cin, studentsFile);
-    ifstream studentsTestFile;
-    studentsTestFile.open(studentsFile);
-    if(!studentsTestFile.is_open()) //If opening fails, then filename is not valid
-        throw inexistentFile(studentsFile);
-    
-    cout << "Insert the teachers' filename: " << endl;
-    getline(cin, teachersFile);
-    ifstream teachersTestFile;
-    teachersTestFile.open(teachersFile);
-    if(!teachersTestFile.is_open())
-        throw inexistentFile(teachersFile);
-    
-    cout << "Insert the Mandatory Units' filename: " << endl;
-    getline(cin, mandatoryUnitsFile);
-    ifstream mandatoryUnitsTestFile;
-    mandatoryUnitsTestFile.open(mandatoryUnitsFile);
+	cout << "Insert the students' filename: " << endl;
+	getline(cin, studentsFile);
+	ifstream studentsTestFile;
+	studentsTestFile.open(studentsFile);
+	if (!studentsTestFile.is_open()) //If opening fails, then filename is not valid
+		throw inexistentFile(studentsFile);
+
+	cout << "Insert the teachers' filename: " << endl;
+	getline(cin, teachersFile);
+	ifstream teachersTestFile;
+	teachersTestFile.open(teachersFile);
+	if (!teachersTestFile.is_open())
+		throw inexistentFile(teachersFile);
+
+	cout << "Insert the Mandatory Units' filename: " << endl;
+	getline(cin, mandatoryUnitsFile);
+	ifstream mandatoryUnitsTestFile;
+	mandatoryUnitsTestFile.open(mandatoryUnitsFile);
 	if (!mandatoryUnitsTestFile.is_open())
 		throw inexistentFile(mandatoryUnitsFile);
-    
-    cout << "Insert the Optional Units' filename: " << endl;
-    getline(cin, optionalUnitsFile);
-    ifstream optionalUnitsTestFile;
-    optionalUnitsTestFile.open(optionalUnitsFile);
+
+	cout << "Insert the Optional Units' filename: " << endl;
+	getline(cin, optionalUnitsFile);
+	ifstream optionalUnitsTestFile;
+	optionalUnitsTestFile.open(optionalUnitsFile);
 	if (!optionalUnitsTestFile.is_open())
 		throw inexistentFile(optionalUnitsFile);
-    
-    //No failure in opening = good to go. Close temporary files to avoid unwanted trouble
-    studentsTestFile.close();
-    teachersTestFile.close();
-    mandatoryUnitsTestFile.close();
-    optionalUnitsTestFile.close();
+
+	//No failure in opening = good to go. Close temporary files to avoid unwanted trouble
+	studentsTestFile.close();
+	teachersTestFile.close();
+	mandatoryUnitsTestFile.close();
+	optionalUnitsTestFile.close();
 }
 
 
@@ -52,9 +52,9 @@ unsigned short int mainMenu() {
 	unsigned short int option;
 	clearScreen();
 	cout << endl;
-    cout << TAB_BIG << "----------------------" << endl;
-    cout << TAB_BIG << "---Course Main Menu---" << endl;
-    cout << TAB_BIG << "----------------------" << endl;
+	cout << TAB_BIG << "----------------------" << endl;
+	cout << TAB_BIG << "---Course Main Menu---" << endl;
+	cout << TAB_BIG << "----------------------" << endl;
 	cout << TAB << "1 - Students menu" << endl;
 	cout << TAB << "2 - Teachers menu" << endl;
 	cout << TAB << "3 - Units menu" << endl;
@@ -247,15 +247,15 @@ void registrateStudentOptions(Course & course) {
 
 	while ((option = registrateStudentMenu()))
 		switch (option) {
-		case 1: 
+		case 1:
 			//Random Student
 			//course.registrateStudent();
 			break;
 		case 2:
-		//This one with parameter to choose a specific student
-			//course.registrateStudent();
+			//This one with parameter to choose a specific student
+				//course.registrateStudent();
 			break;
-			
+
 		}
 }
 
@@ -289,7 +289,7 @@ void listStudentsOptions(Course & course) {
 	while ((option = listStudentsMenu()))
 		switch (option) {
 		case 1:
-            course.showStudents(sortByName);
+			course.showStudents(sortByName);
 			break;
 		case 2: {
 			cout << "Insert the curricular year: ";
@@ -382,7 +382,7 @@ unsigned short int listRegistrationsMenu() {
 	cout << TAB_BIG << "List Registrations Menu" << endl;
 	cout << endl;
 	cout << TAB << "1 - Show registrations by unit" << endl;
-	cout << TAB << "2 - Show registrations by student" << endl; 
+	cout << TAB << "2 - Show registrations by student" << endl;
 	cout << TAB << "3 - Show registrations by year" << endl;
 	cout << TAB << "4 - Show registrations of all students" << endl;
 	cout << TAB << "0 - Return to menu." << endl << endl;
@@ -509,7 +509,7 @@ void teachersOptions(Course & course) {
 				course.addTeacher();
 				cout << "Teacher successfully created" << endl;
 			}
-			catch(repeatedIdentification<string> &s){
+			catch (repeatedIdentification<string> &s) {
 				cout << "ERROR: There's a teacher identified by \"" << s.getRepIdentification() << "\" already!" << endl;
 			}
 			break;
@@ -534,7 +534,7 @@ void teachersOptions(Course & course) {
 		case 4:
 			listTeachersOptions(course);
 			break;
-	}
+		}
 }
 
 // Edit Teacher Menu
@@ -619,7 +619,7 @@ void listTeachersOptions(Course & course) {
 
 	while ((option = listTeachersMenu()))
 		switch (option) {
-		case 1: 
+		case 1:
 			course.showTeachers(sortTByName);
 			break;
 		case 2:
@@ -673,13 +673,13 @@ void showTeacherOptions(Course & course) {
 			deleteWhitespace(unitAbbreviation);
 			if (!course.verifyUnit(unitAbbreviation))
 				cout << "ERROR: No unit identified by \"" << unitAbbreviation << "\"!" << endl;
-            else {
-                map<string, Unit*>::const_iterator it = course.getMap().find(unitAbbreviation);
+			else {
+				map<string, Unit*>::const_iterator it = course.getMap().find(unitAbbreviation);
 				course.showTeacher(it->second);
-            }
+			}
 			break;
 		}
-                
+
 		case 3: {
 			showTeacherPupilOptions(course);
 		}
@@ -758,7 +758,7 @@ void unitsOptions(Course & course) {
 	while ((option = unitsMenu()))
 		switch (option) {
 		case 1:
-            editUnitsOptions(course);
+			editUnitsOptions(course);
 			break;
 		case 2:
 			listUnitsOptions(course);
@@ -794,7 +794,7 @@ void listUnitsOptions(Course & course) {
 
 	while ((option = listUnitsMenu()))
 		switch (option) {
-		case 1: 
+		case 1:
 			course.showUnits();
 			break;
 		case 2: {
@@ -854,19 +854,19 @@ void editUnitsOptions(Course & course) {
 
 	while ((option = editUnitsMenu()))
 		switch (option) {
-		case 1: 
+		case 1:
 			course.editUnitName();
 			break;
 		case 2: {
-            try {
-                course.editUnitAbbreviation();
-            }
-            catch (invalidIdentification<string> &s) {
-                cout << "ERROR: No unit identified by \"" << s.getInvIdentification() << "\"!" << endl;
-            }
-            catch (repeatedIdentification<string> &s) {
-                cout << "ERROR: Unit with abbreviation \"" << s.getRepIdentification() << "\" already exists!" << endl;
-            }
+			try {
+				course.editUnitAbbreviation();
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No unit identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			catch (repeatedIdentification<string> &s) {
+				cout << "ERROR: Unit with abbreviation \"" << s.getRepIdentification() << "\" already exists!" << endl;
+			}
 			break;
 		}
 		case 3:

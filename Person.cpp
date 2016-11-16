@@ -29,7 +29,7 @@ void Person::setName(string newName) {
 
 /*Student*/
 
-Student::Student(istream &in):Person(in) {
+Student::Student(istream &in) :Person(in) {
 	in >> curricularYear;
 	if (curricularYear > 1)
 		in >> code;
@@ -49,13 +49,17 @@ Student::Student(string name, string status, unsigned int curricularYear, vector
 	this->status = status; //Can be anything
 	this->curricularYear = curricularYear;
 	this->code = code;
-   
-	email = "up" + to_string(code) + "@fe.up.pt";    
+
+	email = "up" + to_string(code) + "@fe.up.pt";
 	ectsTaking = 0;
 	this->unitsDone = unitsDone;
 	this->unitsToDo = unitsToDo;
 	calculateAverage();
-    registrationComplete = false;
+	registrationComplete = false;
+}
+
+unsigned long int Student::getCode() const {
+	return code;
 }
 
 string Student::getStatus() const {
@@ -64,10 +68,6 @@ string Student::getStatus() const {
 
 float Student::getECTSTaking() const {
 	return ectsTaking;
-}
-
-unsigned long int Student::getCode() const {
-	return code;
 }
 
 unsigned int Student::getCurricularYear() const {
@@ -96,7 +96,7 @@ Date Student::getRegistrationDate() const {
 
 void Student::addUnitDone(std::pair<Unit*, unsigned int> p) {
 	int index = p.first->getCurricularYear();
-	unitsDone.at(index-1).push_back(p);
+	unitsDone.at(index - 1).push_back(p);
 	calculateAverage();
 }
 
@@ -114,7 +114,7 @@ void Student::addUnitTaking(Unit* u) {
 
 void Student::calculateAverage() {
 	average = 0.0;
-	if(curricularYear != 1){
+	if (curricularYear != 1) {
 		double number_of_ects = 0.0;
 		for (int i = 0; i < unitsDone.size(); i++) {
 			for (int j = 0; j < unitsDone.at(i).size(); j++) {
@@ -144,7 +144,7 @@ void Student::setStatus(string newStatus) {
 	status = newStatus;
 }
 
-void Student::save(std::ostream &out) const{
+void Student::save(std::ostream &out) const {
 	out << name << endl << curricularYear;
 	if (curricularYear > 1)
 		out << " " << code;
@@ -190,7 +190,7 @@ bool sortByCurricularYear(Student s1, Student s2) {
 
 /*Teacher*/
 
-Teacher::Teacher(istream &in):Person(in) {
+Teacher::Teacher(istream &in) :Person(in) {
 	getline(in, code);
 	email = code + "@fe.up.pt";
 	//Reads units after creating object (goes to the line and searches map for unit, adding it to the vector)
@@ -214,7 +214,7 @@ void Teacher::addUnitTaught(Unit* newUnit) {
 	unitsTaught.push_back(newUnit);
 }
 
-vector<Unit*> Teacher::getUnitsTaught() const{
+vector<Unit*> Teacher::getUnitsTaught() const {
 	return unitsTaught;
 }
 
@@ -237,7 +237,7 @@ vector<Student*> Teacher::getPupils() const {
 	return pupils;
 }
 
-void Teacher::save(ostream &out) const{
+void Teacher::save(ostream &out) const {
 	out << name << endl << code << endl;
 	for (unsigned int i = 0; i < unitsTaught.size(); i++)
 		out << unitsTaught.at(i)->getAbbreviation() << " ";

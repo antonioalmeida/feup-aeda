@@ -4,22 +4,22 @@
 using namespace std;
 
 int main(int argc, char **argv) {
-    
-    std::string course, studentsFileName, teachersFileName, mandatoryUnitsFileName, optionalUnitsFileName;
-    
+
+	std::string course, studentsFileName, teachersFileName, mandatoryUnitsFileName, optionalUnitsFileName;
+
 	try {
 		start(studentsFileName, teachersFileName, mandatoryUnitsFileName, optionalUnitsFileName);
 	}
-	catch(inexistentFile &s){
+	catch (inexistentFile &s) {
 		cout << "ERROR: File \"" << s.getInexistentFileName() << "\" not found! Exiting..." << endl;
-		PressToContinue();
+		pressToContinue();
 		return 1;
 	}
-	
+
 	Course mieic(studentsFileName, teachersFileName, mandatoryUnitsFileName, optionalUnitsFileName);
 	mainOption(mieic);
-	PressToContinue();
-    
+	pressToContinue();
+
 	return 0;
-    
+
 }

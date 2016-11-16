@@ -8,7 +8,7 @@
 
 #define MAX_ECTS 75
 
-//Header file for class Person and its derived classes (Student and Teacher, for now; to be implemented)
+//Header file for class Person and its derived classes Student and Teacher
 
 class Person {
 protected:
@@ -21,7 +21,9 @@ public:
 
 	std::string getName() const;
 	std::string getEmail() const;
+
 	void setName(std::string newName);
+
 	virtual void save(std::ostream &out) const {}; //Save object to file (can't use overloaded operator<< because it'll be used to show object information in a more user-friendly way)
 };
 
@@ -42,27 +44,29 @@ public:
 	static unsigned long int nextCode; //Sequential code used for 1st timers (unsigned int may not have enough memory, unsigned long should hold easily)
 	Student() {}; //default constructor
 	Student(std::istream &in);
-    Student(std::string name, std::string status, unsigned int curricularYear, std::vector<std::vector<std::pair<Unit*, unsigned int>>> unitsDone, std::vector<std::vector<std::pair<Unit*, unsigned int>>> unitsToDo, unsigned long int code = nextCode++);
-    
+	Student(std::string name, std::string status, unsigned int curricularYear, std::vector<std::vector<std::pair<Unit*, unsigned int>>> unitsDone, std::vector<std::vector<std::pair<Unit*, unsigned int>>> unitsToDo, unsigned long int code = nextCode++);
+
+	unsigned long int getCode() const;
 	std::string getStatus() const;
 	float getECTSTaking() const;
-	unsigned long int getCode() const;
 	unsigned int getCurricularYear() const;
 	double getAverage() const;
 	std::vector<std::vector<std::pair<Unit*, unsigned int>>> getUnitsDone() const;
 	std::vector<std::vector<std::pair<Unit*, unsigned int>>> getUnitsToDo() const;
 	std::vector<Unit*> getUnitsTaking() const;
 	Date getRegistrationDate() const; //If registrationComplete = false, do what?
+
 	void addUnitDone(std::pair<Unit*, unsigned int> p);
 	void addUnitToDo(std::pair<Unit*, unsigned int> p);
 	void addUnitTaking(Unit* u);
 	void calculateAverage();
 	bool isRegistered() const; //Check if student is already registered, if so he'll be ignored in the registration process
+	
 	void setRegistration(); //The only state possible is to go from false to true so keeping it simple
 	void setStatus(std::string newStatus);
+	
 	virtual void save(std::ostream &out) const;
 	bool operator==(const Student &s1); //!< Students are equal if they have the same code (= same person)
-
 	friend std::ostream& operator<<(std::ostream& out, const Student& s);
 
 };
@@ -79,14 +83,16 @@ public:
 	Teacher(std::string name, std::string code, std::vector<Unit*> unitsTaught);
 
 	std::string getCode() const;
+	std::vector<Unit*> getUnitsTaught() const;
 	std::vector<Student*> getPupils() const;
+
 	void setCode(std::string newCode);
+
 	void addUnitTaught(Unit* newUnit);
 	void addStudent(Student* newStudent);
 	void removeStudent(Student oldStudent); //!< Removes student from pupils vector if he exists, otherwise does nothing
-	std::vector<Unit*> getUnitsTaught() const;
-	virtual void save(std::ostream &out) const;
 
+	virtual void save(std::ostream &out) const;
 	friend std::ostream& operator<<(std::ostream& out, const Teacher& s);
 };
 

@@ -6,6 +6,7 @@
 #define WINDOW_SIZE 24
 #define TAB_BIG "                        "
 #define TAB	"     "
+
 //Header file for Utils, a file with useful functions to use throughout the program
 
 unsigned short int readOp(unsigned short int minValue, unsigned short int  maxValue); //!< Reads integer value in range [minValue, maxValue]
@@ -16,4 +17,4 @@ void clearScreen();
 
 void deleteWhitespace(std::string &s);
 
-void PressToContinue();
+void pressToContinue();

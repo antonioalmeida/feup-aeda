@@ -51,7 +51,7 @@ bool operator<(const Unit &u1, const Unit &u2) {
 }
 
 bool compareUnitPointers(Unit* u1, Unit* u2) {
-	return (u1->getCurricularYear() < u2->getCurricularYear() || (u1->getCurricularYear() == u2->getCurricularYear() && u1->getName() < u2->getName()));
+	return (u1->getCurricularYear() < u2->getCurricularYear() || (u1->getCurricularYear() == u2->getCurricularYear() && u1->getAbbreviation() < u2->getAbbreviation()));
 }
 
 ostream& operator<<(ostream &out, const Unit &u1) {
@@ -61,7 +61,7 @@ ostream& operator<<(ostream &out, const Unit &u1) {
 
 /* Derived class MandatoryUnit methods */
 
-MandatoryUnit::MandatoryUnit(istream &in): Unit(in) {
+MandatoryUnit::MandatoryUnit(istream &in) : Unit(in) {
 }
 
 bool MandatoryUnit::isFull() const {
@@ -93,7 +93,7 @@ void MandatoryUnit::save(ostream &out) const {
 
 /* Derived class OptionUnit methods */
 
-OptionalUnit::OptionalUnit(istream &in):Unit(in) {
+OptionalUnit::OptionalUnit(istream &in) :Unit(in) {
 	in >> fixedVacancies;
 	vacancies = fixedVacancies;
 }
