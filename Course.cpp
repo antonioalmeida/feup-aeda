@@ -808,6 +808,11 @@ void Course::editUnitName() {
 	getline(cin, newName);
 	deleteWhitespace(newName);
 
+	vector<Unit*> units = getAllUnits();
+	for (unsigned int i = 0; i < units.size(); i++) {
+		if (units.at(i)->getName() == newName)
+			throw repeatedIdentification<string>(newName);
+	}
 	map<string, Unit*>::iterator it = abbreviationToUnit.find(abbreviation);
 	it->second->setName(newName);
 }

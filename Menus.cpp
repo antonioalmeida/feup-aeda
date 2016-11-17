@@ -231,7 +231,7 @@ unsigned short int registrateStudentMenu() {
 	unsigned short int option;
 
 	clearScreen();
-	cout << TAB_BIG << "Registrate Student Menu" << endl;
+	cout << TAB_BIG << "Register Student Menu" << endl;
 	cout << endl;
 	cout << TAB << "1 - Register a random student" << endl;
 	cout << TAB << "2 - Register a specific student" << endl;
@@ -248,12 +248,26 @@ void registrateStudentOptions(Course & course) {
 	while ((option = registrateStudentMenu()))
 		switch (option) {
 		case 1:
-			//Random Student
-			//course.registrateStudent();
+			//course.registerRandomStudent();
+			pressToContinue();
 			break;
 		case 2:
-			//This one with parameter to choose a specific student
-				//course.registrateStudent();
+			try {
+				//course.registerSpecificStudent();
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			catch (invalidIdentification<unsigned long> &s) {
+				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			catch (alreadyRegistered<string> &s) {
+				cout << "ERROR: Student \"" << s.getIdentifier() << "\" is already registered!" << endl;
+			}
+			catch (alreadyRegistered<unsigned long> &s) {
+				cout << "ERROR: Student \"" << s.getIdentifier() << "\" is already registered!" << endl;
+			}
+			pressToContinue();
 			break;
 
 		}
@@ -855,11 +869,22 @@ void editUnitsOptions(Course & course) {
 	while ((option = editUnitsMenu()))
 		switch (option) {
 		case 1:
-			course.editUnitName();
+			try {
+				course.editUnitName();
+				cout << "Unit successfully edited" << endl;
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No unit identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			catch (repeatedIdentification<string> &s) {
+				cout << "ERROR: Unit with name \"" << s.getRepIdentification() << "\" already exists!" << endl;
+			}
+			pressToContinue();
 			break;
 		case 2: {
 			try {
 				course.editUnitAbbreviation();
+				cout << "Unit successfully edited" << endl;
 			}
 			catch (invalidIdentification<string> &s) {
 				cout << "ERROR: No unit identified by \"" << s.getInvIdentification() << "\"!" << endl;
@@ -867,10 +892,18 @@ void editUnitsOptions(Course & course) {
 			catch (repeatedIdentification<string> &s) {
 				cout << "ERROR: Unit with abbreviation \"" << s.getRepIdentification() << "\" already exists!" << endl;
 			}
+			pressToContinue();
 			break;
 		}
 		case 3:
-			course.editUnitScientificArea();
+			try {
+				course.editUnitScientificArea();
+				cout << "Unit successfully edited" << endl;
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No unit identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			pressToContinue();
 			break;
 		}
 }

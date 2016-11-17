@@ -84,12 +84,14 @@ public:
 	}
 };
 
-class tooManyECTS { //When user is trying to make student take more than 75 ECTS
+template <class T> class alreadyRegistered { //When user is trying to register a student already registered
+private:
+	T identifier;
 public:
-	tooManyECTS() {};
-};
-
-class alreadyRegistered { //When user is trying to register a student already registered
-public:
-	alreadyRegistered() {};
+	alreadyRegistered(T id) {
+		identifier = id;
+	}
+	T getIdentifier() const {
+		return identifier;
+	}
 };
