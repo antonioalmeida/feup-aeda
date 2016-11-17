@@ -36,6 +36,7 @@ void clearScreen() {
 void pressToContinue() {
 	string trash;
 	cout << "Press any key followed by ENTER to continue.";
+	cin.ignore();
 	getline(cin, trash);
 	cout << endl;
 }
