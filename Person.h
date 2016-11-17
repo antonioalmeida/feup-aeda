@@ -15,16 +15,47 @@ protected:
 	std::string name;
 	std::string email; //created directly from code ("up"+code+"@fe.up.pt" for Student, code+"@fe.up.pt" for Teacher)
 public:
-	Person() {}; //default constructor
+    //! Default constructor
+	Person() {};
+    
+    //! Class constructor used for persons read from text files
+    /*!
+     \param in text file from where the person's information will be read
+     */
 	Person(std::istream &in);
+    
+    //! Class constructor used for persons created during program execution
+    /*!
+     \param name the created person's name
+     */
 	Person(std::string name);
-
+    
+    //! Get function to acess person's name
+    /*!
+     \return string with person's name
+     \sa getEmail()
+     */
 	std::string getName() const;
+    
+    //! Get function to acess person's email
+    /*!
+     \return string with person's email
+     \sa getName()
+     */
 	std::string getEmail() const;
-
+    
+    //! Sets the person's name to newName
+    /*!
+     \param newName string with person's new name
+     \sa getName()
+     */
 	void setName(std::string newName);
-
-	virtual void save(std::ostream &out) const {}; //Save object to file (can't use overloaded operator<< because it'll be used to show object information in a more user-friendly way)
+    
+    //! Prints person to out, used for writing to files. Virtual function, only used in derivated classed Student and Teacher
+    /*!
+     \param out stream the person will be printed to.
+     */
+	virtual void save(std::ostream &out) const {};
 };
 
 class Student : public Person {
@@ -41,9 +72,27 @@ protected:
 	Date registrationDate; //Not sure how it'll be handled, but needs to be here since it's stated in the paper...
 
 public:
-	static unsigned long int nextCode; //Sequential code used for 1st timers (unsigned int may not have enough memory, unsigned long should hold easily)
-	Student() {}; //default constructor
+    //! Sequential code used for 1st timers (unsigned int may not have enough memory, unsigned long should hold easily)
+	static unsigned long int nextCode;
+    
+    //! Default constructor
+	Student() {};
+    
+    //! Class constructor used for students read from text files
+    /*!
+     \param in text file from where the student's information will be read
+     */
 	Student(std::istream &in);
+    
+    //! Class constructor used for studens created during program execution
+    /*!
+     \param name string that holds the students's name
+     \param status string that holds the student's status
+     \param curricularYear unsigned int that holds the student's curricylar year
+     \param unitsDone vector that holds the student's completed units
+     \param unitsToDo vector that hold the student's uncompleted unites
+     \param code int that holds the students code (automatically created if curricularYear == 1)
+     */
 	Student(std::string name, std::string status, unsigned int curricularYear, std::vector<std::vector<std::pair<Unit*, unsigned int>>> unitsDone, std::vector<std::vector<std::pair<Unit*, unsigned int>>> unitsToDo, unsigned long int code = nextCode++);
 
 	unsigned long int getCode() const;
@@ -77,22 +126,83 @@ protected:
 	std::vector<Unit*> unitsTaught;
 	std::vector<Student*> pupils;
 public:
-	static unsigned int lessStudents; //One (or more) teacher(s) will have the least amount of students as pupils. It is to those that should be assigned students first. This variable holds that minimum
-	Teacher() {}; //default constructor
+    //! One (or more) teacher(s) will have the least amount of students as pupils. It is to those that should be assigned students first. This variable holds that minimum
+	static unsigned int lessStudents;
+    
+    //! Default constructor (does nothing)
+    Teacher() {};
+    
+    //! Class constructor used for teachers read from text files
+    /*!
+     \param in text file from where the teacher's information will be read
+     */
 	Teacher(std::istream &in);
+    
+    //! Class constructor used for teachers created during program execution
+    /*!
+     \param name string that holds the new teacher's name
+     \param code string that holds the new teacher's code
+     \param unitsTaught vector of type Unit* that holds the units taught by the new teacher
+     */
 	Teacher(std::string name, std::string code, std::vector<Unit*> unitsTaught);
-
+    
+    //! Gets a copy of the teacher's code
+    /*!
+     \return copy of string data member code
+     */
 	std::string getCode() const;
+    
+    //! Gets a copy of vector that holds the units taught by the teacher
+    /*!
+     \return copy of Unit* data member unitsTaught
+     */
 	std::vector<Unit*> getUnitsTaught() const;
+    
+    //! Gets a copy of vector that holds the teacher's pupils
+    /*!
+     \return copy of Student* data member pupils
+     */
 	std::vector<Student*> getPupils() const;
 
-	void setCode(std::string newCode);
+    //! Changes teacher's code to newCode
+    /*!
+     \param newCode string that represents the teacher's new code
+     */
+    void setCode(std::string newCode);
 
+    //! Adds units newUnit to the teachers unitsTaught vector.
+    /*!
+     \param newUnit pointer to unit to be added.
+     \sa addStudent(Student* newStudent);
+     */
 	void addUnitTaught(Unit* newUnit);
+    
+    //! Adds newStudent to the teachers pupils vector.
+    /*!
+     \param newStudent pointer to student to be added.
+     \sa removeStudent(Student newStudent);
+     */
 	void addStudent(Student* newStudent);
-	void removeStudent(Student oldStudent); //!< Removes student from pupils vector if he exists, otherwise does nothing
+    
+    //! Removes oldStudent from the teachers pupils vector.
+    /*!
+     \param oldStudent student to be removed.
+     \sa addStudent(Student* newStudent);
+     */
+	void removeStudent(Student oldStudent);
 
+    //! Prints teacher to out, used for writing to files.
+    /*!
+     \param out stream the teacher will be printed to.
+     \sa std::ostream& operator<<(std::ostream& out, const Teacher& s);
+     */
 	virtual void save(std::ostream &out) const;
+    
+    //! Overload of << operator
+    /*!
+     \param out stream the teacher will be printed to.
+     \param s the teacher that will be printed.
+     */
 	friend std::ostream& operator<<(std::ostream& out, const Teacher& s);
 };
 
