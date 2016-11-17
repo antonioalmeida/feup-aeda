@@ -1,22 +1,22 @@
 29
 Gabriel de Sousa Torcato David
-208741 
+gtd
 MDIS |
 
 Raul Fernando de Almeida Moreira Vidal
-206415
+rmvidal
 AOCO LGPR |
 
 Antonio Fernando Vasconcelos Cunha Castro Coelho
-419920
+acoelho
 FPRO |
 
-Catarina Rosa Santos Ferreira de Castro
-211935
+Rui Paulo Soares Ribeiro
+rribeiro
 AMAT |
 
 Antonio Joaquim Mendes Ferreira
-211573
+ferreira
 ALGE |
 
 Manuel Firmino da Silva Torres
@@ -24,93 +24,125 @@ Manuel Firmino da Silva Torres
 PF PPIN |
 
 Jose Luis Cabral Moura Borges
-211706
+jlborges
 MEST |
 
 Jorge Alves da Silva
-208785
+jsilva
 PROG SOPE |
 
 Jaime Enrique Villate Matiz
-211847
+villate
 FISI1 FISI2 |
 
 Jose Augusto Trigo Barbosa
-208228
+jtrigo
 CMAT |
 
+João Paulo de Castro Canas Ferreira
+jcf
+MPCP |
+ 
 Joao Manuel Paiva Cardoso
-449856
+jmpc
 TCOM COMP |
 
 Jose Manuel Soutelo Soeiro de Carvalho
-209537
+jmsoeiro
 MNUM |
 
 Ana Paula Cunha da Rocha
-211625
+arocha
 AEDA |
 
 Pedro Alexandre Guimaraes Lobo Ferreira Souto
-238172
+pfs
 LCOM SDIS |
 
 Joao Pedro Mendes Moreira
-236031
+jpmm
 BDAD |
 
 Rosaldo Jose Fernandes Rossetti
-419241
+rjfr
 CAL |
 
 Antonio Augusto de Sousa
-209500
+aas
 CGRA LAIG |
 
 Joao Carlos Pascoal Faria
-210006
+jcpf
 LPOO |
 
 Rui Carlos Camacho de Sousa Ferreira da Silva
-209847
+rccsfs
 PLOG |
 
 Rui Filipe Lima Maranhao de Abreu
-466651
+rflma
 ESOF |
 
 Manuel Alberto Pereira Ricardo
-236891
+mapr
 RCOM |
 
 Andre Monteiro de Oliveira Restivo
-353972
+amor
 LTW |
 
 Sergio Sobral Nunes
-310021
+ssn
 LBAW |
 
 Eugenio da Costa Oliveira
-207971
+eco
 IART AIAD |
 
 Joao Jose da Cunha e Silva Pinto Ferreira
-210653
+jjcspf
 SINF |
 
 Ademar Manuel Teixeira de Aguiar
-231081
+amta
 LDSO |
 
 Lia Raquel Neto Martins Lima Patricio
-236200
+lrnmlp
 GEMP |
 
 Ana Cristina Ramada Paiva
-242693
+acrp
 MFES |
 
 Maria Teresa Galvao Dias
-237494
+mtgd
 IOPE |
+
+Andre Rodrigo Fonte Couto
+arfc
+APSI ERSS MARK TNEL DAPI |
+
+Lara Daniela Fernandes Fonseca
+ldff
+DJCO CPAR LAPD APIN CMOV |
+
+Soraia Susana Amaro Goncalves
+ssag
+MNSE PPRO TBDA SADE SSIN |
+
+Hermenegildo Emanuel da Senra Leitao
+hesl
+ASSO GOLO MPES ADAD ECAC |
+
+Zeferina Andreia Milhezes Miranda
+zamm
+ROBO PFAL |
+
+Carla Albertina da Conceicao Almeida
+caca
+VCOM MADS |
+
+Pablo Juan Andrade
+pja
+TQSO |
