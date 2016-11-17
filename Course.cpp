@@ -679,7 +679,7 @@ void Course::showTeachers(bool(*comparisonFunction)(Teacher, Teacher)) const {
 
 void Course::showTeacher(string teacherID) const {
 	for (int i = 0; i < teachers.size(); i++) {
-		if (teachers.at(i).getName() == teacherID) {
+		if (teachers.at(i).getName() == teacherID|| teachers.at(i).getCode() == teacherID) {
 			cout << teachers.at(i) << endl;
 			return;
 		}
