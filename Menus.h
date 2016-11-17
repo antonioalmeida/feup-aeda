@@ -1,6 +1,7 @@
 #pragma once
+
+#include <iostream>
 #include "Course.h"
-#include "Person.h"
 
 void start(std::string &studentsFile, std::string &teachersFile, std::string &mandatoryUnitsFile, std::string &optionalUnitsFile); //!< Asks user for filenames. Throws exception if any of needed files does not exist
 
@@ -61,10 +62,10 @@ void showTeacherPupilOptions(Course & course);
 unsigned short int unitsMenu();
 void unitsOptions(Course & course);
 
-//List Units Menu
-unsigned short int listUnitsMenu();
-void listUnitsOptions(Course & course);
-
 //Edit Units Menu
 unsigned short int editUnitsMenu();
 void editUnitsOptions(Course & course);
+
+//List Units Menu
+unsigned short int listUnitsMenu();
+void listUnitsOptions(Course & course);

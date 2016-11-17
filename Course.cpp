@@ -699,7 +699,7 @@ void Course::showTeacher(Unit* u1) const {
 	}
 }
 
-void Course::showTeacherPupil(string pupilName) const {
+void Course::showTeacherPupilByName(string pupilName) const {
 	for (int i = 0; i < teachers.size(); i++) {
 		vector<Student*> pupilsTemp = teachers.at(i).getPupils();
 		for (vector<Student*>::iterator it = pupilsTemp.begin(); it != pupilsTemp.end(); it++) {
@@ -709,10 +709,10 @@ void Course::showTeacherPupil(string pupilName) const {
 			}
 		}
 	}
-	cout << "Student identified by \"" << pupilName << "\" does not exist or has not been assigned a mentor yet!" << endl;
+	throw invalidIdentification<string>(pupilName);
 }
 
-void Course::showTeacherPupil(unsigned long int pupilCode) const {
+void Course::showTeacherPupilByCode(unsigned long int pupilCode) const {
 	for (int i = 0; i < teachers.size(); i++) {
 		vector<Student*> pupilsTemp = teachers.at(i).getPupils();
 		for (vector<Student*>::iterator it = pupilsTemp.begin(); it != pupilsTemp.end(); it++) {
@@ -722,76 +722,11 @@ void Course::showTeacherPupil(unsigned long int pupilCode) const {
 			}
 		}
 	}
-	cout << "Student identified by \"" << pupilCode << "\" does not exist or has not been assigned a mentor yet!" << endl;
+	throw invalidIdentification<unsigned long int>(pupilCode);
 }
 
 //Units
 
-void Course::showUnits() const {
-	vector<Unit*> unitTemp = getAllUnits();
-
-	sort(unitTemp.begin(), unitTemp.end());
-
-	for (int i = 0; i < unitTemp.size(); i++)
-		cout << *unitTemp.at(i) << endl;
-	cout << endl;
-}
-
-void Course::showSpecificUnit() const {
-	string abbreviation;
-	cout << "Insert the unit's abbreviation: ";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	getline(cin, abbreviation);
-	deleteWhitespace(abbreviation);
-	map<string, Unit*>::const_iterator it = abbreviationToUnit.find(abbreviation);
-	if (it == abbreviationToUnit.end())
-		throw invalidIdentification<string>(abbreviation);
-	else
-		cout << *(it->second);
-}
-
-void Course::showYearUnit(unsigned short int year) const {
-	vector<Unit*> unitTemp = getUnitsFromYear(year);
-
-	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
-
-	for (int i = 0; i < unitTemp.size(); i++)
-		cout << *unitTemp.at(i) << endl;
-	cout << endl;
-}
-
-void Course::showMandatoryUnit() const {
-	vector<Unit*> unitTemp = getAllMandatoryUnits();
-
-	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
-
-	for (int i = 0; i < unitTemp.size(); i++)
-		cout << *unitTemp.at(i) << endl;
-	cout << endl;
-}
-
-void Course::showOptionalUnit() const {
-	vector<Unit*> unitTemp = getAllOptionalUnits();
-
-	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
-
-	for (int i = 0; i < unitTemp.size(); i++)
-		cout << *unitTemp.at(i) << endl;
-	cout << endl;
-}
-
-void Course::showUnitsofScientificArea(std::string scientificArea) const {
-	vector<Unit*> result;
-	for (map<string, Unit*>::const_iterator it = abbreviationToUnit.begin(); it != abbreviationToUnit.end(); it++) {
-		if (it->second->getScientificArea() == scientificArea)
-			result.push_back(it->second);
-	}
-
-	sort(result.begin(), result.end(), compareUnitPointers);
-	for (int i = 0; i < result.size(); i++)
-		cout << *(result.at(i)) << endl;
-	cout << endl;
-}
 
 void Course::editUnitName() {
 	string abbreviation;
@@ -862,6 +797,71 @@ void Course::editUnitScientificArea() {
 	it->second->setScientificArea(newScientificArea);
 }
 
+void Course::showUnits() const {
+	vector<Unit*> unitTemp = getAllUnits();
+
+	sort(unitTemp.begin(), unitTemp.end());
+
+	for (int i = 0; i < unitTemp.size(); i++)
+		cout << *unitTemp.at(i) << endl;
+	cout << endl;
+}
+
+void Course::showSpecificUnit() const {
+	string abbreviation;
+	cout << "Insert the unit's abbreviation: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	getline(cin, abbreviation);
+	deleteWhitespace(abbreviation);
+	map<string, Unit*>::const_iterator it = abbreviationToUnit.find(abbreviation);
+	if (it == abbreviationToUnit.end())
+		throw invalidIdentification<string>(abbreviation);
+	else
+		cout << *(it->second);
+}
+
+void Course::showYearUnit(unsigned short int year) const {
+	vector<Unit*> unitTemp = getUnitsFromYear(year);
+
+	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
+
+	for (int i = 0; i < unitTemp.size(); i++)
+		cout << *unitTemp.at(i) << endl;
+	cout << endl;
+}
+
+void Course::showMandatoryUnit() const {
+	vector<Unit*> unitTemp = getAllMandatoryUnits();
+
+	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
+
+	for (int i = 0; i < unitTemp.size(); i++)
+		cout << *unitTemp.at(i) << endl;
+	cout << endl;
+}
+
+void Course::showOptionalUnit() const {
+	vector<Unit*> unitTemp = getAllOptionalUnits();
+
+	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
+
+	for (int i = 0; i < unitTemp.size(); i++)
+		cout << *unitTemp.at(i) << endl;
+	cout << endl;
+}
+
+void Course::showUnitsofScientificArea(std::string scientificArea) const {
+	vector<Unit*> result;
+	for (map<string, Unit*>::const_iterator it = abbreviationToUnit.begin(); it != abbreviationToUnit.end(); it++) {
+		if (it->second->getScientificArea() == scientificArea)
+			result.push_back(it->second);
+	}
+
+	sort(result.begin(), result.end(), compareUnitPointers);
+	for (int i = 0; i < result.size(); i++)
+		cout << *(result.at(i)) << endl;
+	cout << endl;
+}
 
 //Save
 void Course::save() const {

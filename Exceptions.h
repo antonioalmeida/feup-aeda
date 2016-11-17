@@ -1,6 +1,6 @@
 #pragma once
 
-//Header file for custom made exceptions to be caught and treated throughout program execution (to be implemented)
+//Header file for custom made exceptions to be caught and treated throughout program execution
 
 class invalidDay { //Invalid day regardless of other date specifications (day == 0 or day > 31)
 private:
@@ -97,6 +97,6 @@ public:
 };
 
 class tooManyECTS { //When user is trying to make student take more than 75 ECTS
-    public:
-    	tooManyECTS() {};
+public:
+	tooManyECTS() {};
 };

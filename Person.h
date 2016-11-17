@@ -15,46 +15,46 @@ protected:
 	std::string name;
 	std::string email;
 public:
-    //! Default constructor
+	//! Default constructor
 	Person() {};
-    
-    //! Class constructor used for persons read from text files
-    /*!
-     \param in text file from where the person's information will be read
-     */
+
+	//! Class constructor used for persons read from text files
+	/*!
+	 \param in text file from where the person's information will be read
+	 */
 	Person(std::istream &in);
-    
-    //! Class constructor used for persons created during program execution
-    /*!
-     \param name the created person's name
-     */
+
+	//! Class constructor used for persons created during program execution
+	/*!
+	 \param name the created person's name
+	 */
 	Person(std::string name);
-    
-    //! Get function to acess person's name
-    /*!
-     \return string with person's name
-     \sa getEmail()
-     */
+
+	//! Get function to acess person's name
+	/*!
+	 \return string with person's name
+	 \sa getEmail()
+	 */
 	std::string getName() const;
-    
-    //! Get function to acess person's email
-    /*!
-     \return string with person's email
-     \sa getName()
-     */
+
+	//! Get function to acess person's email
+	/*!
+	 \return string with person's email
+	 \sa getName()
+	 */
 	std::string getEmail() const;
-    
-    //! Sets the person's name to newName
-    /*!
-     \param newName string with person's new name
-     \sa getName()
-     */
+
+	//! Sets the person's name to newName
+	/*!
+	 \param newName string with person's new name
+	 \sa getName()
+	 */
 	void setName(std::string newName);
-    
-    //! Prints person to out, used for writing to files. Virtual function, only used in derivated classed Student and Teacher
-    /*!
-     \param out stream the person will be printed to.
-     */
+
+	//! Prints person to out, used for writing to files. Virtual function, only used in derivated classed Student and Teacher
+	/*!
+	 \param out stream the person will be printed to.
+	 */
 	virtual void save(std::ostream &out) const {};
 };
 
@@ -72,27 +72,27 @@ protected:
 	Date registrationDate;
 
 public:
-    //! Sequential code used for freshmen
+	//! Sequential code used for freshmen
 	static unsigned long int nextCode;
-    
-    //! Default constructor
+
+	//! Default constructor
 	Student() {};
-    
-    //! Class constructor used for students read from text files
-    /*!
-     \param in text file from where the student's information will be read
-     */
+
+	//! Class constructor used for students read from text files
+	/*!
+	 \param in text file from where the student's information will be read
+	 */
 	Student(std::istream &in);
-    
-    //! Class constructor used for studens created during program execution
-    /*!
-     \param name string that holds the students's name
-     \param status string that holds the student's status
-     \param curricularYear unsigned int that holds the student's curricylar year
-     \param unitsDone vector that holds the student's completed units
-     \param unitsToDo vector that hold the student's uncompleted unites
-     \param code int that holds the students code (automatically assigned if curricularYear is 1)
-     */
+
+	//! Class constructor used for studens created during program execution
+	/*!
+	 \param name string that holds the students's name
+	 \param status string that holds the student's status
+	 \param curricularYear unsigned int that holds the student's curricylar year
+	 \param unitsDone vector that holds the student's completed units
+	 \param unitsToDo vector that hold the student's uncompleted unites
+	 \param code int that holds the students code (automatically assigned if curricularYear is 1)
+	 */
 	Student(std::string name, std::string status, unsigned int curricularYear, std::vector<std::vector<std::pair<Unit*, unsigned int>>> unitsDone, std::vector<std::vector<std::pair<Unit*, unsigned int>>> unitsToDo, unsigned long int code = nextCode++);
 
 	//! Gets a copy of the student's unique code
@@ -100,49 +100,49 @@ public:
 	\return copy of unsigned long it data member code
 	*/
 	unsigned long int getCode() const;
-	
+
 	//! Gets a copy of the student's status
 	/*!
 	\return copy of string data member status
 	*/
 	std::string getStatus() const;
-	
+
 	//! Gets a copy of the amount of ECTS the student is currently taking
 	/*!
 	\return copy of float data member ectsTaking
 	*/
 	float getECTSTaking() const;
-	
+
 	//! Gets a copy of the student's current curricular year
 	/*!
 	\return copy of unsigned int data member curricularYear
 	*/
 	unsigned int getCurricularYear() const;
-	
+
 	//! Gets a copy of the value of the student's current average
 	/*!
 	\return copy of float data member average
 	*/
 	double getAverage() const;
-	
+
 	//! Gets a copy of the matrix that holds the information about units the student has taken and completed (pairs consisting of a pointer to the unit and the final grade)
 	/*!
 	\return copy of data member pair vector vectors of type <Unit*, unsigned int> unitsDone
 	*/
 	std::vector<std::vector<std::pair<Unit*, unsigned int>>> getUnitsDone() const;
-	
+
 	//! Gets a copy of the matrix that holds the information about units the student has taken but not completed (pairs consisting of a pointer to the unit and the final grade)
 	/*!
 	\return copy of data member pair vector vectors of type <Unit*, unsigned int> unitsToDo
 	*/
 	std::vector<std::vector<std::pair<Unit*, unsigned int>>> getUnitsToDo() const;
-	
+
 	//! Gets a copy of the vector that holds pointers to the units the student's taking
 	/*!
 	\return copy of data member vector of type Unit* unitsTaking
 	*/
 	std::vector<Unit*> getUnitsTaking() const;
-	
+
 	//! Gets a copy of the student's registration date
 	/*!
 	\return copy of data member registrationDate, an object of custom class Date
@@ -160,7 +160,7 @@ public:
 	\param p pair whose left side is a pointer to the unit and the right side is the final grade obtained
 	*/
 	void addUnitToDo(std::pair<Unit*, unsigned int> p);
-	
+
 	//! Adds a unit that the student is taking to the unitsTaking vector. Throws exception if adding the unit would cause an ECTS overflow
 	/*!
 	\param u pointer to the unit to be added
@@ -175,16 +175,16 @@ public:
 	\return current value of data member isRegistered: true if student has completed registration, false otherwise
 	*/
 	bool isRegistered() const; //Check if student is already registered, if so he'll be ignored in the registration process
-	
+
 	//! Changes a student's registration status to its current opposite (true if false and vice-versa)
 	void setRegistration();
-	
+
 	//! Changes a student's status to a new one
 	/*!
 	\param newStatus string corresponding to the student's new status
 	*/
 	void setStatus(std::string newStatus);
-	
+
 	//! Prints student to out (used when writing to file)
 	/*!
 	\param out outstream where the student will be printed to
@@ -213,83 +213,83 @@ protected:
 	std::vector<Unit*> unitsTaught;
 	std::vector<Student*> pupils;
 public:
-    //! One (or more) teacher(s) will have the least amount of students as pupils. It is to those that should be assigned students first. This variable holds that minimum
+	//! One (or more) teacher(s) will have the least amount of students as pupils. It is to those that should be assigned students first. This variable holds that minimum
 	static unsigned int lessStudents;
-    
-    //! Default constructor (does nothing)
-    Teacher() {};
-    
-    //! Class constructor used for teachers read from text files
-    /*!
-     \param in text file from where the teacher's information will be read
-     */
+
+	//! Default constructor (does nothing)
+	Teacher() {};
+
+	//! Class constructor used for teachers read from text files
+	/*!
+	 \param in text file from where the teacher's information will be read
+	 */
 	Teacher(std::istream &in);
-    
-    //! Class constructor used for teachers created during program execution
-    /*!
-     \param name string that holds the new teacher's name
-     \param code string that holds the new teacher's code
-     \param unitsTaught vector of type Unit* that holds the units taught by the new teacher
-     */
+
+	//! Class constructor used for teachers created during program execution
+	/*!
+	 \param name string that holds the new teacher's name
+	 \param code string that holds the new teacher's code
+	 \param unitsTaught vector of type Unit* that holds the units taught by the new teacher
+	 */
 	Teacher(std::string name, std::string code, std::vector<Unit*> unitsTaught);
-    
-    //! Gets a copy of the teacher's code
-    /*!
-     \return copy of string data member code
-     */
+
+	//! Gets a copy of the teacher's code
+	/*!
+	 \return copy of string data member code
+	 */
 	std::string getCode() const;
-    
-    //! Gets a copy of vector that holds the units taught by the teacher
-    /*!
-     \return copy of Unit* data member unitsTaught
-     */
+
+	//! Gets a copy of vector that holds the units taught by the teacher
+	/*!
+	 \return copy of Unit* data member unitsTaught
+	 */
 	std::vector<Unit*> getUnitsTaught() const;
-    
-    //! Gets a copy of vector that holds the teacher's pupils
-    /*!
-     \return copy of Student* data member pupils
-     */
+
+	//! Gets a copy of vector that holds the teacher's pupils
+	/*!
+	 \return copy of Student* data member pupils
+	 */
 	std::vector<Student*> getPupils() const;
 
-    //! Changes teacher's code to newCode
-    /*!
-     \param newCode string that represents the teacher's new code
-     */
-    void setCode(std::string newCode);
+	//! Changes teacher's code to newCode
+	/*!
+	 \param newCode string that represents the teacher's new code
+	 */
+	void setCode(std::string newCode);
 
-    //! Adds units newUnit to the teachers unitsTaught vector.
-    /*!
-     \param newUnit pointer to unit to be added.
-     \sa addStudent(Student* newStudent);
-     */
+	//! Adds units newUnit to the teachers unitsTaught vector.
+	/*!
+	 \param newUnit pointer to unit to be added.
+	 \sa addStudent(Student* newStudent);
+	 */
 	void addUnitTaught(Unit* newUnit);
-    
-    //! Adds newStudent to the teachers pupils vector.
-    /*!
-     \param newStudent pointer to student to be added.
-     \sa removeStudent(Student newStudent);
-     */
+
+	//! Adds newStudent to the teachers pupils vector.
+	/*!
+	 \param newStudent pointer to student to be added.
+	 \sa removeStudent(Student newStudent);
+	 */
 	void addStudent(Student* newStudent);
-    
-    //! Removes oldStudent from the teachers pupils vector.
-    /*!
-     \param oldStudent student to be removed.
-     \sa addStudent(Student* newStudent);
-     */
+
+	//! Removes oldStudent from the teachers pupils vector.
+	/*!
+	 \param oldStudent student to be removed.
+	 \sa addStudent(Student* newStudent);
+	 */
 	void removeStudent(Student oldStudent);
 
-    //! Prints teacher to out, used for writing to files.
-    /*!
-     \param out stream the teacher will be printed to.
-     \sa std::ostream& operator<<(std::ostream& out, const Teacher& s);
-     */
+	//! Prints teacher to out, used for writing to files.
+	/*!
+	 \param out stream the teacher will be printed to.
+	 \sa std::ostream& operator<<(std::ostream& out, const Teacher& s);
+	 */
 	virtual void save(std::ostream &out) const;
-    
-    //! Overload of << operator
-    /*!
-     \param out stream the teacher will be printed to.
-     \param s the teacher that will be printed.
-     */
+
+	//! Overload of << operator
+	/*!
+	 \param out stream the teacher will be printed to.
+	 \param s the teacher that will be printed.
+	 */
 	friend std::ostream& operator<<(std::ostream& out, const Teacher& s);
 };
 

@@ -1,9 +1,4 @@
-#include <iostream>
-
 #include "Menus.h"
-#include "Utils.h"
-#include "Course.h"
-#include "Person.h"
 
 using namespace std;
 
@@ -71,10 +66,13 @@ void mainOption(Course &course) {
 	while ((option = mainMenu()))
 		switch (option) {
 		case 1: studentsOptions(course);
+			pressToContinue();
 			break;
 		case 2: teachersOptions(course);
+			pressToContinue();
 			break;
 		case 3: unitsOptions(course);
+			pressToContinue();
 			break;
 		}
 
@@ -126,16 +124,19 @@ void studentsOptions(Course &course) {
 			catch (repeatedIdentification<string> &r) {
 				cout << "ERROR: A student is already identified by \"" << r.getRepIdentification() << "\"!" << endl;
 			}
+			pressToContinue();
 			break;
 		case 2:
 			editStudentOptions(course);
+			pressToContinue();
 			break;
 		case 3: {
 			unsigned short choice;
 			cout << TAB << "1 - Identify student by name" << endl;
 			cout << TAB << "2 - Identify student by code" << endl << endl;
+			cout << TAB << "0 - Return to previous menu" << endl << endl;
 			cout << TAB << "Enter your option: ";
-			choice = readOp(1, 2);
+			choice = readOp(0, 2);
 			if (choice == 1) {
 				string studentName;
 				cout << "Insert the student's full name: ";
@@ -153,7 +154,7 @@ void studentsOptions(Course &course) {
 			else { //choice == 2
 				unsigned long studentCode;
 				cout << "Insert the student's code: ";
-				cin >> studentCode; //Check for invalid input (later)
+				cin >> studentCode;
 				try {
 					course.removeStudent(studentCode);
 					cout << "Student removed successfully" << endl;
@@ -162,16 +163,20 @@ void studentsOptions(Course &course) {
 					cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
 				}
 			}
+			pressToContinue();
 			break;
 		}
 		case 4:
 			registrateStudentOptions(course);
+			pressToContinue();
 			break;
 		case 5:
 			listStudentsOptions(course);
+			pressToContinue();
 			break;
 		case 6:
 			listRegistrationsOptions(course);
+			pressToContinue();
 			break;
 		}
 }
@@ -209,6 +214,7 @@ void editStudentOptions(Course & course) {
 			catch (repeatedIdentification<string> &s) {
 				cout << "ERROR: There's already a student identified by \"" << s.getRepIdentification() << "\"!" << endl;
 			}
+			pressToContinue();
 			break;
 		case 2:
 			try {
@@ -218,6 +224,7 @@ void editStudentOptions(Course & course) {
 			catch (invalidIdentification<string> &s) {
 				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
+			pressToContinue();
 			break;
 
 		}
@@ -304,11 +311,13 @@ void listStudentsOptions(Course & course) {
 		switch (option) {
 		case 1:
 			course.showStudents(sortByName);
+			pressToContinue();
 			break;
 		case 2: {
 			cout << "Insert the curricular year: ";
 			unsigned short int year = readOp(1, 5);
 			course.showStudents(sortByCurricularYear);
+			pressToContinue();
 			break;
 		}
 		case 3: {
@@ -318,19 +327,24 @@ void listStudentsOptions(Course & course) {
 			getline(cin, statusToShow);
 			deleteWhitespace(statusToShow);
 			course.showStudentsStatus(statusToShow);
+			pressToContinue();
 			break;
 		}
 		case 4:
 			course.showStudents(sortByAverage);
+			pressToContinue();
 			break;
 		case 5:
 			showStudentOptions(course);
+			pressToContinue();
 			break;
 		case 6:
 			course.showRegisteredStudents();
+			pressToContinue();
 			break;
 		case 7:
 			course.showUnregisteredStudents();
+			pressToContinue();
 			break;
 		}
 }
@@ -369,18 +383,20 @@ void showStudentOptions(Course & course) {
 			catch (invalidIdentification<string> &s) {
 				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
+			pressToContinue();
 			break;
 		}
 		case 2: {
 			cout << "Insert the student's code: " << endl;
 			unsigned long studentCode;
-			cin >> studentCode; //Check for invalid input (later)
+			cin >> studentCode;
 			try {
 				course.showStudent(studentCode);
 			}
 			catch (invalidIdentification<unsigned long> &s) {
 				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
+			pressToContinue();
 			break;
 		}
 		}
@@ -418,19 +434,23 @@ void listRegistrationsOptions(Course & course) {
 			catch (invalidIdentification<string> &s) {
 				cout << "ERROR: No unit identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
+			pressToContinue();
 			break;
 		}
 		case 2:
 			studentRegistrationsOptions(course);
+			pressToContinue();
 			break;
 		case 3: {
 			unsigned long yearToShow;
 			yearToShow = readOp(1, 5);
 			course.showYearRegistrations(yearToShow);
+			pressToContinue();
 			break;
 		}
 		case 4:
 			course.showAllStudentsRegistrations();
+			pressToContinue();
 			break;
 		}
 }
@@ -470,18 +490,20 @@ void studentRegistrationsOptions(Course & course) {
 			catch (invalidIdentification<string> &s) {
 				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
+			pressToContinue();
 			break;
 		}
 		case 2: {
 			cout << "Insert the student's code: " << endl;
 			unsigned long studentCode;
-			cin >> studentCode; //Check for invalid input (later)
+			cin >> studentCode;
 			try {
 				course.showStudentUnits(studentCode);
 			}
 			catch (invalidIdentification<unsigned long> &s) {
 				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
+			pressToContinue();
 			break;
 		}
 		}
@@ -526,9 +548,11 @@ void teachersOptions(Course & course) {
 			catch (repeatedIdentification<string> &s) {
 				cout << "ERROR: There's a teacher identified by \"" << s.getRepIdentification() << "\" already!" << endl;
 			}
+			pressToContinue();
 			break;
 		case 2:
 			editTeacherOptions(course);
+			pressToContinue();
 			break;
 		case 3: {
 			string teacherID;
@@ -543,10 +567,12 @@ void teachersOptions(Course & course) {
 			catch (invalidIdentification<string> &s) {
 				cout << "ERROR: No teacher identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
+			pressToContinue();
 			break;
 		}
 		case 4:
 			listTeachersOptions(course);
+			pressToContinue();
 			break;
 		}
 }
@@ -585,6 +611,7 @@ void editTeacherOptions(Course & course) {
 			catch (repeatedIdentification<string> &s) {
 				cout << "ERROR: There's a teacher identified by \"" << s.getRepIdentification() << "\" already!" << endl;
 			}
+			pressToContinue();
 			break;
 		case 2:
 			try {
@@ -597,6 +624,7 @@ void editTeacherOptions(Course & course) {
 			catch (repeatedIdentification<string> &s) {
 				cout << "ERROR: There's a teacher identified by \"" << s.getRepIdentification() << "\" already!" << endl;
 			}
+			pressToContinue();
 			break;
 		case 3:
 			try {
@@ -606,6 +634,7 @@ void editTeacherOptions(Course & course) {
 			catch (invalidIdentification<string> &s) {
 				cout << "ERROR: No teacher identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
+			pressToContinue();
 			break;
 		}
 }
@@ -635,9 +664,11 @@ void listTeachersOptions(Course & course) {
 		switch (option) {
 		case 1:
 			course.showTeachers(sortTByName);
+			pressToContinue();
 			break;
 		case 2:
 			showTeacherOptions(course);
+			pressToContinue();
 			break;
 		}
 }
@@ -677,6 +708,7 @@ void showTeacherOptions(Course & course) {
 			catch (invalidIdentification<string> &s) {
 				cout << "ERROR: No teacher identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
+			pressToContinue();
 			break;
 		}
 		case 2: {
@@ -691,11 +723,14 @@ void showTeacherOptions(Course & course) {
 				map<string, Unit*>::const_iterator it = course.getMap().find(unitAbbreviation);
 				course.showTeacher(it->second);
 			}
+			pressToContinue();
 			break;
 		}
 
 		case 3: {
 			showTeacherPupilOptions(course);
+			pressToContinue();
+			break;
 		}
 		}
 }
@@ -728,14 +763,26 @@ void showTeacherPupilOptions(Course & course) {
 			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			getline(cin, pupilName);
 			deleteWhitespace(pupilName);
-			course.showTeacherPupil(pupilName);
+			try {
+				course.showTeacherPupilByName(pupilName);
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "Student identified by \"" << s.getInvIdentification() << "\" does not exist or has not been assigned a mentor yet!" << endl;
+			}
+			pressToContinue();
 			break;
 		}
 		case 2: {
 			cout << "Insert the pupil's code: " << endl;
 			unsigned long pupilCode;
-			cin >> pupilCode; //Check for invalid input (later)
-			course.showTeacherPupil(pupilCode);
+			cin >> pupilCode;
+			try {
+				course.showTeacherPupilByCode(pupilCode);
+			}
+			catch (invalidIdentification<unsigned long int> &s) {
+				cout << "Student identified by \"" << s.getInvIdentification() << "\" does not exist or has not been assigned a mentor yet!" << endl;
+			}
+			pressToContinue();
 			break;
 		}
 		}
@@ -773,74 +820,12 @@ void unitsOptions(Course & course) {
 		switch (option) {
 		case 1:
 			editUnitsOptions(course);
+			pressToContinue();
 			break;
 		case 2:
 			listUnitsOptions(course);
+			pressToContinue();
 			break;
-		}
-}
-
-// List Units Menu
-
-
-unsigned short int listUnitsMenu() {
-	unsigned short int option;
-
-	clearScreen();
-	cout << TAB_BIG << "List Units Menu" << endl;
-	cout << endl;
-	cout << TAB << "1 - Show all units" << endl; //done
-	cout << TAB << "2 - Show units of a specific year" << endl;  //done
-	cout << TAB << "3 - Show mandatory units" << endl; //done
-	cout << TAB << "4 - Show optional units" << endl; //done
-	cout << TAB << "5 - Show a specific unit" << endl; //done
-	cout << TAB << "6 - Show units of a specific scientific area" << endl; //done
-	cout << TAB << "0 - Return to previous menu" << endl << endl;
-	cout << TAB << "Enter your option: ";
-	option = readOp(0, 6);
-
-	return option;
-}
-
-
-void listUnitsOptions(Course & course) {
-	unsigned int option;
-
-	while ((option = listUnitsMenu()))
-		switch (option) {
-		case 1:
-			course.showUnits();
-			break;
-		case 2: {
-			cout << "Insert the curricular year: " << endl;
-			unsigned short int year;
-			year = readOp(1, 5);
-			course.showYearUnit(year);
-			break;
-		}
-		case 3:
-			course.showMandatoryUnit();
-			break;
-		case 4:
-			course.showOptionalUnit();
-			break;
-		case 5:
-			try {
-				course.showSpecificUnit();
-			}
-			catch (invalidIdentification<string> &s) {
-				cout << "ERROR: No unit identified by \"" << s.getInvIdentification() << "\"!" << endl;
-			}
-			break;
-		case 6: {
-			string scientificArea;
-			cout << "Insert the scientific area: ";
-			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			getline(cin, scientificArea);
-			deleteWhitespace(scientificArea);
-			course.showUnitsofScientificArea(scientificArea);
-			break;
-		}
 		}
 }
 
@@ -905,5 +890,81 @@ void editUnitsOptions(Course & course) {
 			}
 			pressToContinue();
 			break;
+		}
+}
+
+
+// List Units Menu
+
+
+unsigned short int listUnitsMenu() {
+	unsigned short int option;
+
+	clearScreen();
+	cout << TAB_BIG << "List Units Menu" << endl;
+	cout << endl;
+	cout << TAB << "1 - Show all units" << endl; //done
+	cout << TAB << "2 - Show units of a specific year" << endl;  //done
+	cout << TAB << "3 - Show mandatory units" << endl; //done
+	cout << TAB << "4 - Show optional units" << endl; //done
+	cout << TAB << "5 - Show a specific unit" << endl; //done
+	cout << TAB << "6 - Show units of a specific scientific area" << endl; //done
+	cout << TAB << "0 - Return to previous menu" << endl << endl;
+	cout << TAB << "Enter your option: ";
+	option = readOp(0, 6);
+
+	return option;
+}
+
+
+void listUnitsOptions(Course & course) {
+	unsigned int option;
+
+	while ((option = listUnitsMenu()))
+		switch (option) {
+		case 1:
+			course.showUnits();
+			pressToContinue();
+			break;
+		case 2: {
+			cout << "Insert the curricular year: " << endl;
+			unsigned short int year;
+			year = readOp(1, 5);
+			course.showYearUnit(year);
+			pressToContinue();
+			break;
+		}
+		case 3:
+			course.showMandatoryUnit();
+			pressToContinue();
+			break;
+		case 4:
+			course.showOptionalUnit();
+			pressToContinue();
+			break;
+		case 5:
+			try {
+				course.showSpecificUnit();
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No unit identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			pressToContinue();
+			break;
+		case 6: {
+			string scientificArea;
+			cout << "Insert the scientific area: ";
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			getline(cin, scientificArea);
+			deleteWhitespace(scientificArea);
+			try{
+			course.showUnitsofScientificArea(scientificArea);
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No unit identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			pressToContinue();
+			break;
+		}
 		}
 }

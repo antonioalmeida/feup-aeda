@@ -64,8 +64,8 @@ public:
 	void showTeachers(bool(*comparisonFunction)(Teacher, Teacher)) const;
 	void showTeacher(std::string teacherID) const;
 	void showTeacher(Unit* u1) const;
-	void showTeacherPupil(std::string pupilName) const;
-	void showTeacherPupil(unsigned long int pupilCode) const;
+	void showTeacherPupilByName(std::string pupilName) const;
+	void showTeacherPupilByCode(unsigned long int pupilCode) const;
 
 	void showUnits() const;
 	void showSpecificUnit() const;
