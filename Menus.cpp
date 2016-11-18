@@ -255,12 +255,17 @@ void registrateStudentOptions(Course & course) {
 	while ((option = registrateStudentMenu()))
 		switch (option) {
 		case 1:
-			//course.registerRandomStudent();
+			try {
+				course.registerRandomStudent();
+			}
+			catch (alreadyRegistered<string> &s) {
+				cout << "ERROR: \"" << s.getIdentifier() << "\" has been registered!" << endl;
+			}
 			pressToContinue();
 			break;
 		case 2:
 			try {
-				//course.registerSpecificStudent();
+				course.registerSpecificStudent();
 			}
 			catch (invalidIdentification<string> &s) {
 				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;

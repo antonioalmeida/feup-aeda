@@ -106,9 +106,14 @@ void Student::addUnitToDo(std::pair<Unit*, unsigned int> p) {
 	calculateAverage();
 }
 
+void Student::removeUnitToDo(Unit* u) {
+	for (unsigned int i = 0; i < unitsToDo.at(u->getCurricularYear() - 1).size(); i++) {
+		if (compareUnitPointers(u, unitsToDo.at(u->getCurricularYear() - 1).at(i).first))
+			unitsToDo.at(u->getCurricularYear() - 1).erase(unitsToDo.at(u->getCurricularYear() - 1).begin() + i);
+	}
+}
+
 void Student::addUnitTaking(Unit* u) {
-	if (ectsTaking + u->getECTS() > MAX_ECTS)
-		throw tooManyECTS();
 	unitsTaking.push_back(u);
 }
 

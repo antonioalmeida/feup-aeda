@@ -161,6 +161,12 @@ public:
 	*/
 	void addUnitToDo(std::pair<Unit*, unsigned int> p);
 
+	//! Removes given unit of the unitsToDo matrix. Called during registration process which means student is now taking this unit (again)
+	/*!
+	\param u pointer to the unit to be removed
+	*/
+	void removeUnitToDo(Unit* u);
+
 	//! Adds a unit that the student is taking to the unitsTaking vector. Throws exception if adding the unit would cause an ECTS overflow
 	/*!
 	\param u pointer to the unit to be added

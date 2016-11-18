@@ -96,7 +96,7 @@ public:
 	}
 };
 
-class tooManyECTS { //When user is trying to make student take more than 75 ECTS
+/*class tooManyECTS { //When user is trying to make student take more than 75 ECTS
 public:
 	tooManyECTS() {};
-};
+};*/
