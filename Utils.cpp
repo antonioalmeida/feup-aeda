@@ -60,3 +60,25 @@ unsigned short int readOp(unsigned short int minValue, unsigned short int  maxVa
 
 	return number;
 }
+
+void unitsPrintHeader() {
+    cout << "Abbreviation";
+    cout << setw(51) << "Name";
+    cout << setw(7) << "Year";
+    cout << setw(7) << "ECTS";
+    cout << setw(27) << "Scientific Area";
+    cout << setw(12) << "Vacancies" << endl << endl;
+}
+
+void studentsPrintHeader() {
+    cout << "Code";
+    cout << setw(37) << "Name";
+    cout << setw(9) << "Average";
+    cout << setw(15) << "Units Taking" << endl << endl;
+}
+
+void teachersPrintHeader() {
+    cout << setw(8) << "Code";
+    cout << setw(50) << "Name";
+    cout << "   Units Taught" << endl << endl;
+}

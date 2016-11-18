@@ -332,6 +332,7 @@ void Course::removeStudent(string studentName) {
 void Course::showStudent(string studentName) const {
 	for (int i = 0; i < students.size(); i++) {
 		if (students.at(i).getName() == studentName) {
+            studentsPrintHeader();
 			cout << students.at(i) << endl;
 			return;
 		}
@@ -342,6 +343,7 @@ void Course::showStudent(string studentName) const {
 void Course::showStudent(unsigned long int studentCode) const {
 	for (int i = 0; i < students.size(); i++) {
 		if (students.at(i).getCode() == studentCode) {
+            studentsPrintHeader();
 			cout << students.at(i) << endl;
 			return;
 		}
@@ -352,8 +354,11 @@ void Course::showStudent(unsigned long int studentCode) const {
 void Course::showStudents(bool(*comparisonFunction)(Student, Student)) const {
 	vector<Student> studentsTemp = students;
 	sort(studentsTemp.begin(), studentsTemp.end(), *comparisonFunction);
-	for (int i = 0; i < studentsTemp.size(); i++)
-		cout << studentsTemp.at(i) << endl;
+    
+    studentsPrintHeader();
+    for (int i = 0; i < studentsTemp.size(); i++) {
+		cout << studentsTemp.at(i);
+    }
 	cout << endl;
 }
 
@@ -363,7 +368,10 @@ void Course::showStudentsStatus(string status) const {
 		if (students.at(i).getStatus() == status)
 			studentsToShow.push_back(students.at(i));
 	}
+    
 	sort(studentsToShow.begin(), studentsToShow.end(), sortByName);
+    studentsPrintHeader();
+    
 	for (int i = 0; i < studentsToShow.size(); i++)
 		cout << studentsToShow.at(i) << endl;
 	cout << endl;
@@ -376,6 +384,8 @@ void Course::showRegisteredStudents() const {
 			studentsToShow.push_back(students.at(i));
 	}
 	sort(studentsToShow.begin(), studentsToShow.end(), sortByName);
+    studentsPrintHeader();
+    
 	for (int i = 0; i < studentsToShow.size(); i++)
 		cout << studentsToShow.at(i) << endl;
 	cout << endl;
@@ -388,6 +398,8 @@ void Course::showUnregisteredStudents() const {
 			studentsToShow.push_back(students.at(i));
 	}
 	sort(studentsToShow.begin(), studentsToShow.end(), sortByName);
+    studentsPrintHeader();
+    
 	for (int i = 0; i < studentsToShow.size(); i++)
 		cout << studentsToShow.at(i) << endl;
 	cout << endl;
@@ -414,6 +426,8 @@ void Course::showUnitRegistrations() const {
 	}
 
 	sort(result.begin(), result.end(), sortByName);
+    studentsPrintHeader();
+    
 	for (int i = 0; i < result.size(); i++)
 		cout << result.at(i) << endl;
 	cout << endl;
@@ -672,15 +686,18 @@ void Course::removeTeacher(string teacherID) {
 void Course::showTeachers(bool(*comparisonFunction)(Teacher, Teacher)) const {
 	vector<Teacher> teachersTemp = teachers;
 	sort(teachersTemp.begin(), teachersTemp.end(), *comparisonFunction);
+    
+    teachersPrintHeader();
 	for (int i = 0; i < teachersTemp.size(); i++)
-		cout << teachersTemp.at(i) << endl;
+		cout << teachersTemp.at(i);
 	cout << endl;
 }
 
 void Course::showTeacher(string teacherID) const {
 	for (int i = 0; i < teachers.size(); i++) {
 		if (teachers.at(i).getName() == teacherID|| teachers.at(i).getCode() == teacherID) {
-			cout << teachers.at(i) << endl;
+            teachersPrintHeader();
+			cout << teachers.at(i);
 			return;
 		}
 	}
@@ -692,7 +709,8 @@ void Course::showTeacher(Unit* u1) const {
 		vector<Unit*> unitsTaughtTemp = teachers.at(i).getUnitsTaught();
 		for (vector<Unit*>::iterator it = unitsTaughtTemp.begin(); it != unitsTaughtTemp.end(); it++) {
 			if ((*it)->getAbbreviation() == u1->getAbbreviation()) {
-				cout << teachers.at(i) << endl;
+                teachersPrintHeader();
+				cout << teachers.at(i);
 				return;
 			}
 		}
@@ -704,7 +722,8 @@ void Course::showTeacherPupilByName(string pupilName) const {
 		vector<Student*> pupilsTemp = teachers.at(i).getPupils();
 		for (vector<Student*>::iterator it = pupilsTemp.begin(); it != pupilsTemp.end(); it++) {
 			if ((*it)->getName() == pupilName) {
-				cout << teachers.at(i) << endl;
+                teachersPrintHeader();
+				cout << teachers.at(i);
 				return;
 			}
 		}
@@ -717,7 +736,8 @@ void Course::showTeacherPupilByCode(unsigned long int pupilCode) const {
 		vector<Student*> pupilsTemp = teachers.at(i).getPupils();
 		for (vector<Student*>::iterator it = pupilsTemp.begin(); it != pupilsTemp.end(); it++) {
 			if ((*it)->getCode() == pupilCode) {
-				cout << teachers.at(i) << endl;
+                teachersPrintHeader();
+				cout << teachers.at(i);
 				return;
 			}
 		}
@@ -800,6 +820,8 @@ void Course::editUnitScientificArea() {
 void Course::showUnits() const {
 	vector<Unit*> unitTemp = getAllUnits();
 
+    unitsPrintHeader();
+    
 	sort(unitTemp.begin(), unitTemp.end());
 
 	for (int i = 0; i < unitTemp.size(); i++)
@@ -816,15 +838,18 @@ void Course::showSpecificUnit() const {
 	map<string, Unit*>::const_iterator it = abbreviationToUnit.find(abbreviation);
 	if (it == abbreviationToUnit.end())
 		throw invalidIdentification<string>(abbreviation);
-	else
+    else {
+        unitsPrintHeader();
 		cout << *(it->second);
+    }
 }
 
 void Course::showYearUnit(unsigned short int year) const {
 	vector<Unit*> unitTemp = getUnitsFromYear(year);
 
 	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
-
+    
+    unitsPrintHeader();
 	for (int i = 0; i < unitTemp.size(); i++)
 		cout << *unitTemp.at(i) << endl;
 	cout << endl;
@@ -834,7 +859,8 @@ void Course::showMandatoryUnit() const {
 	vector<Unit*> unitTemp = getAllMandatoryUnits();
 
 	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
-
+    
+    unitsPrintHeader();
 	for (int i = 0; i < unitTemp.size(); i++)
 		cout << *unitTemp.at(i) << endl;
 	cout << endl;
@@ -845,6 +871,7 @@ void Course::showOptionalUnit() const {
 
 	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
 
+    unitsPrintHeader();
 	for (int i = 0; i < unitTemp.size(); i++)
 		cout << *unitTemp.at(i) << endl;
 	cout << endl;
@@ -858,6 +885,8 @@ void Course::showUnitsofScientificArea(std::string scientificArea) const {
 	}
 
 	sort(result.begin(), result.end(), compareUnitPointers);
+    
+    unitsPrintHeader();
 	for (int i = 0; i < result.size(); i++)
 		cout << *(result.at(i)) << endl;
 	cout << endl;

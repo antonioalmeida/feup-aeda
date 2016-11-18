@@ -69,22 +69,27 @@ bool MandatoryUnit::isFull() const {
 }
 
 void MandatoryUnit::print(ostream &out) const { //May change display format later
-	out << name << "(" << abbreviation << ")" << " - " << curricularYear;
-	switch (curricularYear) {
-	case 1:
-		out << "st ";
-		break;
-	case 2:
-		out << "nd ";
-		break;
-	case 3:
-		out << "rd ";
-		break;
-	default:
-		out << "th ";
-		break;
-	}
-	out << " year unit, worth " << ECTS << "ECTS. Scientific area - " << scientificArea;
+    out << "[" << setw(5) << abbreviation << "]";
+    out << setw(56) << name;
+    out << setw(5) << curricularYear;
+    
+    switch (curricularYear) {
+        case 1:
+            out << "st ";
+            break;
+        case 2:
+            out << "nd ";
+            break;
+        case 3:
+            out << "rd ";
+            break;
+        default:
+            out << "th ";
+            break;
+    }
+    out << setw(6) << ECTS;
+    out << setw(34) << scientificArea;
+    out << setw(5) << "inf";
 }
 
 void MandatoryUnit::save(ostream &out) const {
@@ -119,7 +124,10 @@ bool OptionalUnit::isFull() const {
 }
 
 void OptionalUnit::print(ostream &out) const {
-	out << name << "(" << abbreviation << ") | " << curricularYear;
+    out << "[" << setw(5) << abbreviation << "]";
+    out << setw(56) << name;
+    out << setw(5) << curricularYear;
+    
 	switch (curricularYear) {
 	case 1:
 		out << "st ";
@@ -134,7 +142,10 @@ void OptionalUnit::print(ostream &out) const {
 		out << "th ";
 		break;
 	}
-	out << " year unit, worth " << ECTS << "ECTS | Scientific area - " << scientificArea << " | Currently has " << vacancies << " places left";
+    out << setw(6) << ECTS;
+    out << setw(34) << scientificArea;
+    out << setw(5) << vacancies;
+    
 }
 
 void OptionalUnit::save(ostream &out) const {

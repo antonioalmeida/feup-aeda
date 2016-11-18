@@ -166,7 +166,10 @@ bool Student::operator==(const Student &s1) {
 }
 
 ostream& operator<<(ostream& out, const Student& s) {
-	out << s.getName() << " | " << s.getCode() << " | Current Average: " << s.getAverage();
+    out << s.getCode();
+    out << setw(32) << s.getName();
+    out << setw(9) << s.getAverage();
+    
 	if (s.getUnitsTaking().size() != 0) {
 		out << " | Taking: ";
 		for (int i = 0; i < s.getUnitsTaking().size(); i++)
@@ -245,9 +248,11 @@ void Teacher::save(ostream &out) const {
 }
 
 ostream& operator<<(ostream& out, const Teacher& s) { //Subject to change
-	out << s.getName() << "(" << s.getCode() << ")" << "| Teaches:";
+    out << setw(8)<<  s.getCode();
+    out << setw(50) << s.getName();
+    out << " ";
 	for (int i = 0; i < s.getUnitsTaught().size(); i++)
-		out << s.getUnitsTaught().at(i)->getAbbreviation() << " ";
+		out << setw(6) << s.getUnitsTaught().at(i)->getAbbreviation() << " ";
 	out << endl;
 	return out;
 }
