@@ -14,18 +14,80 @@ private:
 	unsigned int month;
 	unsigned int year;
 public:
-	Date() {}; // Default class constructor
-	Date(unsigned int day, unsigned int month, unsigned int year); //!< Class constructor with parameters. Date elements given in separate (to use with run-time created objects)
+	//! Default class constructor (does nothing)
+	Date() {};
 
-	unsigned int getDay() const; //!< Returns date day
-	unsigned int getMonth() const; //!< Returns date month
-	unsigned int getYear() const; //!< Returns date year
-	std::string getDate() const; //!< Returns date in form (DD/MM/YYYY)
-	void setDay(unsigned int newDay); //!< Sets date's day to newDay
-	void setMonth(unsigned int newMonth); //!< Sets date's month to newMonth
-	void setYear(unsigned int newYear); //!< Sets date's year to newYear
+	//! Creates a new (valid) date given by its three parameters
+	/*!
+	\param day unsigned int corresponding to the date's day
+	\param month unsigned int corresponding to the date's month
+	\param year unsigned int corresponding to the date's year
+	*/
+	Date(unsigned int day, unsigned int month, unsigned int year);
 
-	friend std::ostream& operator<<(std::ostream& out, const Date &date); //!< Overload of << operator so it can be sent to cout like objects
-	friend bool operator<(const Date &date1, const Date &date2); //!< Overload of < operator to compare two dates
-	friend bool operator==(const Date &dat1, const Date &dat2); //!< Overload of == operator to compare if two dates are equal
+	//! Gets a copy of a date's day
+	/*!
+	\return copy of unsigned int data member day
+	*/
+	unsigned int getDay() const;
+
+	//! Gets a copy of a date's month
+	/*!
+	\return copy of unsigned int data member month
+	*/
+	unsigned int getMonth() const;
+
+	//! Gets a copy of a date's year
+	/*!
+	\return copy of unsigned int data member year
+	*/
+	unsigned int getYear() const;
+
+	//! Gets a copy of a date in std::string format
+	/*!
+	\return date in std::string format in the form of DD/MM/YYYY
+	*/
+	std::string getDate() const;
+
+	//! Changes a date's day
+	/*!
+	\param newDay unsigned int corresponding to the date's new day
+	*/
+	void setDay(unsigned int newDay);
+
+	//! Changes a date's month
+	/*!
+	\param newMonth unsigned int corresponding to the date's new month
+	*/
+	void setMonth(unsigned int newMonth);
+
+	//! Changes a date's year
+	/*!
+	\param newYear unsigned int corresponding to the date's new year
+	*/
+	void setYear(unsigned int newYear);
+
+	//! Overload of operator<< to print out Date objects
+	/*!
+	\param out out stream where the object will be printed to
+	\param date object that will be printed
+	\return reference to out stream where the object will be printed to
+	*/
+	friend std::ostream& operator<<(std::ostream& out, const Date &date);
+
+	//! Tests inferiority between two dates
+	/*!
+	\param date1 first of two dates to be compared
+	\param date2 second of two dates to be compared
+	\return true if date1 is before date2 in the Gregorian calendar standard, false otherwise
+	*/
+	friend bool operator<(const Date &date1, const Date &date2);
+
+	//! Tests equalty between two dates
+	/*!
+	\param date1 first of two dates to be compared
+	\param date2 second of two dates to be compared
+	\return true if date1 is the same as date2 in the Gregorian calendar standard, false otherwise
+	*/
+	friend bool operator==(const Date &dat1, const Date &dat2);
 };
