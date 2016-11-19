@@ -180,7 +180,7 @@ public:
 	/*!
 	\return current value of data member isRegistered: true if student has completed registration, false otherwise
 	*/
-	bool isRegistered() const; //Check if student is already registered, if so he'll be ignored in the registration process
+	bool isRegistered() const; 
 
 	//! Changes a student's registration status to its current opposite (true if false and vice-versa)
 	void setRegistration();
@@ -190,6 +190,20 @@ public:
 	\param newStatus string corresponding to the student's new status
 	*/
 	void setStatus(std::string newStatus);
+    
+    //! Changes a students registration date to newDate
+    /*!
+     \param newDate Date corresponding to the student's new registration date
+     \sa getRegistrationDate();
+     */
+    void setRegistrationDate(Date newDate);
+    
+    //! Changes a students ectsTaking value to newECTS
+    /*!
+     \param newECTS float that holds the student's new ectsTaking value
+     \sa getECTSTaking()
+     */
+    void setECTSTaking(float newECTS);
 
 	//! Prints student to out (used when writing to file)
 	/*!

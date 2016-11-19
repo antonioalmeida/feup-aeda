@@ -75,6 +75,7 @@ void studentsPrintHeader() {
     cout << "Code";
     cout << setw(37) << "Name";
     cout << setw(9) << "Average";
+    cout << setw(7) << "ECTS";
     cout << setw(15) << "Units Taking" << endl << endl;
 }
 

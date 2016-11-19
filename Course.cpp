@@ -660,9 +660,34 @@ void Course::registerRandomStudent() {
 			optUnitsFromCurrentYear.erase(optUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
 		}
 	}
+    
+    unsigned int day, month, year;
+    do {
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "Insert the date \"" << it->getName() << "\" has registered in: (DD/MM/YYYY) ";
+        string registrationDate;
+        getline(cin, registrationDate);
+        deleteWhitespace(registrationDate);
 
-	Date dateOfRegistration(19, 11, 2016); //Change later (ask user, do not use exceptions because it will throw away all the info put into the function, use loop while !validDate instead) and add method in Student to set RegistrationDate
-	//Set student's data member ectsTaking to total_ects (modify operator<< to print out this value?)
+        istringstream dateTemp;
+        dateTemp.str(registrationDate);
+        dateTemp >> day;
+        dateTemp.ignore(numeric_limits<int>::max(), '/');
+        dateTemp >> month;
+        dateTemp.ignore(numeric_limits<int>::max(), '/');
+        dateTemp >> year;
+        Date dateOfRegistration(day,month,year);
+        
+        if(!validDate(day, month, year))
+            cout << "The date you inserted is not valid \n";
+        else {
+            it->setRegistrationDate(dateOfRegistration);
+            cout << "Date " << dateOfRegistration << " was successfuly added \n";
+        }
+        
+    } while(!validDate(day, month, year));
+        
+    it->setECTSTaking(total_ects);
 	it->setRegistration();
 }
 
@@ -805,8 +830,33 @@ void Course::registerSpecificStudentByName() {
 		}
 	}
 
-	Date dateOfRegistration(19, 11, 2016); //Change later (ask user, do not use exceptions because it will throw away all the info put into the function, use loop while !validDate instead) and add method in Student to set RegistrationDate
-	//Set student's data member ectsTaking to total_ects (modify operator<< to print out this value?)
+    unsigned int day, month, year;
+    do {
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "Insert the date \"" << it->getName() << "\" has registered in: (DD/MM/YYYY) ";
+        string registrationDate;
+        getline(cin, registrationDate);
+        deleteWhitespace(registrationDate);
+        
+        istringstream dateTemp;
+        dateTemp.str(registrationDate);
+        dateTemp >> day;
+        dateTemp.ignore(numeric_limits<int>::max(), '/');
+        dateTemp >> month;
+        dateTemp.ignore(numeric_limits<int>::max(), '/');
+        dateTemp >> year;
+        Date dateOfRegistration(day,month,year);
+        
+        if(!validDate(day, month, year))
+            cout << "The date you inserted is not valid \n";
+        else {
+            it->setRegistrationDate(dateOfRegistration);
+            cout << "Date " << dateOfRegistration << " was successfuly added \n";
+        }
+        
+    } while(!validDate(day, month, year));
+    
+    it->setECTSTaking(total_ects);
 	it->setRegistration();
 }
 
@@ -941,8 +991,33 @@ void Course::registerSpecificStudentByCode() {
 		}
 	}
 
-	Date dateOfRegistration(19, 11, 2016); //Change later (ask user, do not use exceptions because it will throw away all the info put into the function, use loop while !validDate instead) and add method in Student to set RegistrationDate
-	 //Set student's data member ectsTaking to total_ects (modify operator<< to print out this value?)
+    unsigned int day, month, year;
+    do {
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "Insert the date \"" << it->getName() << "\" has registered in: (DD/MM/YYYY) ";
+        string registrationDate;
+        getline(cin, registrationDate);
+        deleteWhitespace(registrationDate);
+        
+        istringstream dateTemp;
+        dateTemp.str(registrationDate);
+        dateTemp >> day;
+        dateTemp.ignore(numeric_limits<int>::max(), '/');
+        dateTemp >> month;
+        dateTemp.ignore(numeric_limits<int>::max(), '/');
+        dateTemp >> year;
+        Date dateOfRegistration(day,month,year);
+        
+        if(!validDate(day, month, year))
+            cout << "The date you inserted is not valid \n";
+        else {
+            it->setRegistrationDate(dateOfRegistration);
+            cout << "Date " << dateOfRegistration << " was successfuly added \n";
+        }
+        
+    } while(!validDate(day, month, year));
+    
+    it->setECTSTaking(total_ects);
 	it->setRegistration();
 }
 

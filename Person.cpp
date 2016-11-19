@@ -150,6 +150,14 @@ void Student::setStatus(string newStatus) {
 	status = newStatus;
 }
 
+void Student::setRegistrationDate(Date newDate) {
+    registrationDate = newDate;
+}
+
+void Student::setECTSTaking(float newECTS) {
+    ectsTaking = newECTS;
+}
+
 void Student::save(std::ostream &out) const {
 	out << name << endl << curricularYear;
 	if (curricularYear > 1)
@@ -175,9 +183,10 @@ ostream& operator<<(ostream& out, const Student& s) {
     out << s.getCode();
     out << setw(32) << s.getName();
     out << setw(9) << s.getAverage();
+    out << setw(7) << s.getECTSTaking();
     
 	if (s.getUnitsTaking().size() != 0) {
-		out << " | Taking: ";
+		out << "  ";
 		for (int i = 0; i < s.getUnitsTaking().size(); i++)
 			out << s.getUnitsTaking().at(i)->getAbbreviation() << " ";
 	}
