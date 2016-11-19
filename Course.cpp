@@ -698,13 +698,30 @@ void Course::registerRandomStudent() {
             cout << "The date you inserted is not valid \n";
         else {
             it->setRegistrationDate(dateOfRegistration);
-            cout << "Date " << dateOfRegistration << " was successfuly added \n";
+            cout << "The student \"" << it->getName() << "\" was successfuly registrated on " << dateOfRegistration;
         }
         
     } while(!validDate(day, month, year));
-        
+    
+    //Add the student to the teacher with the least amount of pupils (the first one that comes up)
+    for(int i = 0; i < teachers.size(); i++) {
+        if(teachers.at(i).getPupils().size() == Teacher::lessStudents) {
+            teachers.at(i).addStudent(&(*it));
+            
+            unsigned int newMinimum = numeric_limits<unsigned int>::max();
+            for (int j = 0; j < teachers.size(); j++) {
+                if (j != i && teachers.at(j).getPupils().size() < newMinimum)
+                    newMinimum = teachers.at(j).getPupils().size();
+            }
+            Teacher::lessStudents = newMinimum;
+            cout << " and is now a pupil of " << teachers.at(i).getName() << endl;
+            break;
+        }
+    }
+    
     it->setECTSTaking(total_ects);
 	it->setRegistration();
+    
 }
 
 void Course::registerSpecificStudentByName() {
@@ -867,10 +884,26 @@ void Course::registerSpecificStudentByName() {
             cout << "The date you inserted is not valid \n";
         else {
             it->setRegistrationDate(dateOfRegistration);
-            cout << "Date " << dateOfRegistration << " was successfuly added \n";
+            cout << "The student \"" << it->getName() << "\" was successfuly registrated on " << dateOfRegistration;
         }
         
     } while(!validDate(day, month, year));
+    
+    //Add the student to the teacher with the least amount of pupils (the first one that comes up)
+    for(int i = 0; i < teachers.size(); i++) {
+        if(teachers.at(i).getPupils().size() == Teacher::lessStudents) {
+            teachers.at(i).addStudent(&(*it));
+            
+            unsigned int newMinimum = numeric_limits<unsigned int>::max();
+            for (int j = 0; j < teachers.size(); j++) {
+                if (j != i && teachers.at(j).getPupils().size() < newMinimum)
+                    newMinimum = teachers.at(j).getPupils().size();
+            }
+            Teacher::lessStudents = newMinimum;
+            cout << " and is now a pupil of " << teachers.at(i).getName() << endl;
+            break;
+        }
+    }
     
     it->setECTSTaking(total_ects);
 	it->setRegistration();
@@ -1028,10 +1061,26 @@ void Course::registerSpecificStudentByCode() {
             cout << "The date you inserted is not valid \n";
         else {
             it->setRegistrationDate(dateOfRegistration);
-            cout << "Date " << dateOfRegistration << " was successfuly added \n";
+            cout << "The student \"" << it->getName() << "\" was successfuly registrated on " << dateOfRegistration;
         }
         
     } while(!validDate(day, month, year));
+    
+    //Add the student to the teacher with the least amount of pupils (the first one that comes up)
+    for(int i = 0; i < teachers.size(); i++) {
+        if(teachers.at(i).getPupils().size() == Teacher::lessStudents) {
+            teachers.at(i).addStudent(&(*it));
+            
+            unsigned int newMinimum = numeric_limits<unsigned int>::max();
+            for (int j = 0; j < teachers.size(); j++) {
+                if (j != i && teachers.at(j).getPupils().size() < newMinimum)
+                    newMinimum = teachers.at(j).getPupils().size();
+            }
+            Teacher::lessStudents = newMinimum;
+            cout << " and is now a pupil of " << teachers.at(i).getName() << endl;
+            break;
+        }
+    }
     
     it->setECTSTaking(total_ects);
 	it->setRegistration();
@@ -1169,7 +1218,7 @@ void Course::removeTeacher(string teacherID) {
 			found = true;
 			if (teachers.at(i).getPupils().size() == Teacher::lessStudents) {
 				unsigned int newMinimum = numeric_limits<unsigned int>::max();
-				for (int j = 0; j < teachers.size(); i++) {
+				for (int j = 0; j < teachers.size(); j++) {
 					if (j != i && teachers.at(j).getPupils().size() < newMinimum)
 						newMinimum = teachers.at(j).getPupils().size();
 				}
