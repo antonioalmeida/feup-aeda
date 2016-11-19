@@ -22,6 +22,10 @@ void editStudentOptions(Course & course);
 unsigned short int registrateStudentMenu();
 void registrateStudentOptions(Course & course);
 
+//Register Specific Student Menu
+unsigned short int registrateSpecificStudentMenu();
+void registrateSpecificStudentOptions(Course & course);
+
 //List Students Menu
 unsigned short int listStudentsMenu();
 void listStudentsOptions(Course & course);

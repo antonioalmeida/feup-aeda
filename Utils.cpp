@@ -37,7 +37,7 @@ void pressToContinue() {
 	string trash;
 	cout << "Press any key followed by ENTER to continue.";
 	if (cin.peek() != cin.eof()) //If there are no characters to be ignored, don't call it, otherwise might have to input ENTER 2 times
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cin.ignore();
 	getline(cin, trash);
 	cout << endl;
 }

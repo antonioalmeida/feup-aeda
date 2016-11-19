@@ -9,6 +9,7 @@ unsigned int Teacher::lessStudents = 0;
 
 Person::Person(istream &in) {
 	getline(in, name);
+	deleteWhitespace(name);
 }
 
 Person::Person(string name) {

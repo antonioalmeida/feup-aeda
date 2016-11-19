@@ -553,7 +553,7 @@ void Course::registerRandomStudent() {
 	}
 
 	vector<Unit*> manUnitsFromCurrentYear = getManUnitsFromYear(it->getCurricularYear());
-	vector<Unit*> optUnitsFromCurrentYearr = getOptUnitsFromYear(it->getCurricularYear()); //Empty unless curricular year is 4 or 5
+	vector<Unit*> optUnitsFromCurrentYear = getOptUnitsFromYear(it->getCurricularYear()); //Empty unless curricular year is 4 or 5
 
 	//Show units the student has left behind so he knows what to put in first
 	if (unitsLeftBehind.size() > 0) {
@@ -562,6 +562,7 @@ void Course::registerRandomStudent() {
 		for (unsigned int i = 0; i < unitsLeftBehind.size(); i++)
 			cout << *(unitsLeftBehind.at(i)) << endl;
 	}
+	sort(unitsLeftBehind.begin(), unitsLeftBehind.end(), compareUnitPointers); //To guarantee units from lower curricular years are registered first
 	
 	//Show units the student from the current year
 	cout << "Units from the current year:" << endl;
@@ -570,16 +571,16 @@ void Course::registerRandomStudent() {
 		cout << *(manUnitsFromCurrentYear.at(i)) << endl;
 
 	string abbreviation;
-	bool allDone = false;
 	float total_ects = 0;
 
+	//First, make sure student registers to the units he's got behind
 	while (unitsLeftBehind.size() > 0) {
 		cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" is going to take: ";
 		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		cin >> abbreviation;
 		deleteWhitespace(abbreviation);
 		int indexOfCurrentUnit = -1;
-		for (int l = 0; l < unitsLeftBehind.size(); l++) {
+		for (unsigned int l = 0; l < unitsLeftBehind.size(); l++) {
 			if (unitsLeftBehind.at(l)->getAbbreviation() == abbreviation) {
 				indexOfCurrentUnit = l;
 				break;
@@ -587,21 +588,362 @@ void Course::registerRandomStudent() {
 		}
 		if (indexOfCurrentUnit == -1)
 			cout << "Unit \"" << abbreviation << "\" does not exist or is not valid! Please insert a valid abbreviation" << endl;
+		else if(unitsLeftBehind.at(0)->getCurricularYear() > unitsLeftBehind.at(indexOfCurrentUnit)->getCurricularYear()) //If there is at least one unit left behind from a curricular year lower than the one provided in abbreviation
+			cout << "There are units left behind from curricular years lower than \"" << abbreviation << "\", must register to those first!" << endl;
 		else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS) //Delete this if? I think it'll never reach 75ECTS only of left behind units
 			cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
 		else {
 			total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
 			it->addUnitTaking(unitsLeftBehind.at(indexOfCurrentUnit));
 			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
-			it->removeUnitToDo(unitsLeftBehind.at(indexOfCurrentUnit));
+			//it->removeUnitToDo(unitsLeftBehind.at(indexOfCurrentUnit)); //not sure if i wanna remove it (might want to keep it to later save in file)
 			unitsLeftBehind.erase(unitsLeftBehind.begin() + indexOfCurrentUnit);
 		}
 	}
 	
+	//Now, make sure student registers to all mandatory units (or as much as he can)
+	while (manUnitsFromCurrentYear.size() > 0 && total_ects <= MAX_ECTS) {
+		cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" is going to take: ";
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cin >> abbreviation;
+		deleteWhitespace(abbreviation);
+		int indexOfCurrentUnit = -1;
+		for (unsigned int l = 0; l < manUnitsFromCurrentYear.size(); l++) {
+			if (manUnitsFromCurrentYear.at(l)->getAbbreviation() == abbreviation) {
+				indexOfCurrentUnit = l;
+				break;
+			}
+		}
+		if (indexOfCurrentUnit == -1)
+			cout << "Unit \"" << abbreviation << "\" does not exist or is not valid! Please insert a valid abbreviation" << endl;
+		else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS) //insert another test to see student has credits left but no units left with small enough ects? and if so, exit loop
+			cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
+		else {
+			total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
+			it->addUnitTaking(manUnitsFromCurrentYear.at(indexOfCurrentUnit));
+			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
+			manUnitsFromCurrentYear.erase(manUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
+		}
+	}
+
+	//Now, if it is the case (if empty vector just skips loop) and there's credit left, register to optional units
+	while(optUnitsFromCurrentYear.size() > 0 && total_ects <= MAX_ECTS){
+		cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" has taken (0 to finish): ";
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cin >> abbreviation;
+		deleteWhitespace(abbreviation);
+		if (abbreviation == "0")
+			break;
+		int indexOfCurrentUnit = -1;
+		for (unsigned int l = 0; l < optUnitsFromCurrentYear.size(); l++) {
+			if (optUnitsFromCurrentYear.at(l)->getAbbreviation() == abbreviation) {
+				indexOfCurrentUnit = l;
+				break;
+			}
+		}
+		if (indexOfCurrentUnit == -1)
+			cout << "Unit \"" << abbreviation << "\" does not exist! Please insert a valid abbreviation" << endl;
+		else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS)
+			cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
+		else if (optUnitsFromCurrentYear.at(indexOfCurrentUnit)->isFull()) { //Select optional unit is a valid option but is already full, so suggest units from same scientific area THAT ARE NOT FULL
+			cout << "Unit \"" << abbreviation << "\ is currently full! Here's some other units from the same area that might interest you:" << endl;
+			vector<Unit*> sameAreaUnits = getUnitsFromSameScientificArea(optUnitsFromCurrentYear.at(indexOfCurrentUnit));
+			unitsPrintHeader();
+			for (unsigned int i = 0; i < sameAreaUnits.size(); i++)
+				cout << *(sameAreaUnits.at(i)) << endl;
+		}
+		else{
+			total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
+			it->addUnitTaking(optUnitsFromCurrentYear.at(indexOfCurrentUnit));
+			optUnitsFromCurrentYear.at(indexOfCurrentUnit)->updateVacancies();
+			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
+			optUnitsFromCurrentYear.erase(optUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
+		}
+	}
+
+	Date dateOfRegistration(19, 11, 2016); //Change later (ask user, do not use exceptions because it will throw away all the info put into the function, use loop while !validDate instead) and add method in Student to set RegistrationDate
+	//Set student's data member ectsTaking to total_ects (modify operator<< to print out this value?)
+	it->setRegistration();
 }
 
-void Course::registerSpecificStudent() {
+void Course::registerSpecificStudentByName() {
+	string studentName;
+	cout << "Insert the student's full name: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	getline(cin, studentName);
+	deleteWhitespace(studentName);
+	vector<Student>::iterator it = students.begin();
+	for (it; it != students.end(); it++) {
+		if (it->getName() == studentName)
+			break;
+	}
 
+	if (it == students.end())
+		throw invalidIdentification<string>(studentName);
+	else if (it->isRegistered())
+		throw alreadyRegistered<string>(studentName);
+
+	vector<Unit*> unitsLeftBehind;
+	for (unsigned int i = 0; i < it->getUnitsToDo().size(); i++) {
+		for (unsigned int j = 0; j < it->getUnitsToDo().at(i).size(); j++)
+			unitsLeftBehind.push_back(it->getUnitsToDo().at(i).at(j).first);
+	}
+
+	vector<Unit*> manUnitsFromCurrentYear = getManUnitsFromYear(it->getCurricularYear());
+	vector<Unit*> optUnitsFromCurrentYear = getOptUnitsFromYear(it->getCurricularYear()); //Empty unless curricular year is 4 or 5
+
+																						  //Show units the student has left behind so he knows what to put in first
+	if (unitsLeftBehind.size() > 0) {
+		cout << "Units from previous years left to do:" << endl;
+		unitsPrintHeader();
+		for (unsigned int i = 0; i < unitsLeftBehind.size(); i++)
+			cout << *(unitsLeftBehind.at(i)) << endl;
+	}
+	sort(unitsLeftBehind.begin(), unitsLeftBehind.end(), compareUnitPointers); //To guarantee units from lower curricular years are registered first
+
+																			   //Show units the student from the current year
+	cout << "Units from the current year:" << endl;
+	unitsPrintHeader();
+	for (unsigned int i = 0; i < manUnitsFromCurrentYear.size(); i++)
+		cout << *(manUnitsFromCurrentYear.at(i)) << endl;
+
+	string abbreviation;
+	float total_ects = 0;
+
+	//First, make sure student registers to the units he's got behind
+	while (unitsLeftBehind.size() > 0) {
+		cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" is going to take: ";
+		//cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cin >> abbreviation;
+		deleteWhitespace(abbreviation);
+		int indexOfCurrentUnit = -1;
+		for (unsigned int l = 0; l < unitsLeftBehind.size(); l++) {
+			if (unitsLeftBehind.at(l)->getAbbreviation() == abbreviation) {
+				indexOfCurrentUnit = l;
+				break;
+			}
+		}
+		if (indexOfCurrentUnit == -1)
+			cout << "Unit \"" << abbreviation << "\" does not exist or is not valid! Please insert a valid abbreviation" << endl;
+		else if (unitsLeftBehind.at(0)->getCurricularYear() > unitsLeftBehind.at(indexOfCurrentUnit)->getCurricularYear()) //If there is at least one unit left behind from a curricular year lower than the one provided in abbreviation
+			cout << "There are units left behind from curricular years lower than \"" << abbreviation << "\", must register to those first!" << endl;
+		else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS) //Delete this if? I think it'll never reach 75ECTS only of left behind units
+			cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
+		else {
+			total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
+			it->addUnitTaking(unitsLeftBehind.at(indexOfCurrentUnit));
+			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
+			//it->removeUnitToDo(unitsLeftBehind.at(indexOfCurrentUnit)); //not sure if i wanna remove it (might want to keep it to later save in file)
+			unitsLeftBehind.erase(unitsLeftBehind.begin() + indexOfCurrentUnit);
+		}
+	}
+
+	//Now, make sure student registers to all mandatory units (or as much as he can)
+	while (manUnitsFromCurrentYear.size() > 0 && total_ects <= MAX_ECTS) {
+		cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" is going to take: ";
+		//cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cin >> abbreviation;
+		deleteWhitespace(abbreviation);
+		int indexOfCurrentUnit = -1;
+		for (unsigned int l = 0; l < manUnitsFromCurrentYear.size(); l++) {
+			if (manUnitsFromCurrentYear.at(l)->getAbbreviation() == abbreviation) {
+				indexOfCurrentUnit = l;
+				break;
+			}
+		}
+		if (indexOfCurrentUnit == -1)
+			cout << "Unit \"" << abbreviation << "\" does not exist or is not valid! Please insert a valid abbreviation" << endl;
+		else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS) //insert another test to see student has credits left but no units left with small enough ects? and if so, exit loop
+			cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
+		else {
+			total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
+			it->addUnitTaking(manUnitsFromCurrentYear.at(indexOfCurrentUnit));
+			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
+			manUnitsFromCurrentYear.erase(manUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
+		}
+	}
+
+	if (optUnitsFromCurrentYear.size() > 0) {
+		cout << "Optional Units from the current year:" << endl;
+		unitsPrintHeader();
+		for (unsigned int i = 0; i < optUnitsFromCurrentYear.size(); i++)
+			cout << *(optUnitsFromCurrentYear.at(i)) << endl;
+	}
+
+	//Now, if it is the case (if empty vector just skips loop) and there's credit left, register to optional units
+	while (optUnitsFromCurrentYear.size() > 0 && total_ects <= MAX_ECTS) {
+		cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" has taken (0 to finish): ";
+		//cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cin >> abbreviation;
+		deleteWhitespace(abbreviation);
+		if (abbreviation == "0")
+			break;
+		int indexOfCurrentUnit = -1;
+		for (unsigned int l = 0; l < optUnitsFromCurrentYear.size(); l++) {
+			if (optUnitsFromCurrentYear.at(l)->getAbbreviation() == abbreviation) {
+				indexOfCurrentUnit = l;
+				break;
+			}
+		}
+		if (indexOfCurrentUnit == -1)
+			cout << "Unit \"" << abbreviation << "\" does not exist! Please insert a valid abbreviation" << endl;
+		else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS)
+			cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
+		else if (optUnitsFromCurrentYear.at(indexOfCurrentUnit)->isFull()) { //Select optional unit is a valid option but is already full, so suggest units from same scientific area THAT ARE NOT FULL
+			cout << "Unit \"" << abbreviation << "\ is currently full! Here's some other units from the same area that might interest you:" << endl;
+			vector<Unit*> sameAreaUnits = getUnitsFromSameScientificArea(optUnitsFromCurrentYear.at(indexOfCurrentUnit));
+			unitsPrintHeader();
+			for (unsigned int i = 0; i < sameAreaUnits.size(); i++)
+				cout << *(sameAreaUnits.at(i)) << endl;
+		}
+		else {
+			total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
+			it->addUnitTaking(optUnitsFromCurrentYear.at(indexOfCurrentUnit));
+			optUnitsFromCurrentYear.at(indexOfCurrentUnit)->updateVacancies();
+			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
+			optUnitsFromCurrentYear.erase(optUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
+		}
+	}
+
+	Date dateOfRegistration(19, 11, 2016); //Change later (ask user, do not use exceptions because it will throw away all the info put into the function, use loop while !validDate instead) and add method in Student to set RegistrationDate
+	//Set student's data member ectsTaking to total_ects (modify operator<< to print out this value?)
+	it->setRegistration();
+}
+
+void Course::registerSpecificStudentByCode() {
+	unsigned long int studentCode;
+	cout << "Insert the student's code: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	cin >> studentCode;
+	vector<Student>::iterator it = students.begin();
+	for (it; it != students.end(); it++) {
+		if (it->getCode() == studentCode)
+			break;
+	}
+
+	if (it == students.end())
+		throw invalidIdentification<unsigned long int>(studentCode);
+	else if (it->isRegistered())
+		throw alreadyRegistered<unsigned long int>(studentCode);
+
+	vector<Unit*> unitsLeftBehind;
+	for (unsigned int i = 0; i < it->getUnitsToDo().size(); i++) {
+		for (unsigned int j = 0; j < it->getUnitsToDo().at(i).size(); j++)
+			unitsLeftBehind.push_back(it->getUnitsToDo().at(i).at(j).first);
+	}
+
+	vector<Unit*> manUnitsFromCurrentYear = getManUnitsFromYear(it->getCurricularYear());
+	vector<Unit*> optUnitsFromCurrentYear = getOptUnitsFromYear(it->getCurricularYear()); //Empty unless curricular year is 4 or 5
+
+																						  //Show units the student has left behind so he knows what to put in first
+	if (unitsLeftBehind.size() > 0) {
+		cout << "Units from previous years left to do:" << endl;
+		unitsPrintHeader();
+		for (unsigned int i = 0; i < unitsLeftBehind.size(); i++)
+			cout << *(unitsLeftBehind.at(i)) << endl;
+	}
+	sort(unitsLeftBehind.begin(), unitsLeftBehind.end(), compareUnitPointers); //To guarantee units from lower curricular years are registered first
+
+																			   //Show units the student from the current year
+	cout << "Units from the current year:" << endl;
+	unitsPrintHeader();
+	for (unsigned int i = 0; i < manUnitsFromCurrentYear.size(); i++)
+		cout << *(manUnitsFromCurrentYear.at(i)) << endl;
+
+	string abbreviation;
+	float total_ects = 0;
+
+	//First, make sure student registers to the units he's got behind
+	while (unitsLeftBehind.size() > 0) {
+		cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" is going to take: ";
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cin >> abbreviation;
+		deleteWhitespace(abbreviation);
+		int indexOfCurrentUnit = -1;
+		for (unsigned int l = 0; l < unitsLeftBehind.size(); l++) {
+			if (unitsLeftBehind.at(l)->getAbbreviation() == abbreviation) {
+				indexOfCurrentUnit = l;
+				break;
+			}
+		}
+		if (indexOfCurrentUnit == -1)
+			cout << "Unit \"" << abbreviation << "\" does not exist or is not valid! Please insert a valid abbreviation" << endl;
+		else if (unitsLeftBehind.at(0)->getCurricularYear() > unitsLeftBehind.at(indexOfCurrentUnit)->getCurricularYear()) //If there is at least one unit left behind from a curricular year lower than the one provided in abbreviation
+			cout << "There are units left behind from curricular years lower than \"" << abbreviation << "\", must register to those first!" << endl;
+		else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS) //Delete this if? I think it'll never reach 75ECTS only of left behind units
+			cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
+		else {
+			total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
+			it->addUnitTaking(unitsLeftBehind.at(indexOfCurrentUnit));
+			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
+			//it->removeUnitToDo(unitsLeftBehind.at(indexOfCurrentUnit)); //not sure if i wanna remove it (might want to keep it to later save in file)
+			unitsLeftBehind.erase(unitsLeftBehind.begin() + indexOfCurrentUnit);
+		}
+	}
+
+	//Now, make sure student registers to all mandatory units (or as much as he can)
+	while (manUnitsFromCurrentYear.size() > 0 && total_ects <= MAX_ECTS) {
+		cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" is going to take: ";
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cin >> abbreviation;
+		deleteWhitespace(abbreviation);
+		int indexOfCurrentUnit = -1;
+		for (unsigned int l = 0; l < manUnitsFromCurrentYear.size(); l++) {
+			if (manUnitsFromCurrentYear.at(l)->getAbbreviation() == abbreviation) {
+				indexOfCurrentUnit = l;
+				break;
+			}
+		}
+		if (indexOfCurrentUnit == -1)
+			cout << "Unit \"" << abbreviation << "\" does not exist or is not valid! Please insert a valid abbreviation" << endl;
+		else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS) //insert another test to see student has credits left but no units left with small enough ects? and if so, exit loop
+			cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
+		else {
+			total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
+			it->addUnitTaking(manUnitsFromCurrentYear.at(indexOfCurrentUnit));
+			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
+			manUnitsFromCurrentYear.erase(manUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
+		}
+	}
+
+	//Now, if it is the case (if empty vector just skips loop) and there's credit left, register to optional units
+	while (optUnitsFromCurrentYear.size() > 0 && total_ects <= MAX_ECTS) {
+		cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" has taken (0 to finish): ";
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cin >> abbreviation;
+		deleteWhitespace(abbreviation);
+		if (abbreviation == "0")
+			break;
+		int indexOfCurrentUnit = -1;
+		for (unsigned int l = 0; l < optUnitsFromCurrentYear.size(); l++) {
+			if (optUnitsFromCurrentYear.at(l)->getAbbreviation() == abbreviation) {
+				indexOfCurrentUnit = l;
+				break;
+			}
+		}
+		if (indexOfCurrentUnit == -1)
+			cout << "Unit \"" << abbreviation << "\" does not exist! Please insert a valid abbreviation" << endl;
+		else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS)
+			cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
+		else if (optUnitsFromCurrentYear.at(indexOfCurrentUnit)->isFull()) { //Select optional unit is a valid option but is already full, so suggest units from same scientific area THAT ARE NOT FULL
+			cout << "Unit \"" << abbreviation << "\ is currently full! Here's some other units from the same area that might interest you:" << endl;
+			vector<Unit*> sameAreaUnits = getUnitsFromSameScientificArea(optUnitsFromCurrentYear.at(indexOfCurrentUnit));
+			unitsPrintHeader();
+			for (unsigned int i = 0; i < sameAreaUnits.size(); i++)
+				cout << *(sameAreaUnits.at(i)) << endl;
+		}
+		else {
+			total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
+			it->addUnitTaking(optUnitsFromCurrentYear.at(indexOfCurrentUnit));
+			optUnitsFromCurrentYear.at(indexOfCurrentUnit)->updateVacancies();
+			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
+			optUnitsFromCurrentYear.erase(optUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
+		}
+	}
+
+	Date dateOfRegistration(19, 11, 2016); //Change later (ask user, do not use exceptions because it will throw away all the info put into the function, use loop while !validDate instead) and add method in Student to set RegistrationDate
+	 //Set student's data member ectsTaking to total_ects (modify operator<< to print out this value?)
+	it->setRegistration();
 }
 
 //Teachers

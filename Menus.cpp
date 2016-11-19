@@ -264,17 +264,53 @@ void registrateStudentOptions(Course & course) {
 			pressToContinue();
 			break;
 		case 2:
+			registrateSpecificStudentOptions(course);
+			pressToContinue();
+			break;
+
+		}
+}
+
+// Registrate specific student menu
+
+unsigned short int registrateSpecificStudentMenu() {
+	unsigned short int option;
+
+	clearScreen();
+	cout << TAB_BIG << "Register Specific Student Menu" << endl;
+	cout << endl;
+	cout << TAB << "1 - Identify student by name" << endl;
+	cout << TAB << "2 - Identify student by code" << endl;
+	cout << TAB << "0 - Return to previous menu" << endl << endl;
+	cout << TAB << "Enter your option: ";
+	option = readOp(0, 2);
+
+	return option;
+}
+
+void registrateSpecificStudentOptions(Course & course) {
+	unsigned int option;
+
+	while ((option = registrateSpecificStudentMenu()))
+		switch (option) {
+		case 1:
 			try {
-				course.registerSpecificStudent();
+				course.registerSpecificStudentByName();
 			}
 			catch (invalidIdentification<string> &s) {
 				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
-			catch (invalidIdentification<unsigned long> &s) {
-				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
-			}
 			catch (alreadyRegistered<string> &s) {
 				cout << "ERROR: Student \"" << s.getIdentifier() << "\" is already registered!" << endl;
+			}
+			pressToContinue();
+			break;
+		case 2:
+			try {
+				course.registerSpecificStudentByCode();
+			}
+			catch (invalidIdentification<unsigned long> &s) {
+				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
 			catch (alreadyRegistered<unsigned long> &s) {
 				cout << "ERROR: Student \"" << s.getIdentifier() << "\" is already registered!" << endl;
@@ -284,7 +320,6 @@ void registrateStudentOptions(Course & course) {
 
 		}
 }
-
 
 //LIST STUDENTS MENU
 

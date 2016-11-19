@@ -53,7 +53,8 @@ public:
 	void editStudentName(); //!< Edits a given student's name. Throws exception if specified student does not exist or new name is already taken
 	void editStudentStatus(); //!< Edits a given student's name. Throws exception if specified student does not exist
 	void registerRandomStudent();
-	void registerSpecificStudent();
+	void registerSpecificStudentByName();
+	void registerSpecificStudentByCode();
 
 	void addTeacher();
 	void editTeacherName();

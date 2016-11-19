@@ -2,7 +2,7 @@
 APSI Algoritmos de Processamento de Sinal
 4 6
 Interacao e Multimedia
-100
+1
 
 DJCO Desenvolvimento de Jogos de Computador
 4 6

@@ -2,7 +2,7 @@
 
 //Header file for custom made exceptions to be caught and treated throughout program execution
 
-class invalidDay { //Invalid day regardless of other date specifications (day == 0 or day > 31)
+/*class invalidDay { //Invalid day regardless of other date specifications (day == 0 or day > 31)
 private:
 	unsigned int day;
 public:
@@ -46,7 +46,7 @@ public:
 	unsigned int getInvYear() const {
 		return year;
 	}
-};
+};*/
 
 template <class T> class invalidIdentification { //When search for specific person goes wrong (may search by code - which can be string or unsigned long it, name... whatever)
 private:
