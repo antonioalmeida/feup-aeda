@@ -401,7 +401,7 @@ void Course::showUnregisteredStudents() const {
     studentsPrintHeader();
     
 	for (int i = 0; i < studentsToShow.size(); i++)
-		cout << studentsToShow.at(i) << endl;
+        cout << studentsToShow.at(i);
 	cout << endl;
 }
 
@@ -454,7 +454,7 @@ void Course::showStudentUnits(unsigned long studentCode) const {
 			vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
 			cout << "Student identified by \"" << studentCode << "\" is taking:" << endl;
 			for (int j = 0; j < unitsTaking.size(); j++) {
-				cout << unitsTaking.at(j) << endl;
+				cout << unitsTaking.at(j);
 			}
 		}
 		cout << endl;
@@ -464,25 +464,41 @@ void Course::showStudentUnits(unsigned long studentCode) const {
 }
 
 void Course::showYearRegistrations(unsigned int yearToShow) const {
+    cout << setw(26) << "Name" << setw(25) << "Registration Date" << setw(17) << "Units Taking" << endl << endl;
 	for (int i = 0; i < students.size(); i++) {
-		if (students.at(i).getCurricularYear() == yearToShow) {
-			vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
-			cout << "Student \"" << students.at(i).getName() << "\" is taking: ";
-			for (int j = 0; j < unitsTaking.size(); j++)
-				cout << unitsTaking.at(j)->getAbbreviation() << " ";
-			cout << endl;
-		}
+        cout << setw(32) << students.at(i).getName() << "  ";
+        if(!students.at(i).isRegistered()) {
+            cout << "is not registered" << endl;
+            continue; //moves on to next student
+        }
+        
+        cout << "    " << students.at(i).getRegistrationDate() << "       ";
+        vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
+        
+        for (int j = 0; j < unitsTaking.size(); j++)
+            cout << unitsTaking.at(j)->getAbbreviation() << " ";
+        
+        cout << endl;
 	}
 }
 
 void Course::showAllStudentsRegistrations() const {
-	for (int i = 0; i < students.size(); i++) {
-		vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
-		cout << "Student \"" << students.at(i).getName() << "\" is taking: ";
-		for (int j = 0; j < unitsTaking.size(); j++)
-			cout << unitsTaking.at(j)->getAbbreviation() << " ";
-		cout << endl;
-	}
+    cout << setw(26) << "Name" << setw(25) << "Registration Date" << setw(17) << "Units Taking" << endl << endl;
+    for (int i = 0; i < students.size(); i++) {
+        cout << setw(32) << students.at(i).getName() << "  ";
+        if(!students.at(i).isRegistered()) {
+            cout << "is not registered" << endl;
+            continue; //moves on to next student
+        }
+        
+        cout << "    " << students.at(i).getRegistrationDate() << "       ";
+        vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
+        
+        for (int j = 0; j < unitsTaking.size(); j++)
+            cout << unitsTaking.at(j)->getAbbreviation() << " ";
+    
+        cout << endl;
+    }
 }
 
 
