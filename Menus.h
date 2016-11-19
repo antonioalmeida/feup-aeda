@@ -3,73 +3,216 @@
 #include <iostream>
 #include "Course.h"
 
-void start(std::string &studentsFile, std::string &teachersFile, std::string &mandatoryUnitsFile, std::string &optionalUnitsFile); //!< Asks user for filenames. Throws exception if any of needed files does not exist
+//! Asks for input files so information can be read. Throws inexistentFile exception if any of given files does not exist
+/*!
+\param studentsFile name of file where students will be read from
+\param teachersFile name of file where teachers will be read from
+\param mandatoryUnitsFile name of file where mandatory units will be read from
+\param optionalUnitsFile name of file where mandatory units will be read from
+*/
+void start(std::string &studentsFile, std::string &teachersFile, std::string &mandatoryUnitsFile, std::string &optionalUnitsFile);
 
 
-/* Main Menu */
+//! Shows main menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int mainMenu();
+
+//! Processes option read from main menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void mainOption(Course &course);
 
-/* Students Menus */
+//! Shows students' main menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int studentsMenu();
+
+//! Processes option read from students' main menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void studentsOptions(Course &course);
 
-//Edit Students Menu
+//! Shows editing students' menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int editStudentMenu();
+
+//! Processes option read from editing students' menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void editStudentOptions(Course & course);
 
-//Registrate Students Menu
+//! Shows registering students' menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int registrateStudentMenu();
+
+//! Processes option read from registering students' menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void registrateStudentOptions(Course & course);
 
-//Register Specific Student Menu
+//! Shows identification of specific student's menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int registrateSpecificStudentMenu();
+
+//! Processes option read from identification of specific student's menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void registrateSpecificStudentOptions(Course & course);
 
-//List Students Menu
+//! Shows students listing's menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int listStudentsMenu();
+
+//! Processes option read from students listing's menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void listStudentsOptions(Course & course);
 
-//Show Student Menu
+//! Shows identification of specific student's menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int showStudentMenu();
+
+//! Processes option read from identification of specific student's menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void showStudentOptions(Course & course);
 
-//List Registrations Menu
+//! Shows listing students registrations' menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int listRegistrationsMenu();
+
+//! Processes option read from listing students registrations' menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void listRegistrationsOptions(Course & course);
 
-//Registrations for a single student Menu
+//! Shows identification of specific student's menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int studentRegistrationsMenu();
+
+//! Processes option read from identification of specific student's menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void studentRegistrationsOptions(Course & course);
 
-/* Teachers Menu */
+//! Shows teacher's main menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int teachersMenu();
+
+//! Processes option read from teacher's main menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void teachersOptions(Course & course);
 
-//Edit Teacher Menu
+//! Shows editing teacher's menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int editTeacherMenu();
+
+//! Processes option read from editing teacher's menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void editTeacherOptions(Course & course);
 
-//List Teachers Menu
+//! Shows listing teacher's menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int listTeachersMenu();
+
+//! Processes option read from listing teacher's menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void listTeachersOptions(Course & course);
 
-//Show Teacher Menu
+//! Shows identification of specific teacher's menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int showTeacherMenu();
+
+//! Processes option read from identification of specific teacher's menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void showTeacherOptions(Course & course);
 
-//Show Teacher Pupil Menu
+//! Shows identification of specific teacher by one of his pupils' menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int showTeacherPupilMenu();
+
+//! Processes option read from identification of specific teacher by one of his pupils' menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void showTeacherPupilOptions(Course & course);
 
-/* Units Menu */
+//! Shows units' main menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int unitsMenu();
+
+//! Processes option read from units' main menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void unitsOptions(Course & course);
 
-//Edit Units Menu
+//! Shows editing units' menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int editUnitsMenu();
+
+//! Processes option read from editing units' menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void editUnitsOptions(Course & course);
 
-//List Units Menu
+//! Shows listing units' menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int listUnitsMenu();
+
+//! Processes option read from listing units' menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void listUnitsOptions(Course & course);
