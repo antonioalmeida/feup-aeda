@@ -2,101 +2,90 @@
 
 //Header file for custom made exceptions to be caught and treated throughout program execution
 
-/*class invalidDay { //Invalid day regardless of other date specifications (day == 0 or day > 31)
-private:
-	unsigned int day;
-public:
-	invalidDay(unsigned int invDay) {
-		day = invDay;
-	}
-	unsigned int getInvDay() const {
-		return day;
-	}
-};
-
-class invalidMonth { //Invalid month regardless of other date specifications (month == 0 or month > 12)
-private:
-	unsigned int month;
-public:
-	invalidMonth(unsigned int invMonth) {
-		month = invMonth;
-	}
-	unsigned int getInvMonth() const {
-		return month;
-	}
-};
-
-class invalidDate { //When day and month are in a valid range but are wrongly used (ex: 30th February, 29th February on a non-leap year, 31st November, ...)
-private:
-	unsigned int day;
-	unsigned int month;
-	unsigned int year;
-public:
-	invalidDate(unsigned int invDay, unsigned int invMonth, unsigned int invYear) {
-		day = invDay;
-		month = invMonth;
-		year = invYear;
-	}
-	unsigned int getInvDay() const {
-		return day;
-	}
-	unsigned int getInvMonth() const {
-		return month;
-	}
-	unsigned int getInvYear() const {
-		return year;
-	}
-};*/
-
-template <class T> class invalidIdentification { //When search for specific person goes wrong (may search by code - which can be string or unsigned long it, name... whatever)
+/*! Template exception class invalidIdentification, used when trying to identify non-existing structures*/
+template <class T> class invalidIdentification {
 private:
 	T identification;
 public:
+	//! Creates a new object to throw an exception
+	/*!
+	\param id identifier that does not exist
+	*/
 	invalidIdentification(T id) {
 		identification = id;
 	}
+
+	//! Gets a copy of inexistent identifier
+	/*!
+	\return copy of data member identification
+	*/
 	T getInvIdentification() const {
 		return identification;
 	}
 };
 
-template <class T> class repeatedIdentification { //When trying to change an identification member of an object, it may already exist. That would cause conflict if searches are made based on it, so can't allow it
+/*! Template exception class repeatedIdentification, used when trying to set an already existent identifier for a structure*/
+template <class T> class repeatedIdentification {
 private:
 	T identification;
 public:
+	//! Creates a new object to throw an exception
+	/*!
+	\param id identifier that already exists
+	*/
 	repeatedIdentification(T id) {
 		identification = id;
 	}
+
+	//! Gets a copy of repeated identifier
+	/*!
+	\return copy of data member identification
+	*/
 	T getRepIdentification() const {
 		return identification;
 	}
 };
 
-class inexistentFile { //When trying to open a file whose name is 'filename' and it does not exist
+/*! Exception class inexistentFile, used when trying to open files that do not exist*/
+class inexistentFile {
 private:
 	std::string filename;
 public:
+	//! Creates a new object to throw an exception
+	/*!
+	\param file name of file that does not exist
+	*/
 	inexistentFile(std::string file) {
 		filename = file;
 	}
+
+	//! Gets a copy of inexistent file name
+	/*!
+	\return copy of data member filename
+	*/
 	std::string getInexistentFileName() const {
 		return filename;
 	}
 };
 
-template <class T> class alreadyRegistered { //When user is trying to register a student already registered
+/*! Template exception class alreadyRegistered, used when trying to register a student that's already completed the registration process*/
+template <class T> class alreadyRegistered {
 private:
 	T identifier;
 public:
+	//! Creates a new object to throw an exception
+	/*!
+	\param id identifier of student that's already been registered
+	*/
 	alreadyRegistered(T id) {
 		identifier = id;
 	}
+
+	//! Gets a copy of already registered student's identifier
+	/*!
+	\return copy of data member identifier
+	*/
 	T getIdentifier() const {
 		return identifier;
 	}
 };
-
-/*class tooManyECTS { //When user is trying to make student take more than 75 ECTS
-public:
-	tooManyECTS() {};
-};*/
