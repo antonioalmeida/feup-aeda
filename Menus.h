@@ -3,6 +3,8 @@
 #include <iostream>
 #include "Course.h"
 
+/*! \file Menus shown throughout program execution*/
+
 //! Asks for input files so information can be read. Throws inexistentFile exception if any of given files does not exist
 /*!
 \param studentsFile name of file where students will be read from

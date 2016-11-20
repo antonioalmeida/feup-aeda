@@ -8,14 +8,16 @@
 
 #define MAX_ECTS 75
 
-//Header file for class Person and its derived classes Student and Teacher
+/*! \file Person and its derived classes Student and Teacher*/
 
 class Person {
 protected:
 	std::string name;
 	std::string email;
 public:
-	//! Default constructor
+	//! Default constructor (does nothing)
+	/*!
+	*/
 	Person() {};
 
 	//! Class constructor used for persons read from text files
@@ -73,9 +75,13 @@ protected:
 
 public:
 	//! Sequential code used for freshmen
+	/*!
+	*/
 	static unsigned long int nextCode;
 
-	//! Default constructor
+	//! Default constructor (does nothing)
+	/*!
+	*/
 	Student() {};
 
 	//! Class constructor used for students read from text files
@@ -174,6 +180,8 @@ public:
 	void addUnitTaking(Unit* u);
 
 	//! Calculates the student's current average. Is left at 0 if it's a freshman
+	/*!
+	*/
 	void calculateAverage();
 
 	//! Checks if given student has completed the registration process
@@ -183,6 +191,8 @@ public:
 	bool isRegistered() const; 
 
 	//! Changes a student's registration status to its current opposite (true if false and vice-versa)
+	/*!
+	*/
 	void setRegistration();
 
 	//! Changes a student's status to a new one
@@ -234,9 +244,13 @@ protected:
 	std::vector<Student*> pupils;
 public:
 	//! One (or more) teacher(s) will have the least amount of students as pupils. It is to those that should be assigned students first. This variable holds that minimum
+	/*!
+	*/
 	static unsigned int lessStudents;
 
 	//! Default constructor (does nothing)
+	/*!
+	*/
 	Teacher() {};
 
 	//! Class constructor used for teachers read from text files

@@ -8,7 +8,7 @@
 #define TAB_BIG "                        "
 #define TAB	"     "
 
-//Header file for Utils, a file with useful functions to use throughout the program
+/*! \file Utils, a file with useful functions to use throughout the program*/
 
 //! Ensures user's input is a number between two numbers given by arguments
 /*!
@@ -28,6 +28,8 @@ unsigned short int readOp(unsigned short int minValue, unsigned short int  maxVa
 bool validDate(unsigned int day, unsigned int month, unsigned int year);
 
 //! Prints a number of new line characters defined by macro WINDOW_SIZE to simulate system("cls")
+/*!
+*/
 void clearScreen(); 
 
 //! Deletes all whitespaces in beggining and end of a string and turns all consecutive whitespaces in the middle into a single whitespace
@@ -37,13 +39,21 @@ void clearScreen();
 void deleteWhitespace(std::string &s);
 
 //! Waits for user input (a random key, followed by ENTER), then clears screen using clearScreen(). Simulates system("pause")
+/*!
+*/
 void pressToContinue();
 
 //! Prints table header used when doing different types of units listings
+/*!
+*/
 void unitsPrintHeader();
 
 //! Prints table header used when doing different types of students listings
+/*!
+*/
 void studentsPrintHeader();
 
 //! Prints table header used when doing different types of teachers listings
+/*!
+*/
 void teachersPrintHeader();

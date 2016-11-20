@@ -4,7 +4,7 @@
 #include <string>
 #include <iomanip>
 
-/*! Unit Class */
+/*! \file Class that represents units taught in course */
 
 class Unit {
 protected:
@@ -15,6 +15,8 @@ protected:
 	unsigned int curricularYear;
 public:
 	//! Default class constructor (does nothing)
+	/*!
+	*/
 	Unit() {};
 
 	//! Class constructor used when reading units from file
@@ -54,6 +56,8 @@ public:
 	unsigned int getCurricularYear() const;
 
 	//! Determines if unit is full or not. Refer to derived classes reimplementations for more information
+	/*!
+	*/
 	virtual bool isFull() const { return false; };
 
 	//! Changes a unit's name
@@ -75,9 +79,13 @@ public:
 	void setScientificArea(std::string newScientificArea);
 
 	//! Updates a unit's number of vacancies. Refer to derived classes reimplementations for more information
+	/*!
+	*/
 	virtual void updateVacancies() {};
 
 	//! Updates a unit's number of vacancies. Refer to derived classes reimplementations for more information
+	/*!
+	*/
 	virtual void incrementVacancies() {};
 
 	//! Auxiliar function used to print unit (called in operator<< overload)
@@ -114,6 +122,8 @@ public:
 class MandatoryUnit : public Unit {
 public:
 	//! Default constructor (does nothing)
+	/*!
+	*/
 	MandatoryUnit() {};
 
 	//! Class constructor used when reading units from file
@@ -148,6 +158,8 @@ protected:
 	unsigned int vacancies;
 public:
 	//! Default constructor (does nothing)
+	/*!
+	*/
 	OptionalUnit() {};
 
 	//! Class constructor used when reading units from file
@@ -169,9 +181,13 @@ public:
 	unsigned int getFixedVacancies() const;
 
 	//! Decrements number of vacancies by one
+	/*!
+	*/
 	virtual void updateVacancies();
 
 	//! Increments number of vacancies by one
+	/*!
+	*/
 	virtual void incrementVacancies();
 
 	//! Determines if unit has vacancies left or not

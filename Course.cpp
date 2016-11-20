@@ -466,19 +466,21 @@ void Course::showStudentUnits(unsigned long studentCode) const {
 void Course::showYearRegistrations(unsigned int yearToShow) const {
     cout << setw(26) << "Name" << setw(25) << "Registration Date" << setw(17) << "Units Taking" << endl << endl;
 	for (int i = 0; i < students.size(); i++) {
-        cout << setw(32) << students.at(i).getName() << "  ";
-        if(!students.at(i).isRegistered()) {
-            cout << "is not registered" << endl;
-            continue; //moves on to next student
-        }
-        
-        cout << "    " << students.at(i).getRegistrationDate() << "       ";
-        vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
-        
-        for (int j = 0; j < unitsTaking.size(); j++)
-            cout << unitsTaking.at(j)->getAbbreviation() << " ";
-        
-        cout << endl;
+		if (students.at(i).getCurricularYear() == yearToShow) {
+			cout << setw(32) << students.at(i).getName() << "  ";
+			if (!students.at(i).isRegistered()) {
+				cout << "is not registered" << endl;
+				continue; //moves on to next student
+			}
+
+			cout << "    " << students.at(i).getRegistrationDate() << "       ";
+			vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
+
+			for (int j = 0; j < unitsTaking.size(); j++)
+				cout << unitsTaking.at(j)->getAbbreviation() << " ";
+
+			cout << endl;
+		}
 	}
 }
 

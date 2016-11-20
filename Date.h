@@ -6,7 +6,7 @@
 #include "Exceptions.h"
 #include "Utils.h"
 
-/*! Date Class */
+/*! \file Date Class */
 
 class Date {
 private:
@@ -15,6 +15,8 @@ private:
 	unsigned int year;
 public:
 	//! Default class constructor (does nothing)
+	/*!
+	*/
 	Date() {};
 
 	//! Creates a new (valid) date given by its three parameters
