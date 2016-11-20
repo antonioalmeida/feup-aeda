@@ -8,7 +8,11 @@
 #define TAB_BIG "                        "
 #define TAB	"     "
 
-/*! \file Utils, a file with useful functions to use throughout the program*/
+/*! \file utils.h
+ \brief Useful functions to use throughout the program.
+ 
+ */
+
 
 //! Ensures user's input is a number between two numbers given by arguments
 /*!
