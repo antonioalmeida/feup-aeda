@@ -33,42 +33,7 @@ public:
 	\param optUnitsFile string corresponding to name of file that holds all optional units' information
 	*/
 	Course(std::string studentsFile, std::string teachersFile, std::string manUnitsFile, std::string optUnitsFile);
-<<<<<<< HEAD
-	~Course() {}; //Deconstructor (NOT EMPTY, IMPLEMENT LATER!)
 
-	std::vector<Student> getStudents() const; //!< Returns students vector
-	std::vector<Teacher> getTeachers() const; //!< Returns teachers vector
-
-	/* Different kinds of get to work with units throughout program */
-	std::map<std::string, Unit*> getMap() const; //!< Returns map used
-	std::vector<Unit*> getAllUnits() const; //!< Returns vector with all units
-	std::vector<Unit*> getAllMandatoryUnits() const; //!< Returns vector with all mandatory units
-	std::vector<Unit*> getAllOptionalUnits() const; //!< Returns vector with all optional units
-	std::vector<Unit*> getUnitsFromYear(unsigned int curricularYear) const; //!< Returns vector with all units from curricular year specified
-	std::vector<Unit*> getOptUnitsFromYear(unsigned int curricularYear) const; //!< Returns vector with all optional units from curricular year specified (which can only be 4 or 5!)
-	std::vector<Unit*> getManUnitsFromYear(unsigned int curricularYear) const; //!< Returns vector with all mandatory units from curricular year specified
-	std::vector<Unit*> getUnitsFromSameScientificArea(Unit* u1) const; //!< Returns vector with all (optional) units with all optional units (not full!!) whose scientific area is the same as u1
-
-	void addStudent(); //!< Adds new student to students vector if all information provided is valid (if given code in case of student of curricularYear >= 2 already exists, exception is thrown)
-	void removeStudent(unsigned long studentCode); //!< Removes student (also removed from his mentor's vector if it is the case). Exception thrown is student does not exist
-	void removeStudent(std::string studentName); //!< Removes student (also removed from his mentor's vector if it is the case). Exception thrown is student does not exist
-
-	void showStudent(std::string studentName) const; //!< Finds a student by name and prints its information
-	void showStudent(unsigned long int studentCode) const; //!< Finds a student by code and prints its information
-	void showStudents(bool(*comparisonFunction)(Student, Student)) const; //!< Prints all students information based on specific sort passed as argument
-	void showStudentsStatus(std::string status) const; //!< Shows students whose status is 'status' alphabetically
-	void showStudentsYear(unsigned short int curricularYear) const;
-	void showRegisteredStudents() const; //!< Shows registered students
-	void showUnregisteredStudents() const; //!< Show unregistered students
-	void showUnitRegistrations() const; //!< Shows students registered to a specific unit. Throws exception if unit specified does not exist
-	void showStudentUnits(std::string studentName) const; //!< Show units a student is taking. Throws exception if student does not exist
-	void showStudentUnits(unsigned long studentCode) const; //!< Show units a student is taking. Throws exception if student does not exist
-	void showYearRegistrations(unsigned int yearToShow) const; //!< Show all students of a curricular year's registrations
-	void showAllStudentsRegistrations() const; //!< Show all students' registrations
-	void editStudentName(); //!< Edits a given student's name. Throws exception if specified student does not exist or new name is already taken
-	void editStudentStatus(); //!< Edits a given student's name. Throws exception if specified student does not exist
-=======
-	
 	//! Deconstructor. Destroys object
 	/*!
 	*/
@@ -206,6 +171,8 @@ public:
 	*/
 	void showStudentUnits(unsigned long studentCode) const;
 
+	void showStudentsYear(unsigned short int curricularYear) const;
+
 	//! Shows registration information of all students from specified curricular year
 	/*!
 	\param yearToShow unsigned int corresponding to the curricular year registration information will be shown
@@ -230,7 +197,7 @@ public:
 	//! Registers a 'random' student (in reality, the first one in students vector that has not done the registration process yet). Throws exception if there's no one left to register
 	/*!
 	*/
->>>>>>> 1c70459501055cd4ca64d5079f0a904fbe85fa1f
+
 	void registerRandomStudent();
 
 	//! Registers a specific student identified by his name. Throws exception if student does not exist or has already completed the registration process
