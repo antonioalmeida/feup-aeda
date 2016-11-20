@@ -43,7 +43,7 @@ void pressToContinue() {
 	if (cin.peek() != cin.eof()) //If there are no characters to be ignored, don't call it, otherwise might have to input ENTER 2 times
 		cin.ignore();
 	getline(cin, trash);
-	cout << endl;
+
 }
 
 void deleteWhitespace(string &s) {
