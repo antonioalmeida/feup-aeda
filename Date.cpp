@@ -14,6 +14,20 @@ Date::Date(unsigned int day, unsigned int month, unsigned int year) {
 		throw invalidDate(day, month, year);*/
 }
 
+Date::Date(string DateStr) { // Date na forma DD/MM/AAA
+
+	istringstream dateTemp(DateStr);
+	dateTemp >> day;
+	dateTemp.ignore(numeric_limits<int>::max(), '/');
+	dateTemp >> month;
+	dateTemp.ignore(numeric_limits<int>::max(), '/');
+	dateTemp >> year;
+
+	this->day = day;
+	this->month = month;
+	this->year = year;
+}
+
 unsigned int Date::getDay() const {
 	return day;
 }

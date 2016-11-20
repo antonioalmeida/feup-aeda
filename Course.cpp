@@ -865,31 +865,23 @@ void Course::registerSpecificStudentByName() {
 		}
 	}
 
-    unsigned int day, month, year;
+	Date dateOfRegistration;
     do {
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cout << "Insert the date \"" << it->getName() << "\" has registered in: (DD/MM/YYYY) ";
         string registrationDate;
         getline(cin, registrationDate);
         deleteWhitespace(registrationDate);
+        dateOfRegistration = Date (registrationDate);
         
-        istringstream dateTemp;
-        dateTemp.str(registrationDate);
-        dateTemp >> day;
-        dateTemp.ignore(numeric_limits<int>::max(), '/');
-        dateTemp >> month;
-        dateTemp.ignore(numeric_limits<int>::max(), '/');
-        dateTemp >> year;
-        Date dateOfRegistration(day,month,year);
-        
-        if(!validDate(day, month, year))
+        if(!validDate(dateOfRegistration.getDay(), dateOfRegistration.getMonth(), dateOfRegistration.getYear()))
             cout << "The date you inserted is not valid \n";
         else {
             it->setRegistrationDate(dateOfRegistration);
             cout << "The student \"" << it->getName() << "\" was successfuly registrated on " << dateOfRegistration;
         }
         
-    } while(!validDate(day, month, year));
+    } while(!validDate(dateOfRegistration.getDay(), dateOfRegistration.getMonth(), dateOfRegistration.getYear()));
     
     //Add the student to the teacher with the least amount of pupils (the first one that comes up)
     for(int i = 0; i < teachers.size(); i++) {
@@ -1093,13 +1085,12 @@ void Course::registerSpecificStudentByCode() {
 
 void Course::addTeacher() {
 	string newTeacherName;
-	cout << "Insert the new teacher's name: ";
 	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	cout << "Insert the new teacher's name: "<<endl;
 	getline(cin, newTeacherName);
 
 	string newTeacherCode;
-	cout << "Insert the new teacher's code: ";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	cout << "Insert the new teacher's code: "<<endl;
 	getline(cin, newTeacherCode);
 
 	for (vector<Teacher>::const_iterator it = teachers.begin(); it != teachers.end(); it++) {
@@ -1112,8 +1103,7 @@ void Course::addTeacher() {
 	string abbreviation;
 	vector<Unit*> newTeacherUnitsTaught;
 	do {
-		cout << "Insert the abbreviation of a unit taught by \"" << newTeacherName << "\" (0 to finish): ";
-		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cout << "Insert the abbreviation of a unit taught by \"" << newTeacherName << "\" (0 to finish): "<<endl;
 		getline(cin, abbreviation);
 		deleteWhitespace(abbreviation);
 		if (abbreviation == "0")
@@ -1121,7 +1111,7 @@ void Course::addTeacher() {
 		if (!verifyUnit(abbreviation))
 			cout << "Unit \"" << abbreviation << "\" does not exist! Please insert a valid abbreviation" << endl;
 		else
-			newTeacherUnitsTaught.push_back(abbreviationToUnit.find(abbreviation)->second);
+			newTeacherUnitsTaught.push_back(abbreviationToUnit.at(abbreviation));
 	} while (true);
 
 	Teacher t1(newTeacherName, newTeacherCode, newTeacherUnitsTaught);

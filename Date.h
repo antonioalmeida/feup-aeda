@@ -27,6 +27,8 @@ public:
 	*/
 	Date(unsigned int day, unsigned int month, unsigned int year);
 
+	Date(std::string DateStr);
+
 	//! Gets a copy of a date's day
 	/*!
 	\return copy of unsigned int data member day

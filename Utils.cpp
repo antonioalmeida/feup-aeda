@@ -5,6 +5,7 @@
 using namespace std;
 
 bool validDate(unsigned int day, unsigned int month, unsigned int year) {
+
 	bool leapYear = (year % 400) || (year % 100 != 0 && year % 4 == 0);
 	switch (month) {
 	case 1:
@@ -14,19 +15,22 @@ bool validDate(unsigned int day, unsigned int month, unsigned int year) {
 	case 8:
 	case 10:
 	case 12:
-		return true;
+		return day < 32;
 	case 4:
 	case 6:
 	case 9:
 	case 11:
-		return day != 31;
+		return day < 31;
 	case 2:
 		if (leapYear)
-			return day < 29;
+			return day < 30;
 		else
-			return day < 28;
+			return day < 29;
+	default:
+		return false;
 	}
 }
+
 
 void clearScreen() {
 	for (unsigned int i = 0; i < WINDOW_SIZE; i++)
@@ -55,32 +59,35 @@ unsigned short int readOp(unsigned short int minValue, unsigned short int  maxVa
 	unsigned short int number;
 	do {
 		cin >> number;
-		if (number < minValue || number > maxValue)
-			cout << "ERROR: Out of range value, please insert a value between " << minValue << "-" << maxValue << ": ";
+		if (cin.fail() || (number < minValue || number > maxValue)) {
+			cout << "ERROR: Invalid input, please insert a value between " << minValue << "-" << maxValue << ": ";
+			cin.clear();
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 	} while (number < minValue || number > maxValue);
 
 	return number;
 }
 
 void unitsPrintHeader() {
-    cout << "Abbreviation";
-    cout << setw(51) << "Name";
-    cout << setw(7) << "Year";
-    cout << setw(7) << "ECTS";
-    cout << setw(27) << "Scientific Area";
-    cout << setw(12) << "Vacancies" << endl << endl;
+	cout << "Abbreviation";
+	cout << setw(51) << "Name";
+	cout << setw(7) << "Year";
+	cout << setw(7) << "ECTS";
+	cout << setw(27) << "Scientific Area";
+	cout << setw(12) << "Vacancies" << endl << endl;
 }
 
 void studentsPrintHeader() {
-    cout << "Code";
-    cout << setw(37) << "Name";
-    cout << setw(9) << "Average";
-    cout << setw(7) << "ECTS";
-    cout << setw(15) << "Units Taking" << endl << endl;
+	cout << "Code";
+	cout << setw(37) << "Name";
+	cout << setw(9) << "Average";
+	cout << setw(7) << "ECTS";
+	cout << setw(15) << "Units Taking" << endl << endl;
 }
 
 void teachersPrintHeader() {
-    cout << setw(8) << "Code";
-    cout << setw(50) << "Name";
-    cout << "   Units Taught" << endl << endl;
+	cout << setw(8) << "Code";
+	cout << setw(50) << "Name";
+	cout << "   Units Taught" << endl << endl;
 }
