@@ -199,7 +199,7 @@ bool sortByName(Student s1, Student s2) {
 }
 
 bool sortByAverage(Student s1, Student s2) {
-	return s1.getAverage() < s2.getAverage();
+	return s1.getAverage() > s2.getAverage();
 }
 
 bool sortByCurricularYear(Student s1, Student s2) {

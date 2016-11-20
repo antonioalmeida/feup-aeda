@@ -417,7 +417,7 @@ void Course::showUnitRegistrations() const {
 	cout << endl;
 }
 
-void Course::showStudentUnits(std::string studentName) const {
+void Course::showStudentUnits(string studentName) const {
 	for (unsigned int i = 0; i < students.size(); i++) {
 		if (students.at(i).getName() == studentName) {
 			vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
@@ -425,9 +425,9 @@ void Course::showStudentUnits(std::string studentName) const {
 			for (unsigned int j = 0; j < unitsTaking.size(); j++) {
 				cout << unitsTaking.at(j) << endl;
 			}
+			cout << endl;
+			return;
 		}
-		cout << endl;
-		return;
 	}
 	throw invalidIdentification<string>(studentName);
 }
@@ -440,9 +440,9 @@ void Course::showStudentUnits(unsigned long studentCode) const {
 			for (unsigned int j = 0; j < unitsTaking.size(); j++) {
 				cout << unitsTaking.at(j);
 			}
+			cout << endl;
+			return;
 		}
-		cout << endl;
-		return;
 	}
 	throw invalidIdentification<unsigned long>(studentCode);
 }
@@ -505,7 +505,6 @@ void Course::editStudentName() {
 
 	string newName;
 	cout << "Insert the student's new full name: ";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, newName);
 	vector<Student>::iterator second_it = students.begin();
 	for (second_it; second_it != students.end(); second_it++) {
@@ -533,7 +532,6 @@ void Course::editStudentStatus() {
 
 	string newStatus;
 	cout << "Insert the student's new status: ";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, newStatus);
 	it->setStatus(newStatus);
 }
@@ -1111,7 +1109,6 @@ void Course::editTeacherName() {
 
 	string newTeacherName;
 	cout << "Insert the teacher's new full name: ";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, newTeacherName);
 
 	for (vector<Teacher>::iterator second_it = teachers.begin(); second_it != teachers.end(); second_it++) {
@@ -1140,7 +1137,6 @@ void Course::editTeacherCode() {
 
 	string newTeacherCode;
 	cout << "Insert the teacher's new code: ";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, newTeacherCode);
 
 	for (vector<Teacher>::iterator second_it = teachers.begin(); second_it != teachers.end(); second_it++) {
@@ -1170,14 +1166,15 @@ void Course::teacherAddUnitTaught() {
 	string abbreviation;
 	do {
 		cout << "Insert the abbreviation of a unit taught by \"" << teacherName << "\" (0 if you changed your mind): ";
-		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		getline(cin, abbreviation);
 		deleteWhitespace(abbreviation);
+		if (abbreviation == "0")
+			break;
 		if (!verifyUnit(abbreviation) && abbreviation != "0")
 			cout << "Unit \"" << abbreviation << "\" does not exist! Please insert a valid abbreviation" << endl;
 		else
 			it->addUnitTaught(abbreviationToUnit.find(abbreviation)->second);
-	} while (abbreviation != "0" || !verifyUnit(abbreviation));
+	} while (true);
 }
 
 void Course::removeTeacher(string teacherID) {
@@ -1341,7 +1338,7 @@ void Course::showUnits() const {
 
 	unitsPrintHeader();
 
-	sort(unitTemp.begin(), unitTemp.end());
+	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
 
 	for (unsigned int i = 0; i < unitTemp.size(); i++)
 		cout << *unitTemp.at(i) << endl;
@@ -1478,7 +1475,7 @@ void Course::save() const {
 	cout << "Insert the filename where teachers will be saved: ";
 	getline(cin, teachersFileName);
 	ofstream teachersOut(teachersFileName+".txt");
-	studentsOut << teachers.size() << endl;
+	teachersOut << teachers.size() << endl;
 	for (unsigned int i = 0; i < teachers.size(); i++) {
 		teachers.at(i).save(teachersOut);
 		teachersOut << endl << endl;
@@ -1486,7 +1483,7 @@ void Course::save() const {
 	teachersOut.close();
 
 	ofstream teachersOutExecution(teachersFileName+"_execution.txt");
-	studentsOut << teachers.size() << endl;
+	teachersOutExecution << teachers.size() << endl;
 	for (unsigned int i = 0; i < teachers.size(); i++) {
 		teachers.at(i).save(teachersOutExecution);
 		teachersOutExecution << endl;

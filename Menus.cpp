@@ -131,6 +131,7 @@ void studentsOptions(Course &course) {
 			pressToContinue();
 			break;
 		case 3: {
+			clearScreen();
 			unsigned short choice;
 			cout << TAB << "1 - Identify student by name" << endl;
 			cout << TAB << "2 - Identify student by code" << endl << endl;
@@ -226,7 +227,7 @@ void editStudentOptions(Course & course) {
 		case 2:
 			try {
 				course.editStudentStatus();
-				cout << "Student name successfully edited" << endl; //Only reaches here if exception is not thrown
+				cout << "Student status successfully edited" << endl; //Only reaches here if exception is not thrown
 			}
 			catch (invalidIdentification<string> &s) {
 				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
@@ -502,6 +503,7 @@ void listRegistrationsOptions(Course & course) {
 			break;
 		case 3: {
 			unsigned long yearToShow;
+			cout << "Insert the curricular year you wish too see the registrations from: ";
 			yearToShow = readOp(1, 5);
 			course.showYearRegistrations(yearToShow);
 			pressToContinue();
@@ -715,7 +717,7 @@ unsigned short int listTeachersMenu() {
 	cout << endl;
 	cout << TAB << "1 - Show teachers alphabetically" << endl; //Done
 	cout << TAB << "2 - Show a teacher" << endl;  //Done
-	cout << TAB << "0 - Return to students menu" << endl << endl;
+	cout << TAB << "0 - Return to previous menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 2);
 
