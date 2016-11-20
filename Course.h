@@ -171,6 +171,10 @@ public:
 	*/
 	void showStudentUnits(unsigned long studentCode) const;
 
+	//! Shows all students from a specific curricular year given as argument
+	/*!
+	\param curricularYear unsigned short int corresponding to the curricular year to filter students to be shown
+	*/
 	void showStudentsYear(unsigned short int curricularYear) const;
 
 	//! Shows registration information of all students from specified curricular year
