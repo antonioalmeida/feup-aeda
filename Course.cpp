@@ -1418,19 +1418,17 @@ void Course::save() const {
 	cout << "Insert the filename where mandatory units will be saved: ";
 	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, mandatoryUnitsFileName);
-	ofstream mandatoryUnitsOut(mandatoryUnitsFileName);
+	ofstream mandatoryUnitsOut(mandatoryUnitsFileName+".txt");
 	vector<Unit*> manUnits = getAllMandatoryUnits();
 	mandatoryUnitsOut << manUnits.size() << endl;
 	for (unsigned int i = 0; i < manUnits.size(); i++) {
 		manUnits.at(i)->save(mandatoryUnitsOut);
 		mandatoryUnitsOut << endl << endl;
 	}
-	mandatoryUnitsOut.close();
 
 	cout << "Insert the filename where optional units will be saved: ";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, optionalUnitsFileName);
-	ofstream optionalUnitsOut(optionalUnitsFileName);
+	ofstream optionalUnitsOut(optionalUnitsFileName+".txt");
 	vector<Unit*> optUnits = getAllOptionalUnits();
 	optionalUnitsOut << optUnits.size() << endl;
 	for (unsigned int i = 0; i < optUnits.size(); i++) {
@@ -1440,9 +1438,8 @@ void Course::save() const {
 	optionalUnitsOut.close();
 
 	cout << "Insert the filename where students will be saved: ";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, studentsFileName);
-	ofstream studentsOut(studentsFileName);
+	ofstream studentsOut(studentsFileName+".txt");
 	studentsOut << students.size() << endl;
 	for (unsigned int i = 0; i < students.size(); i++) {
 		students.at(i).save(studentsOut);
@@ -1450,16 +1447,57 @@ void Course::save() const {
 	}
 	studentsOut.close();
 
+	ofstream studentsOutExecution(studentsFileName + "_execution.txt");
+	studentsOutExecution << students.size() << endl;
+	for (unsigned int i = 0; i < students.size(); i++) {
+		students.at(i).save(studentsOutExecution);
+		studentsOutExecution << endl;
+		if (students.at(i).getUnitsTaking().size() > 0) {
+			studentsOutExecution << "Taking: ";
+			for (unsigned int j = 0; j < students.at(i).getUnitsTaking().size(); j++)
+				studentsOutExecution << students.at(i).getUnitsTaking().at(j)->getAbbreviation() << " ";
+			studentsOutExecution << endl << "Mentored by ";
+			for (unsigned int k = 0; i < teachers.size(); k++) {
+				vector<Student*> pupilsTemp = teachers.at(k).getPupils();
+				bool found = false;
+				for (vector<Student*>::iterator it = pupilsTemp.begin(); it != pupilsTemp.end(); it++) {
+					if ((*it)->getName() == students.at(i).getName()) {
+						studentsOutExecution << teachers.at(k).getName() << endl;
+						found = true;
+						break;
+					}
+				}
+				if (found)
+					break;
+			}
+		}
+		studentsOutExecution << endl << endl;
+	}
+	studentsOutExecution.close();
+
 	cout << "Insert the filename where teachers will be saved: ";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, teachersFileName);
-	ofstream teachersOut(teachersFileName);
+	ofstream teachersOut(teachersFileName+".txt");
 	studentsOut << teachers.size() << endl;
 	for (unsigned int i = 0; i < teachers.size(); i++) {
 		teachers.at(i).save(teachersOut);
 		teachersOut << endl << endl;
 	}
 	teachersOut.close();
+
+	ofstream teachersOutExecution(teachersFileName+"_execution.txt");
+	studentsOut << teachers.size() << endl;
+	for (unsigned int i = 0; i < teachers.size(); i++) {
+		teachers.at(i).save(teachersOutExecution);
+		teachersOutExecution << endl;
+		if (teachers.at(i).getPupils().size() > 0) {
+			teachersOutExecution << "Mentors: ";
+			for (unsigned int j = 0; j < teachers.at(i).getPupils().size(); j++)
+				teachersOutExecution << teachers.at(i).getPupils().at(j)->getName() << " | ";
+		}
+		teachersOutExecution << endl << endl;
+	}
+	teachersOutExecution.close();
 }
 
 bool Course::verifyUnit(string unitAbbreviation) const {

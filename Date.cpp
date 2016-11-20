@@ -6,21 +6,15 @@ Date::Date(unsigned int day, unsigned int month, unsigned int year) {
 	this->day = day;
 	this->month = month;
 	this->year = year;
-	/*if (day > 31 || day == 0)
-		throw invalidDay(day);
-	if (month > 12 || month == 0)
-		throw invalidMonth(month);
-	if (!validDate(day, month, year))
-		throw invalidDate(day, month, year);*/
 }
 
-Date::Date(string DateStr) { // Date na forma DD/MM/AAA
+Date::Date(string DateStr) { // Date in the form DD/MM/AAA
 
 	istringstream dateTemp(DateStr);
 	dateTemp >> day;
-	dateTemp.ignore(numeric_limits<int>::max(), '/');
+	dateTemp.ignore(1000, '/');
 	dateTemp >> month;
-	dateTemp.ignore(numeric_limits<int>::max(), '/');
+	dateTemp.ignore(1000, '/');
 	dateTemp >> year;
 
 	this->day = day;
@@ -50,24 +44,14 @@ string Date::getDate() const {
 }
 
 void Date::setDay(unsigned int newDay) {
-	/*if (newDay > 31 || newDay == 0)
-		throw invalidDay(newDay);
-	if (!validDate(newDay, month, year))
-		throw invalidDate(newDay, month, year);*/
 	day = newDay;
 }
 
 void Date::setMonth(unsigned int newMonth) {
-	/*if (newMonth > 12 || newMonth == 0)
-		throw invalidMonth(newMonth);
-	if (!validDate(day, newMonth, year))
-		throw invalidDate(day, newMonth, year);*/
 	month = newMonth;
 }
 
 void Date::setYear(unsigned int newYear) {
-	/*if (!validDate(day, month, newYear))
-		throw invalidDate(day, month, newYear);*/
 	year = newYear;
 }
 

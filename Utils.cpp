@@ -62,7 +62,7 @@ unsigned short int readOp(unsigned short int minValue, unsigned short int  maxVa
 		if (cin.fail() || (number < minValue || number > maxValue)) {
 			cout << "ERROR: Invalid input, please insert a value between " << minValue << "-" << maxValue << ": ";
 			cin.clear();
-			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			cin.ignore(1000, '\n');
 		}
 	} while (number < minValue || number > maxValue);
 
