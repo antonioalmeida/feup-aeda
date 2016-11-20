@@ -145,7 +145,7 @@ vector<Unit*> Course::getUnitsFromSameScientificArea(Unit* u1) const {
 	vector<Unit*> result;
 	for (map<string, Unit*>::const_iterator it = abbreviationToUnit.begin(); it != abbreviationToUnit.end(); it++) {
 		if (dynamic_cast<OptionalUnit*>(it->second) != NULL) {
-			if (it->second->getScientificArea() == u1->getScientificArea() && !(it->second->isFull()))
+			if (it->second->getScientificArea() == u1->getScientificArea() && it->second->getCurricularYear() == u1->getCurricularYear() && !(it->second->isFull()))
 				result.push_back(it->second);
 		}
 	}
@@ -1356,7 +1356,7 @@ void Course::showSpecificUnit() const {
 		throw invalidIdentification<string>(abbreviation);
 	else {
 		unitsPrintHeader();
-		cout << *(it->second);
+		cout << *(it->second) << endl;
 	}
 }
 
@@ -1454,7 +1454,7 @@ void Course::save() const {
 			for (unsigned int j = 0; j < students.at(i).getUnitsTaking().size(); j++)
 				studentsOutExecution << students.at(i).getUnitsTaking().at(j)->getAbbreviation() << " ";
 			studentsOutExecution << endl << "Mentored by ";
-			for (unsigned int k = 0; i < teachers.size(); k++) {
+			for (unsigned int k = 0; k < teachers.size(); k++) {
 				vector<Student*> pupilsTemp = teachers.at(k).getPupils();
 				bool found = false;
 				for (vector<Student*>::iterator it = pupilsTemp.begin(); it != pupilsTemp.end(); it++) {
