@@ -43,6 +43,7 @@ public:
 	void showStudent(unsigned long int studentCode) const; //!< Finds a student by code and prints its information
 	void showStudents(bool(*comparisonFunction)(Student, Student)) const; //!< Prints all students information based on specific sort passed as argument
 	void showStudentsStatus(std::string status) const; //!< Shows students whose status is 'status' alphabetically
+	void showStudentsYear(unsigned short int curricularYear) const;
 	void showRegisteredStudents() const; //!< Shows registered students
 	void showUnregisteredStudents() const; //!< Show unregistered students
 	void showUnitRegistrations() const; //!< Shows students registered to a specific unit. Throws exception if unit specified does not exist

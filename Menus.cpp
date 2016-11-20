@@ -155,12 +155,19 @@ void studentsOptions(Course &course) {
 				unsigned long studentCode;
 				cout << "Insert the student's code: ";
 				cin >> studentCode;
-				try {
-					course.removeStudent(studentCode);
-					cout << "Student removed successfully" << endl;
+				if (cin.fail()) {
+					cin.clear();
+					cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					cout << "ERROR: Input Invalid!" << endl;
 				}
-				catch (invalidIdentification<unsigned long> &s) {
-					cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+				else {
+					try {
+						course.removeStudent(studentCode);
+						cout << "Student removed successfully" << endl;
+					}
+					catch (invalidIdentification<unsigned long> &s) {
+						cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+					}
 				}
 			}
 			pressToContinue();
@@ -333,12 +340,13 @@ unsigned short int listStudentsMenu() {
 	cout << TAB << "2 - Show students by curricular year" << endl;
 	cout << TAB << "3 - Show students by status" << endl;
 	cout << TAB << "4 - Show students by average" << endl;
-	cout << TAB << "5 - Show a single student" << endl;
-	cout << TAB << "6 - Show registered students" << endl;
-	cout << TAB << "7 - Show un-registered students" << endl;
+	cout << TAB << "5 - Show students by a specific curricular year" << endl;
+	cout << TAB << "6 - Show a single student" << endl;
+	cout << TAB << "7 - Show registered students" << endl;
+	cout << TAB << "8 - Show un-registered students" << endl;
 	cout << TAB << "0 - Return to students menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = readOp(0, 7);
+	option = readOp(0, 8);
 
 	return option;
 }
@@ -353,13 +361,10 @@ void listStudentsOptions(Course & course) {
 			course.showStudents(sortByName);
 			pressToContinue();
 			break;
-		case 2: {
-			cout << "Insert the curricular year: ";
-			unsigned short int year = readOp(1, 5);
+		case 2:
 			course.showStudents(sortByCurricularYear);
 			pressToContinue();
 			break;
-		}
 		case 3: {
 			string statusToShow;
 			cout << "Insert the status you wish to be listed: ";
@@ -374,15 +379,22 @@ void listStudentsOptions(Course & course) {
 			course.showStudents(sortByAverage);
 			pressToContinue();
 			break;
-		case 5:
+		case 5: {
+			cout << "Insert the curricular year: ";
+			unsigned short int year = readOp(1, 5);
+			course.showStudentsYear(year);
+			pressToContinue();
+			break;
+		}
+		case 6:
 			showStudentOptions(course);
 			pressToContinue();
 			break;
-		case 6:
+		case 7:
 			course.showRegisteredStudents();
 			pressToContinue();
 			break;
-		case 7:
+		case 8:
 			course.showUnregisteredStudents();
 			pressToContinue();
 			break;
@@ -430,11 +442,18 @@ void showStudentOptions(Course & course) {
 			cout << "Insert the student's code: " << endl;
 			unsigned long studentCode;
 			cin >> studentCode;
-			try {
-				course.showStudent(studentCode);
+			if (cin.fail()) {
+				cin.clear();
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				cout << "ERROR: Input Invalid!" << endl;
 			}
-			catch (invalidIdentification<unsigned long> &s) {
-				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			else {
+				try {
+					course.showStudent(studentCode);
+				}
+				catch (invalidIdentification<unsigned long> &s) {
+					cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+				}
 			}
 			pressToContinue();
 			break;
@@ -537,11 +556,18 @@ void studentRegistrationsOptions(Course & course) {
 			cout << "Insert the student's code: " << endl;
 			unsigned long studentCode;
 			cin >> studentCode;
-			try {
-				course.showStudentUnits(studentCode);
+			if (cin.fail()) {
+				cin.clear();
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				cout << "ERROR: Input Invalid!" << endl;
 			}
-			catch (invalidIdentification<unsigned long> &s) {
-				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			else {
+				try {
+					course.showStudentUnits(studentCode);
+				}
+				catch (invalidIdentification<unsigned long> &s) {
+					cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+				}
 			}
 			pressToContinue();
 			break;
@@ -816,11 +842,18 @@ void showTeacherPupilOptions(Course & course) {
 			cout << "Insert the pupil's code: " << endl;
 			unsigned long pupilCode;
 			cin >> pupilCode;
-			try {
-				course.showTeacherPupilByCode(pupilCode);
+			if (cin.fail()) {
+				cin.clear();
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				cout << "ERROR: Input Invalid!" << endl;
 			}
-			catch (invalidIdentification<unsigned long int> &s) {
-				cout << "Student identified by \"" << s.getInvIdentification() << "\" does not exist or has not been assigned a mentor yet!" << endl;
+			else {
+				try {
+					course.showTeacherPupilByCode(pupilCode);
+				}
+				catch (invalidIdentification<unsigned long int> &s) {
+					cout << "Student identified by \"" << s.getInvIdentification() << "\" does not exist or has not been assigned a mentor yet!" << endl;
+				}
 			}
 			pressToContinue();
 			break;
@@ -997,8 +1030,8 @@ void listUnitsOptions(Course & course) {
 			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			getline(cin, scientificArea);
 			deleteWhitespace(scientificArea);
-			try{
-			course.showUnitsofScientificArea(scientificArea);
+			try {
+				course.showUnitsofScientificArea(scientificArea);
 			}
 			catch (invalidIdentification<string> &s) {
 				cout << "ERROR: No unit identified by \"" << s.getInvIdentification() << "\"!" << endl;

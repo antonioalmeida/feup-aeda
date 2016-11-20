@@ -174,10 +174,17 @@ void Course::addStudent() {
 	unsigned long newStudentCode;
 	if (newStudentCurricularYear > 1) {
 		cout << "Insert the new student's code: ";
-		cin >> newStudentCode; //Verify for invalid input (later)
-		for (int i = 0; i < students.size(); i++) {
-			if (students.at(i).getCode() == newStudentCode)
-				throw repeatedIdentification<unsigned long>(newStudentCode);
+		cin >> newStudentCode;
+		if (cin.fail()) {
+			cin.clear();
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			cout << "ERROR: Input Invalid!" << endl;
+		}
+		else {
+			for (int i = 0; i < students.size(); i++) {
+				if (students.at(i).getCode() == newStudentCode)
+					throw repeatedIdentification<unsigned long>(newStudentCode);
+			}
 		}
 	}
 
@@ -332,7 +339,7 @@ void Course::removeStudent(string studentName) {
 void Course::showStudent(string studentName) const {
 	for (int i = 0; i < students.size(); i++) {
 		if (students.at(i).getName() == studentName) {
-            studentsPrintHeader();
+			studentsPrintHeader();
 			cout << students.at(i) << endl;
 			return;
 		}
@@ -343,7 +350,7 @@ void Course::showStudent(string studentName) const {
 void Course::showStudent(unsigned long int studentCode) const {
 	for (int i = 0; i < students.size(); i++) {
 		if (students.at(i).getCode() == studentCode) {
-            studentsPrintHeader();
+			studentsPrintHeader();
 			cout << students.at(i) << endl;
 			return;
 		}
@@ -354,11 +361,11 @@ void Course::showStudent(unsigned long int studentCode) const {
 void Course::showStudents(bool(*comparisonFunction)(Student, Student)) const {
 	vector<Student> studentsTemp = students;
 	sort(studentsTemp.begin(), studentsTemp.end(), *comparisonFunction);
-    
-    studentsPrintHeader();
-    for (int i = 0; i < studentsTemp.size(); i++) {
+
+	studentsPrintHeader();
+	for (int i = 0; i < studentsTemp.size(); i++) {
 		cout << studentsTemp.at(i);
-    }
+	}
 	cout << endl;
 }
 
@@ -368,15 +375,30 @@ void Course::showStudentsStatus(string status) const {
 		if (students.at(i).getStatus() == status)
 			studentsToShow.push_back(students.at(i));
 	}
-    
+
 	sort(studentsToShow.begin(), studentsToShow.end(), sortByName);
-    studentsPrintHeader();
-    
+	studentsPrintHeader();
+
 	for (int i = 0; i < studentsToShow.size(); i++)
 		cout << studentsToShow.at(i) << endl;
 	cout << endl;
 }
 
+void Course::showStudentsYear(unsigned short int curricularYear) const {
+	vector<Student> studentsToShow;
+	for (int i = 0; i < students.size(); i++) {
+		if (students.at(i).getCurricularYear() == curricularYear)
+			studentsToShow.push_back(students.at(i));
+	}
+
+	sort(studentsToShow.begin(), studentsToShow.end(), sortByName);
+	studentsPrintHeader();
+
+	for (int i = 0; i < studentsToShow.size(); i++)
+		cout << studentsToShow.at(i) << endl;
+	cout << endl;
+
+}
 void Course::showRegisteredStudents() const {
 	vector<Student> studentsToShow;
 	for (int i = 0; i < students.size(); i++) {
@@ -384,8 +406,8 @@ void Course::showRegisteredStudents() const {
 			studentsToShow.push_back(students.at(i));
 	}
 	sort(studentsToShow.begin(), studentsToShow.end(), sortByName);
-    studentsPrintHeader();
-    
+	studentsPrintHeader();
+
 	for (int i = 0; i < studentsToShow.size(); i++)
 		cout << studentsToShow.at(i) << endl;
 	cout << endl;
@@ -398,10 +420,10 @@ void Course::showUnregisteredStudents() const {
 			studentsToShow.push_back(students.at(i));
 	}
 	sort(studentsToShow.begin(), studentsToShow.end(), sortByName);
-    studentsPrintHeader();
-    
+	studentsPrintHeader();
+
 	for (int i = 0; i < studentsToShow.size(); i++)
-        cout << studentsToShow.at(i);
+		cout << studentsToShow.at(i);
 	cout << endl;
 }
 
@@ -426,8 +448,8 @@ void Course::showUnitRegistrations() const {
 	}
 
 	sort(result.begin(), result.end(), sortByName);
-    studentsPrintHeader();
-    
+	studentsPrintHeader();
+
 	for (int i = 0; i < result.size(); i++)
 		cout << result.at(i) << endl;
 	cout << endl;
@@ -464,7 +486,7 @@ void Course::showStudentUnits(unsigned long studentCode) const {
 }
 
 void Course::showYearRegistrations(unsigned int yearToShow) const {
-    cout << setw(26) << "Name" << setw(25) << "Registration Date" << setw(17) << "Units Taking" << endl << endl;
+	cout << setw(26) << "Name" << setw(25) << "Registration Date" << setw(17) << "Units Taking" << endl << endl;
 	for (int i = 0; i < students.size(); i++) {
 		if (students.at(i).getCurricularYear() == yearToShow) {
 			cout << setw(32) << students.at(i).getName() << "  ";
@@ -485,22 +507,22 @@ void Course::showYearRegistrations(unsigned int yearToShow) const {
 }
 
 void Course::showAllStudentsRegistrations() const {
-    cout << setw(26) << "Name" << setw(25) << "Registration Date" << setw(17) << "Units Taking" << endl << endl;
-    for (int i = 0; i < students.size(); i++) {
-        cout << setw(32) << students.at(i).getName() << "  ";
-        if(!students.at(i).isRegistered()) {
-            cout << "is not registered" << endl;
-            continue; //moves on to next student
-        }
-        
-        cout << "    " << students.at(i).getRegistrationDate() << "       ";
-        vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
-        
-        for (int j = 0; j < unitsTaking.size(); j++)
-            cout << unitsTaking.at(j)->getAbbreviation() << " ";
-    
-        cout << endl;
-    }
+	cout << setw(26) << "Name" << setw(25) << "Registration Date" << setw(17) << "Units Taking" << endl << endl;
+	for (int i = 0; i < students.size(); i++) {
+		cout << setw(32) << students.at(i).getName() << "  ";
+		if (!students.at(i).isRegistered()) {
+			cout << "is not registered" << endl;
+			continue; //moves on to next student
+		}
+
+		cout << "    " << students.at(i).getRegistrationDate() << "       ";
+		vector<Unit*> unitsTaking = students.at(i).getUnitsTaking();
+
+		for (int j = 0; j < unitsTaking.size(); j++)
+			cout << unitsTaking.at(j)->getAbbreviation() << " ";
+
+		cout << endl;
+	}
 }
 
 
@@ -581,7 +603,7 @@ void Course::registerRandomStudent() {
 			cout << *(unitsLeftBehind.at(i)) << endl;
 	}
 	sort(unitsLeftBehind.begin(), unitsLeftBehind.end(), compareUnitPointers); //To guarantee units from lower curricular years are registered first
-	
+
 	//Show units the student from the current year
 	cout << "Units from the current year:" << endl;
 	unitsPrintHeader();
@@ -606,7 +628,7 @@ void Course::registerRandomStudent() {
 		}
 		if (indexOfCurrentUnit == -1)
 			cout << "Unit \"" << abbreviation << "\" does not exist or is not valid! Please insert a valid abbreviation" << endl;
-		else if(unitsLeftBehind.at(0)->getCurricularYear() > unitsLeftBehind.at(indexOfCurrentUnit)->getCurricularYear()) //If there is at least one unit left behind from a curricular year lower than the one provided in abbreviation
+		else if (unitsLeftBehind.at(0)->getCurricularYear() > unitsLeftBehind.at(indexOfCurrentUnit)->getCurricularYear()) //If there is at least one unit left behind from a curricular year lower than the one provided in abbreviation
 			cout << "There are units left behind from curricular years lower than \"" << abbreviation << "\", must register to those first!" << endl;
 		else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS) //Delete this if? I think it'll never reach 75ECTS only of left behind units
 			cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
@@ -618,7 +640,7 @@ void Course::registerRandomStudent() {
 			unitsLeftBehind.erase(unitsLeftBehind.begin() + indexOfCurrentUnit);
 		}
 	}
-	
+
 	//Now, make sure student registers to all mandatory units (or as much as he can)
 	while (manUnitsFromCurrentYear.size() > 0 && total_ects <= MAX_ECTS) {
 		cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" is going to take: ";
@@ -645,7 +667,7 @@ void Course::registerRandomStudent() {
 	}
 
 	//Now, if it is the case (if empty vector just skips loop) and there's credit left, register to optional units
-	while(optUnitsFromCurrentYear.size() > 0 && total_ects <= MAX_ECTS){
+	while (optUnitsFromCurrentYear.size() > 0 && total_ects <= MAX_ECTS) {
 		cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" has taken (0 to finish): ";
 		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		cin >> abbreviation;
@@ -670,7 +692,7 @@ void Course::registerRandomStudent() {
 			for (unsigned int i = 0; i < sameAreaUnits.size(); i++)
 				cout << *(sameAreaUnits.at(i)) << endl;
 		}
-		else{
+		else {
 			total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
 			it->addUnitTaking(optUnitsFromCurrentYear.at(indexOfCurrentUnit));
 			optUnitsFromCurrentYear.at(indexOfCurrentUnit)->updateVacancies();
@@ -678,52 +700,44 @@ void Course::registerRandomStudent() {
 			optUnitsFromCurrentYear.erase(optUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
 		}
 	}
-    
-    unsigned int day, month, year;
-    do {
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        cout << "Insert the date \"" << it->getName() << "\" has registered in: (DD/MM/YYYY) ";
-        string registrationDate;
-        getline(cin, registrationDate);
-        deleteWhitespace(registrationDate);
 
-        istringstream dateTemp;
-        dateTemp.str(registrationDate);
-        dateTemp >> day;
-        dateTemp.ignore(numeric_limits<int>::max(), '/');
-        dateTemp >> month;
-        dateTemp.ignore(numeric_limits<int>::max(), '/');
-        dateTemp >> year;
-        Date dateOfRegistration(day,month,year);
-        
-        if(!validDate(day, month, year))
-            cout << "The date you inserted is not valid \n";
-        else {
-            it->setRegistrationDate(dateOfRegistration);
-            cout << "The student \"" << it->getName() << "\" was successfuly registrated on " << dateOfRegistration;
-        }
-        
-    } while(!validDate(day, month, year));
-    
-    //Add the student to the teacher with the least amount of pupils (the first one that comes up)
-    for(int i = 0; i < teachers.size(); i++) {
-        if(teachers.at(i).getPupils().size() == Teacher::lessStudents) {
-            teachers.at(i).addStudent(&(*it));
-            
-            unsigned int newMinimum = numeric_limits<unsigned int>::max();
-            for (int j = 0; j < teachers.size(); j++) {
-                if (j != i && teachers.at(j).getPupils().size() < newMinimum)
-                    newMinimum = teachers.at(j).getPupils().size();
-            }
-            Teacher::lessStudents = newMinimum;
-            cout << " and is now a pupil of " << teachers.at(i).getName() << endl;
-            break;
-        }
-    }
-    
-    it->setECTSTaking(total_ects);
+	Date dateOfRegistration;
+	do {
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cout << "Insert the date \"" << it->getName() << "\" has registered in: (DD/MM/YYYY) ";
+		string registrationDate;
+		getline(cin, registrationDate);
+		deleteWhitespace(registrationDate);
+		dateOfRegistration = Date(registrationDate);
+
+		if (!validDate(dateOfRegistration.getDay(), dateOfRegistration.getMonth(), dateOfRegistration.getYear()))
+			cout << "The date you inserted is not valid \n";
+		else {
+			it->setRegistrationDate(dateOfRegistration);
+			cout << "The student \"" << it->getName() << "\" was successfuly registrated on " << dateOfRegistration;
+		}
+
+	} while (!validDate(dateOfRegistration.getDay(), dateOfRegistration.getMonth(), dateOfRegistration.getYear()));
+
+	//Add the student to the teacher with the least amount of pupils (the first one that comes up)
+	for (int i = 0; i < teachers.size(); i++) {
+		if (teachers.at(i).getPupils().size() == Teacher::lessStudents) {
+			teachers.at(i).addStudent(&(*it));
+
+			unsigned int newMinimum = numeric_limits<unsigned int>::max();
+			for (int j = 0; j < teachers.size(); j++) {
+				if (j != i && teachers.at(j).getPupils().size() < newMinimum)
+					newMinimum = teachers.at(j).getPupils().size();
+			}
+			Teacher::lessStudents = newMinimum;
+			cout << " and is now a pupil of " << teachers.at(i).getName() << endl;
+			break;
+		}
+	}
+
+	it->setECTSTaking(total_ects);
 	it->setRegistration();
-    
+
 }
 
 void Course::registerSpecificStudentByName() {
@@ -866,40 +880,40 @@ void Course::registerSpecificStudentByName() {
 	}
 
 	Date dateOfRegistration;
-    do {
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        cout << "Insert the date \"" << it->getName() << "\" has registered in: (DD/MM/YYYY) ";
-        string registrationDate;
-        getline(cin, registrationDate);
-        deleteWhitespace(registrationDate);
-        dateOfRegistration = Date (registrationDate);
-        
-        if(!validDate(dateOfRegistration.getDay(), dateOfRegistration.getMonth(), dateOfRegistration.getYear()))
-            cout << "The date you inserted is not valid \n";
-        else {
-            it->setRegistrationDate(dateOfRegistration);
-            cout << "The student \"" << it->getName() << "\" was successfuly registrated on " << dateOfRegistration;
-        }
-        
-    } while(!validDate(dateOfRegistration.getDay(), dateOfRegistration.getMonth(), dateOfRegistration.getYear()));
-    
-    //Add the student to the teacher with the least amount of pupils (the first one that comes up)
-    for(int i = 0; i < teachers.size(); i++) {
-        if(teachers.at(i).getPupils().size() == Teacher::lessStudents) {
-            teachers.at(i).addStudent(&(*it));
-            
-            unsigned int newMinimum = numeric_limits<unsigned int>::max();
-            for (int j = 0; j < teachers.size(); j++) {
-                if (j != i && teachers.at(j).getPupils().size() < newMinimum)
-                    newMinimum = teachers.at(j).getPupils().size();
-            }
-            Teacher::lessStudents = newMinimum;
-            cout << " and is now a pupil of " << teachers.at(i).getName() << endl;
-            break;
-        }
-    }
-    
-    it->setECTSTaking(total_ects);
+	do {
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		cout << "Insert the date \"" << it->getName() << "\" has registered in: (DD/MM/YYYY) ";
+		string registrationDate;
+		getline(cin, registrationDate);
+		deleteWhitespace(registrationDate);
+		dateOfRegistration = Date(registrationDate);
+
+		if (!validDate(dateOfRegistration.getDay(), dateOfRegistration.getMonth(), dateOfRegistration.getYear()))
+			cout << "The date you inserted is not valid \n";
+		else {
+			it->setRegistrationDate(dateOfRegistration);
+			cout << "The student \"" << it->getName() << "\" was successfuly registrated on " << dateOfRegistration;
+		}
+
+	} while (!validDate(dateOfRegistration.getDay(), dateOfRegistration.getMonth(), dateOfRegistration.getYear()));
+
+	//Add the student to the teacher with the least amount of pupils (the first one that comes up)
+	for (int i = 0; i < teachers.size(); i++) {
+		if (teachers.at(i).getPupils().size() == Teacher::lessStudents) {
+			teachers.at(i).addStudent(&(*it));
+
+			unsigned int newMinimum = numeric_limits<unsigned int>::max();
+			for (int j = 0; j < teachers.size(); j++) {
+				if (j != i && teachers.at(j).getPupils().size() < newMinimum)
+					newMinimum = teachers.at(j).getPupils().size();
+			}
+			Teacher::lessStudents = newMinimum;
+			cout << " and is now a pupil of " << teachers.at(i).getName() << endl;
+			break;
+		}
+	}
+
+	it->setECTSTaking(total_ects);
 	it->setRegistration();
 }
 
@@ -908,176 +922,178 @@ void Course::registerSpecificStudentByCode() {
 	cout << "Insert the student's code: ";
 	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	cin >> studentCode;
-	vector<Student>::iterator it = students.begin();
-	for (it; it != students.end(); it++) {
-		if (it->getCode() == studentCode)
-			break;
-	}
 
-	if (it == students.end())
-		throw invalidIdentification<unsigned long int>(studentCode);
-	else if (it->isRegistered())
-		throw alreadyRegistered<unsigned long int>(studentCode);
-
-	vector<Unit*> unitsLeftBehind;
-	for (unsigned int i = 0; i < it->getUnitsToDo().size(); i++) {
-		for (unsigned int j = 0; j < it->getUnitsToDo().at(i).size(); j++)
-			unitsLeftBehind.push_back(it->getUnitsToDo().at(i).at(j).first);
-	}
-
-	vector<Unit*> manUnitsFromCurrentYear = getManUnitsFromYear(it->getCurricularYear());
-	vector<Unit*> optUnitsFromCurrentYear = getOptUnitsFromYear(it->getCurricularYear()); //Empty unless curricular year is 4 or 5
-
-																						  //Show units the student has left behind so he knows what to put in first
-	if (unitsLeftBehind.size() > 0) {
-		cout << "Units from previous years left to do:" << endl;
-		unitsPrintHeader();
-		for (unsigned int i = 0; i < unitsLeftBehind.size(); i++)
-			cout << *(unitsLeftBehind.at(i)) << endl;
-	}
-	sort(unitsLeftBehind.begin(), unitsLeftBehind.end(), compareUnitPointers); //To guarantee units from lower curricular years are registered first
-
-																			   //Show units the student from the current year
-	cout << "Units from the current year:" << endl;
-	unitsPrintHeader();
-	for (unsigned int i = 0; i < manUnitsFromCurrentYear.size(); i++)
-		cout << *(manUnitsFromCurrentYear.at(i)) << endl;
-
-	string abbreviation;
-	float total_ects = 0;
-
-	//First, make sure student registers to the units he's got behind
-	while (unitsLeftBehind.size() > 0) {
-		cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" is going to take: ";
+	if (cin.fail()) {
+		cin.clear();
 		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		cin >> abbreviation;
-		deleteWhitespace(abbreviation);
-		int indexOfCurrentUnit = -1;
-		for (unsigned int l = 0; l < unitsLeftBehind.size(); l++) {
-			if (unitsLeftBehind.at(l)->getAbbreviation() == abbreviation) {
-				indexOfCurrentUnit = l;
-				break;
-			}
-		}
-		if (indexOfCurrentUnit == -1)
-			cout << "Unit \"" << abbreviation << "\" does not exist or is not valid! Please insert a valid abbreviation" << endl;
-		else if (unitsLeftBehind.at(0)->getCurricularYear() > unitsLeftBehind.at(indexOfCurrentUnit)->getCurricularYear()) //If there is at least one unit left behind from a curricular year lower than the one provided in abbreviation
-			cout << "There are units left behind from curricular years lower than \"" << abbreviation << "\", must register to those first!" << endl;
-		else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS) //Delete this if? I think it'll never reach 75ECTS only of left behind units
-			cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
-		else {
-			total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
-			it->addUnitTaking(unitsLeftBehind.at(indexOfCurrentUnit));
-			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
-			//it->removeUnitToDo(unitsLeftBehind.at(indexOfCurrentUnit)); //not sure if i wanna remove it (might want to keep it to later save in file)
-			unitsLeftBehind.erase(unitsLeftBehind.begin() + indexOfCurrentUnit);
-		}
+		cout << "ERROR: Input Invalid!" << endl;
 	}
 
-	//Now, make sure student registers to all mandatory units (or as much as he can)
-	while (manUnitsFromCurrentYear.size() > 0 && total_ects <= MAX_ECTS) {
-		cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" is going to take: ";
-		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		cin >> abbreviation;
-		deleteWhitespace(abbreviation);
-		int indexOfCurrentUnit = -1;
-		for (unsigned int l = 0; l < manUnitsFromCurrentYear.size(); l++) {
-			if (manUnitsFromCurrentYear.at(l)->getAbbreviation() == abbreviation) {
-				indexOfCurrentUnit = l;
+	else {
+		vector<Student>::iterator it = students.begin();
+		for (it; it != students.end(); it++) {
+			if (it->getCode() == studentCode)
 				break;
-			}
 		}
-		if (indexOfCurrentUnit == -1)
-			cout << "Unit \"" << abbreviation << "\" does not exist or is not valid! Please insert a valid abbreviation" << endl;
-		else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS) //insert another test to see student has credits left but no units left with small enough ects? and if so, exit loop
-			cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
-		else {
-			total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
-			it->addUnitTaking(manUnitsFromCurrentYear.at(indexOfCurrentUnit));
-			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
-			manUnitsFromCurrentYear.erase(manUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
-		}
-	}
 
-	//Now, if it is the case (if empty vector just skips loop) and there's credit left, register to optional units
-	while (optUnitsFromCurrentYear.size() > 0 && total_ects <= MAX_ECTS) {
-		cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" has taken (0 to finish): ";
-		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		cin >> abbreviation;
-		deleteWhitespace(abbreviation);
-		if (abbreviation == "0")
-			break;
-		int indexOfCurrentUnit = -1;
-		for (unsigned int l = 0; l < optUnitsFromCurrentYear.size(); l++) {
-			if (optUnitsFromCurrentYear.at(l)->getAbbreviation() == abbreviation) {
-				indexOfCurrentUnit = l;
-				break;
-			}
+		if (it == students.end())
+			throw invalidIdentification<unsigned long int>(studentCode);
+		else if (it->isRegistered())
+			throw alreadyRegistered<unsigned long int>(studentCode);
+
+		vector<Unit*> unitsLeftBehind;
+		for (unsigned int i = 0; i < it->getUnitsToDo().size(); i++) {
+			for (unsigned int j = 0; j < it->getUnitsToDo().at(i).size(); j++)
+				unitsLeftBehind.push_back(it->getUnitsToDo().at(i).at(j).first);
 		}
-		if (indexOfCurrentUnit == -1)
-			cout << "Unit \"" << abbreviation << "\" does not exist! Please insert a valid abbreviation" << endl;
-		else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS)
-			cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
-		else if (optUnitsFromCurrentYear.at(indexOfCurrentUnit)->isFull()) { //Select optional unit is a valid option but is already full, so suggest units from same scientific area THAT ARE NOT FULL
-			cout << "Unit \"" << abbreviation << "\ is currently full! Here's some other units from the same area that might interest you:" << endl;
-			vector<Unit*> sameAreaUnits = getUnitsFromSameScientificArea(optUnitsFromCurrentYear.at(indexOfCurrentUnit));
+
+		vector<Unit*> manUnitsFromCurrentYear = getManUnitsFromYear(it->getCurricularYear());
+		vector<Unit*> optUnitsFromCurrentYear = getOptUnitsFromYear(it->getCurricularYear()); //Empty unless curricular year is 4 or 5
+
+																							  //Show units the student has left behind so he knows what to put in first
+		if (unitsLeftBehind.size() > 0) {
+			cout << "Units from previous years left to do:" << endl;
 			unitsPrintHeader();
-			for (unsigned int i = 0; i < sameAreaUnits.size(); i++)
-				cout << *(sameAreaUnits.at(i)) << endl;
+			for (unsigned int i = 0; i < unitsLeftBehind.size(); i++)
+				cout << *(unitsLeftBehind.at(i)) << endl;
 		}
-		else {
-			total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
-			it->addUnitTaking(optUnitsFromCurrentYear.at(indexOfCurrentUnit));
-			optUnitsFromCurrentYear.at(indexOfCurrentUnit)->updateVacancies();
-			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
-			optUnitsFromCurrentYear.erase(optUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
-		}
-	}
+		sort(unitsLeftBehind.begin(), unitsLeftBehind.end(), compareUnitPointers); //To guarantee units from lower curricular years are registered first
 
-    unsigned int day, month, year;
-    do {
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        cout << "Insert the date \"" << it->getName() << "\" has registered in: (DD/MM/YYYY) ";
-        string registrationDate;
-        getline(cin, registrationDate);
-        deleteWhitespace(registrationDate);
-        
-        istringstream dateTemp;
-        dateTemp.str(registrationDate);
-        dateTemp >> day;
-        dateTemp.ignore(numeric_limits<int>::max(), '/');
-        dateTemp >> month;
-        dateTemp.ignore(numeric_limits<int>::max(), '/');
-        dateTemp >> year;
-        Date dateOfRegistration(day,month,year);
-        
-        if(!validDate(day, month, year))
-            cout << "The date you inserted is not valid \n";
-        else {
-            it->setRegistrationDate(dateOfRegistration);
-            cout << "The student \"" << it->getName() << "\" was successfuly registrated on " << dateOfRegistration;
-        }
-        
-    } while(!validDate(day, month, year));
-    
-    //Add the student to the teacher with the least amount of pupils (the first one that comes up)
-    for(int i = 0; i < teachers.size(); i++) {
-        if(teachers.at(i).getPupils().size() == Teacher::lessStudents) {
-            teachers.at(i).addStudent(&(*it));
-            
-            unsigned int newMinimum = numeric_limits<unsigned int>::max();
-            for (int j = 0; j < teachers.size(); j++) {
-                if (j != i && teachers.at(j).getPupils().size() < newMinimum)
-                    newMinimum = teachers.at(j).getPupils().size();
-            }
-            Teacher::lessStudents = newMinimum;
-            cout << " and is now a pupil of " << teachers.at(i).getName() << endl;
-            break;
-        }
-    }
-    
-    it->setECTSTaking(total_ects);
-	it->setRegistration();
+																				   //Show units the student from the current year
+		cout << "Units from the current year:" << endl;
+		unitsPrintHeader();
+		for (unsigned int i = 0; i < manUnitsFromCurrentYear.size(); i++)
+			cout << *(manUnitsFromCurrentYear.at(i)) << endl;
+
+		string abbreviation;
+		float total_ects = 0;
+
+		//First, make sure student registers to the units he's got behind
+		while (unitsLeftBehind.size() > 0) {
+			cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" is going to take: ";
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			cin >> abbreviation;
+			deleteWhitespace(abbreviation);
+			int indexOfCurrentUnit = -1;
+			for (unsigned int l = 0; l < unitsLeftBehind.size(); l++) {
+				if (unitsLeftBehind.at(l)->getAbbreviation() == abbreviation) {
+					indexOfCurrentUnit = l;
+					break;
+				}
+			}
+			if (indexOfCurrentUnit == -1)
+				cout << "Unit \"" << abbreviation << "\" does not exist or is not valid! Please insert a valid abbreviation" << endl;
+			else if (unitsLeftBehind.at(0)->getCurricularYear() > unitsLeftBehind.at(indexOfCurrentUnit)->getCurricularYear()) //If there is at least one unit left behind from a curricular year lower than the one provided in abbreviation
+				cout << "There are units left behind from curricular years lower than \"" << abbreviation << "\", must register to those first!" << endl;
+			else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS) //Delete this if? I think it'll never reach 75ECTS only of left behind units
+				cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
+			else {
+				total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
+				it->addUnitTaking(unitsLeftBehind.at(indexOfCurrentUnit));
+				cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
+				//it->removeUnitToDo(unitsLeftBehind.at(indexOfCurrentUnit)); //not sure if i wanna remove it (might want to keep it to later save in file)
+				unitsLeftBehind.erase(unitsLeftBehind.begin() + indexOfCurrentUnit);
+			}
+		}
+
+		//Now, make sure student registers to all mandatory units (or as much as he can)
+		while (manUnitsFromCurrentYear.size() > 0 && total_ects <= MAX_ECTS) {
+			cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" is going to take: ";
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			cin >> abbreviation;
+			deleteWhitespace(abbreviation);
+			int indexOfCurrentUnit = -1;
+			for (unsigned int l = 0; l < manUnitsFromCurrentYear.size(); l++) {
+				if (manUnitsFromCurrentYear.at(l)->getAbbreviation() == abbreviation) {
+					indexOfCurrentUnit = l;
+					break;
+				}
+			}
+			if (indexOfCurrentUnit == -1)
+				cout << "Unit \"" << abbreviation << "\" does not exist or is not valid! Please insert a valid abbreviation" << endl;
+			else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS) //insert another test to see student has credits left but no units left with small enough ects? and if so, exit loop
+				cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
+			else {
+				total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
+				it->addUnitTaking(manUnitsFromCurrentYear.at(indexOfCurrentUnit));
+				cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
+				manUnitsFromCurrentYear.erase(manUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
+			}
+		}
+
+		//Now, if it is the case (if empty vector just skips loop) and there's credit left, register to optional units
+		while (optUnitsFromCurrentYear.size() > 0 && total_ects <= MAX_ECTS) {
+			cout << "Insert the abbreviation of a unit \"" << it->getName() << "\" has taken (0 to finish): ";
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			cin >> abbreviation;
+			deleteWhitespace(abbreviation);
+			if (abbreviation == "0")
+				break;
+			int indexOfCurrentUnit = -1;
+			for (unsigned int l = 0; l < optUnitsFromCurrentYear.size(); l++) {
+				if (optUnitsFromCurrentYear.at(l)->getAbbreviation() == abbreviation) {
+					indexOfCurrentUnit = l;
+					break;
+				}
+			}
+			if (indexOfCurrentUnit == -1)
+				cout << "Unit \"" << abbreviation << "\" does not exist! Please insert a valid abbreviation" << endl;
+			else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS)
+				cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
+			else if (optUnitsFromCurrentYear.at(indexOfCurrentUnit)->isFull()) { //Select optional unit is a valid option but is already full, so suggest units from same scientific area THAT ARE NOT FULL
+				cout << "Unit \"" << abbreviation << "\ is currently full! Here's some other units from the same area that might interest you:" << endl;
+				vector<Unit*> sameAreaUnits = getUnitsFromSameScientificArea(optUnitsFromCurrentYear.at(indexOfCurrentUnit));
+				unitsPrintHeader();
+				for (unsigned int i = 0; i < sameAreaUnits.size(); i++)
+					cout << *(sameAreaUnits.at(i)) << endl;
+			}
+			else {
+				total_ects += abbreviationToUnit.find(abbreviation)->second->getECTS();
+				it->addUnitTaking(optUnitsFromCurrentYear.at(indexOfCurrentUnit));
+				optUnitsFromCurrentYear.at(indexOfCurrentUnit)->updateVacancies();
+				cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
+				optUnitsFromCurrentYear.erase(optUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
+			}
+		}
+
+		Date dateOfRegistration;
+		do {
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			cout << "Insert the date \"" << it->getName() << "\" has registered in: (DD/MM/YYYY) ";
+			string registrationDate;
+			getline(cin, registrationDate);
+			deleteWhitespace(registrationDate);
+			dateOfRegistration = Date(registrationDate);
+
+			if (!validDate(dateOfRegistration.getDay(), dateOfRegistration.getMonth(), dateOfRegistration.getYear()))
+				cout << "The date you inserted is not valid \n";
+			else {
+				it->setRegistrationDate(dateOfRegistration);
+				cout << "The student \"" << it->getName() << "\" was successfuly registrated on " << dateOfRegistration;
+			}
+
+		} while (!validDate(dateOfRegistration.getDay(), dateOfRegistration.getMonth(), dateOfRegistration.getYear()));
+
+
+		//Add the student to the teacher with the least amount of pupils (the first one that comes up)
+		for (int i = 0; i < teachers.size(); i++) {
+			if (teachers.at(i).getPupils().size() == Teacher::lessStudents) {
+				teachers.at(i).addStudent(&(*it));
+
+				unsigned int newMinimum = numeric_limits<unsigned int>::max();
+				for (int j = 0; j < teachers.size(); j++) {
+					if (j != i && teachers.at(j).getPupils().size() < newMinimum)
+						newMinimum = teachers.at(j).getPupils().size();
+				}
+				Teacher::lessStudents = newMinimum;
+				cout << " and is now a pupil of " << teachers.at(i).getName() << endl;
+				break;
+			}
+		}
+
+		it->setECTSTaking(total_ects);
+		it->setRegistration();
+	}
 }
 
 //Teachers
@@ -1086,11 +1102,11 @@ void Course::registerSpecificStudentByCode() {
 void Course::addTeacher() {
 	string newTeacherName;
 	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	cout << "Insert the new teacher's name: "<<endl;
+	cout << "Insert the new teacher's name: " << endl;
 	getline(cin, newTeacherName);
 
 	string newTeacherCode;
-	cout << "Insert the new teacher's code: "<<endl;
+	cout << "Insert the new teacher's code: " << endl;
 	getline(cin, newTeacherCode);
 
 	for (vector<Teacher>::const_iterator it = teachers.begin(); it != teachers.end(); it++) {
@@ -1103,7 +1119,7 @@ void Course::addTeacher() {
 	string abbreviation;
 	vector<Unit*> newTeacherUnitsTaught;
 	do {
-		cout << "Insert the abbreviation of a unit taught by \"" << newTeacherName << "\" (0 to finish): "<<endl;
+		cout << "Insert the abbreviation of a unit taught by \"" << newTeacherName << "\" (0 to finish): " << endl;
 		getline(cin, abbreviation);
 		deleteWhitespace(abbreviation);
 		if (abbreviation == "0")
@@ -1230,8 +1246,8 @@ void Course::removeTeacher(string teacherID) {
 void Course::showTeachers(bool(*comparisonFunction)(Teacher, Teacher)) const {
 	vector<Teacher> teachersTemp = teachers;
 	sort(teachersTemp.begin(), teachersTemp.end(), *comparisonFunction);
-    
-    teachersPrintHeader();
+
+	teachersPrintHeader();
 	for (int i = 0; i < teachersTemp.size(); i++)
 		cout << teachersTemp.at(i);
 	cout << endl;
@@ -1239,8 +1255,8 @@ void Course::showTeachers(bool(*comparisonFunction)(Teacher, Teacher)) const {
 
 void Course::showTeacher(string teacherID) const {
 	for (int i = 0; i < teachers.size(); i++) {
-		if (teachers.at(i).getName() == teacherID|| teachers.at(i).getCode() == teacherID) {
-            teachersPrintHeader();
+		if (teachers.at(i).getName() == teacherID || teachers.at(i).getCode() == teacherID) {
+			teachersPrintHeader();
 			cout << teachers.at(i);
 			return;
 		}
@@ -1253,7 +1269,7 @@ void Course::showTeacher(Unit* u1) const {
 		vector<Unit*> unitsTaughtTemp = teachers.at(i).getUnitsTaught();
 		for (vector<Unit*>::iterator it = unitsTaughtTemp.begin(); it != unitsTaughtTemp.end(); it++) {
 			if ((*it)->getAbbreviation() == u1->getAbbreviation()) {
-                teachersPrintHeader();
+				teachersPrintHeader();
 				cout << teachers.at(i);
 				return;
 			}
@@ -1266,7 +1282,7 @@ void Course::showTeacherPupilByName(string pupilName) const {
 		vector<Student*> pupilsTemp = teachers.at(i).getPupils();
 		for (vector<Student*>::iterator it = pupilsTemp.begin(); it != pupilsTemp.end(); it++) {
 			if ((*it)->getName() == pupilName) {
-                teachersPrintHeader();
+				teachersPrintHeader();
 				cout << teachers.at(i);
 				return;
 			}
@@ -1280,7 +1296,7 @@ void Course::showTeacherPupilByCode(unsigned long int pupilCode) const {
 		vector<Student*> pupilsTemp = teachers.at(i).getPupils();
 		for (vector<Student*>::iterator it = pupilsTemp.begin(); it != pupilsTemp.end(); it++) {
 			if ((*it)->getCode() == pupilCode) {
-                teachersPrintHeader();
+				teachersPrintHeader();
 				cout << teachers.at(i);
 				return;
 			}
@@ -1364,8 +1380,8 @@ void Course::editUnitScientificArea() {
 void Course::showUnits() const {
 	vector<Unit*> unitTemp = getAllUnits();
 
-    unitsPrintHeader();
-    
+	unitsPrintHeader();
+
 	sort(unitTemp.begin(), unitTemp.end());
 
 	for (int i = 0; i < unitTemp.size(); i++)
@@ -1382,18 +1398,18 @@ void Course::showSpecificUnit() const {
 	map<string, Unit*>::const_iterator it = abbreviationToUnit.find(abbreviation);
 	if (it == abbreviationToUnit.end())
 		throw invalidIdentification<string>(abbreviation);
-    else {
-        unitsPrintHeader();
+	else {
+		unitsPrintHeader();
 		cout << *(it->second);
-    }
+	}
 }
 
 void Course::showYearUnit(unsigned short int year) const {
 	vector<Unit*> unitTemp = getUnitsFromYear(year);
 
 	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
-    
-    unitsPrintHeader();
+
+	unitsPrintHeader();
 	for (int i = 0; i < unitTemp.size(); i++)
 		cout << *unitTemp.at(i) << endl;
 	cout << endl;
@@ -1403,8 +1419,8 @@ void Course::showMandatoryUnit() const {
 	vector<Unit*> unitTemp = getAllMandatoryUnits();
 
 	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
-    
-    unitsPrintHeader();
+
+	unitsPrintHeader();
 	for (int i = 0; i < unitTemp.size(); i++)
 		cout << *unitTemp.at(i) << endl;
 	cout << endl;
@@ -1415,7 +1431,7 @@ void Course::showOptionalUnit() const {
 
 	sort(unitTemp.begin(), unitTemp.end(), compareUnitPointers);
 
-    unitsPrintHeader();
+	unitsPrintHeader();
 	for (int i = 0; i < unitTemp.size(); i++)
 		cout << *unitTemp.at(i) << endl;
 	cout << endl;
@@ -1429,8 +1445,8 @@ void Course::showUnitsofScientificArea(std::string scientificArea) const {
 	}
 
 	sort(result.begin(), result.end(), compareUnitPointers);
-    
-    unitsPrintHeader();
+
+	unitsPrintHeader();
 	for (int i = 0; i < result.size(); i++)
 		cout << *(result.at(i)) << endl;
 	cout << endl;

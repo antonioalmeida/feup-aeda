@@ -151,11 +151,11 @@ void Student::setStatus(string newStatus) {
 }
 
 void Student::setRegistrationDate(Date newDate) {
-    registrationDate = newDate;
+	registrationDate = newDate;
 }
 
 void Student::setECTSTaking(float newECTS) {
-    ectsTaking = newECTS;
+	ectsTaking = newECTS;
 }
 
 void Student::save(std::ostream &out) const {
@@ -180,11 +180,11 @@ bool Student::operator==(const Student &s1) {
 }
 
 ostream& operator<<(ostream& out, const Student& s) {
-    out << s.getCode();
-    out << setw(32) << s.getName();
-    out << setw(9) << s.getAverage();
-    out << setw(7) << s.getECTSTaking();
-    
+	out << s.getCode();
+	out << setw(32) << s.getName();
+	out << setw(9) << s.getAverage();
+	out << setw(7) << s.getECTSTaking();
+
 	if (s.getUnitsTaking().size() != 0) {
 		out << "  ";
 		for (int i = 0; i < s.getUnitsTaking().size(); i++)
@@ -263,9 +263,9 @@ void Teacher::save(ostream &out) const {
 }
 
 ostream& operator<<(ostream& out, const Teacher& s) { //Subject to change
-    out << setw(8)<<  s.getCode();
-    out << setw(50) << s.getName();
-    out << " ";
+	out << setw(8) << s.getCode();
+	out << setw(50) << s.getName();
+	out << " ";
 	for (int i = 0; i < s.getUnitsTaught().size(); i++)
 		out << setw(6) << s.getUnitsTaught().at(i)->getAbbreviation() << " ";
 	out << endl;

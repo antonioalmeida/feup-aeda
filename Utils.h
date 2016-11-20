@@ -30,7 +30,7 @@ bool validDate(unsigned int day, unsigned int month, unsigned int year);
 //! Prints a number of new line characters defined by macro WINDOW_SIZE to simulate system("cls")
 /*!
 */
-void clearScreen(); 
+void clearScreen();
 
 //! Deletes all whitespaces in beggining and end of a string and turns all consecutive whitespaces in the middle into a single whitespace
 /*!
