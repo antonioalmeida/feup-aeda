@@ -10,7 +10,9 @@
 #include "Unit.h"
 #include "Utils.h"
 
-/*! \file Course, a class to handle a specific studies course*/
+/*! \file Course.h
+ \brief Course, a class to handle a specific studies course
+ */
 
 class Course {
 private:

@@ -6,7 +6,9 @@
 #include "Exceptions.h"
 #include "Utils.h"
 
-/*! \file Date Class */
+/*! \file Date.h
+ \brief Date Class 
+ */
 
 class Date {
 private:

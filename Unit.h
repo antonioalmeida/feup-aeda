@@ -4,7 +4,9 @@
 #include <string>
 #include <iomanip>
 
-/*! \file Class that represents units taught in course */
+/*! \file Unit.h 
+ \brief Class that represents units taught in course 
+ */
 
 class Unit {
 protected:

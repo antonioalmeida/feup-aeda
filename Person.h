@@ -8,7 +8,9 @@
 
 #define MAX_ECTS 75
 
-/*! \file Person and its derived classes Student and Teacher*/
+/*! \file Person.h
+ \brief Person and its derived classes Student and Teacher
+ */
 
 class Person {
 protected:

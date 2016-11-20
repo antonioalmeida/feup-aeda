@@ -3,7 +3,9 @@
 #include <iostream>
 #include "Course.h"
 
-/*! \file Menus shown throughout program execution*/
+/*! \file menus.h
+ \brief Menus shown throughout program execution
+ */
 
 //! Asks for input files so information can be read. Throws inexistentFile exception if any of given files does not exist
 /*!

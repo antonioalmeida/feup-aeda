@@ -1,6 +1,8 @@
 #pragma once
 
-/*! \file Custom made exceptions to be caught and treated throughout program execution*/
+/*! \file Exceptions.h
+ \brief Custom made exceptions to be caught and treated throughout program execution
+ */
 
 /*! Template exception class invalidIdentification, used when trying to identify non-existing structures*/
 template <class T> class invalidIdentification {
