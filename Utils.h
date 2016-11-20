@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <climits>
 
 #define WINDOW_SIZE 24
 #define TAB_BIG "                        "

@@ -122,14 +122,14 @@ void Student::calculateAverage() {
 	average = 0.0;
 	if (curricularYear != 1) {
 		double number_of_ects = 0.0;
-		for (int i = 0; i < unitsDone.size(); i++) {
-			for (int j = 0; j < unitsDone.at(i).size(); j++) {
+		for (unsigned int i = 0; i < unitsDone.size(); i++) {
+			for (unsigned int j = 0; j < unitsDone.at(i).size(); j++) {
 				number_of_ects += unitsDone.at(i).at(j).first->getECTS();
 				average += (unitsDone.at(i).at(j).second*unitsDone.at(i).at(j).first->getECTS());
 			}
 		}
-		for (int i = 0; i < unitsToDo.size(); i++) {
-			for (int j = 0; j < unitsToDo.at(i).size(); j++) {
+		for (unsigned int i = 0; i < unitsToDo.size(); i++) {
+			for (unsigned int j = 0; j < unitsToDo.at(i).size(); j++) {
 				number_of_ects += unitsToDo.at(i).at(j).first->getECTS();
 				average += (unitsToDo.at(i).at(j).second*unitsToDo.at(i).at(j).first->getECTS());
 			}
@@ -163,12 +163,12 @@ void Student::save(std::ostream &out) const {
 	if (curricularYear > 1)
 		out << " " << code;
 	out << endl;
-	for (int i = 0; i < unitsDone.size(); i++) {
-		for (int j = 0; j < unitsDone.at(i).size(); j++) {
+	for (unsigned int i = 0; i < unitsDone.size(); i++) {
+		for (unsigned int j = 0; j < unitsDone.at(i).size(); j++) {
 			out << unitsDone.at(i).at(j).first->getAbbreviation() << " " << unitsDone.at(i).at(j).second << " ";
 		}
-		if (i < unitsToDo.size()) { //unitsToDo.size() is always lower or equal than unitsDone.size() so it's a safe parallel test/loop
-			for (int k = 0; k < unitsToDo.at(i).size(); k++)
+		if (i < unitsToDo.size()) { //unitsToDo.size() is always equal than unitsDone.size() so it's a safe parallel test/loop
+			for (unsigned int k = 0; k < unitsToDo.at(i).size(); k++)
 				out << unitsToDo.at(i).at(k).first->getAbbreviation() << " " << unitsDone.at(i).at(k).second << " ";
 		}
 	}
@@ -187,7 +187,7 @@ ostream& operator<<(ostream& out, const Student& s) {
 
 	if (s.getUnitsTaking().size() != 0) {
 		out << "  ";
-		for (int i = 0; i < s.getUnitsTaking().size(); i++)
+		for (unsigned int i = 0; i < s.getUnitsTaking().size(); i++)
 			out << s.getUnitsTaking().at(i)->getAbbreviation() << " ";
 	}
 	out << endl;
@@ -262,11 +262,11 @@ void Teacher::save(ostream &out) const {
 	out << "|";
 }
 
-ostream& operator<<(ostream& out, const Teacher& s) { //Subject to change
+ostream& operator<<(ostream& out, const Teacher& s) {
 	out << setw(8) << s.getCode();
 	out << setw(50) << s.getName();
 	out << " ";
-	for (int i = 0; i < s.getUnitsTaught().size(); i++)
+	for (unsigned int i = 0; i < s.getUnitsTaught().size(); i++)
 		out << setw(6) << s.getUnitsTaught().at(i)->getAbbreviation() << " ";
 	out << endl;
 	return out;

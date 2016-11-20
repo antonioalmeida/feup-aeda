@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <climits>
 #include "Exceptions.h"
 #include "Utils.h"
 

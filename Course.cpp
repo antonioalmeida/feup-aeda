@@ -647,7 +647,7 @@ void Course::registerRandomStudent() {
 		else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS)
 			cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
 		else if (optUnitsFromCurrentYear.at(indexOfCurrentUnit)->isFull()) { //Select optional unit is a valid option but is already full, so suggest units from same scientific area THAT ARE NOT FULL
-			cout << "Unit \"" << abbreviation << "\ is currently full! Here's some other units from the same area that might interest you:" << endl;
+			cout << "Unit \"" << abbreviation << "\" is currently full! Here's some other units from the same area that might interest you:" << endl;
 			vector<Unit*> sameAreaUnits = getUnitsFromSameScientificArea(optUnitsFromCurrentYear.at(indexOfCurrentUnit));
 			unitsPrintHeader();
 			for (unsigned int i = 0; i < sameAreaUnits.size(); i++)
@@ -823,7 +823,7 @@ void Course::registerSpecificStudentByName() {
 		else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS)
 			cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
 		else if (optUnitsFromCurrentYear.at(indexOfCurrentUnit)->isFull()) { //Select optional unit is a valid option but is already full, so suggest units from same scientific area THAT ARE NOT FULL
-			cout << "Unit \"" << abbreviation << "\ is currently full! Here's some other units from the same area that might interest you:" << endl;
+			cout << "Unit \"" << abbreviation << "\" is currently full! Here's some other units from the same area that might interest you:" << endl;
 			vector<Unit*> sameAreaUnits = getUnitsFromSameScientificArea(optUnitsFromCurrentYear.at(indexOfCurrentUnit));
 			unitsPrintHeader();
 			for (unsigned int i = 0; i < sameAreaUnits.size(); i++)
@@ -1000,7 +1000,7 @@ void Course::registerSpecificStudentByCode() {
 			else if ((total_ects + abbreviationToUnit.find(abbreviation)->second->getECTS()) > MAX_ECTS)
 				cout << "Unit \"" << abbreviation << "\" would cause 75ECTS limit to be exceeded! Please insert a valid abbreviation" << endl;
 			else if (optUnitsFromCurrentYear.at(indexOfCurrentUnit)->isFull()) { //Select optional unit is a valid option but is already full, so suggest units from same scientific area THAT ARE NOT FULL
-				cout << "Unit \"" << abbreviation << "\ is currently full! Here's some other units from the same area that might interest you:" << endl;
+				cout << "Unit \"" << abbreviation << "\" is currently full! Here's some other units from the same area that might interest you:" << endl;
 				vector<Unit*> sameAreaUnits = getUnitsFromSameScientificArea(optUnitsFromCurrentYear.at(indexOfCurrentUnit));
 				unitsPrintHeader();
 				for (unsigned int i = 0; i < sameAreaUnits.size(); i++)
