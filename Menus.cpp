@@ -760,8 +760,8 @@ void showTeacherOptions(Course & course) {
 			if (!course.verifyUnit(unitAbbreviation))
 				cout << "ERROR: No unit identified by \"" << unitAbbreviation << "\"!" << endl;
 			else {
-				map<string, Unit*>::const_iterator it = course.getMap().find(unitAbbreviation);
-				course.showTeacher(it->second);
+				Unit* it = course.getMap().at(unitAbbreviation);
+				course.showTeacher(it);
 			}
 			pressToContinue();
 			break;

@@ -1116,11 +1116,13 @@ void Course::addTeacher() {
 		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		getline(cin, abbreviation);
 		deleteWhitespace(abbreviation);
-		if (!verifyUnit(abbreviation) && abbreviation != "0")
+		if (abbreviation == "0")
+			break;
+		if (!verifyUnit(abbreviation))
 			cout << "Unit \"" << abbreviation << "\" does not exist! Please insert a valid abbreviation" << endl;
 		else
 			newTeacherUnitsTaught.push_back(abbreviationToUnit.find(abbreviation)->second);
-	} while (abbreviation != "0");
+	} while (true);
 
 	Teacher t1(newTeacherName, newTeacherCode, newTeacherUnitsTaught);
 	teachers.push_back(t1);
