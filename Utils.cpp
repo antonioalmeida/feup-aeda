@@ -6,7 +6,7 @@ using namespace std;
 
 bool validDate(unsigned int day, unsigned int month, unsigned int year) {
 
-	bool leapYear = (year % 400) || (year % 100 != 0 && year % 4 == 0);
+	bool leapYear = (year % 400 == 0) || (year % 100 != 0 && year % 4 == 0);
 	switch (month) {
 	case 1:
 	case 3:

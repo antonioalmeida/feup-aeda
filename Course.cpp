@@ -66,6 +66,7 @@ Course::Course(string studentsFile, string teachersFile, string manUnitsFile, st
 			else //grade < 10
 				s1.addUnitToDo(pair<Unit*, unsigned int>(u1, grade));
 		}
+		s1.calculateAverage();
 		students.push_back(s1);
 		studentsIn.ignore(1000, '\n');
 		studentsIn.ignore(1000, '\n'); //Not sure but I think Student constructor does not skip blank line between students
@@ -342,7 +343,7 @@ void Course::showStudentsStatus(string status) const {
 	studentsPrintHeader();
 
 	for (unsigned int i = 0; i < studentsToShow.size(); i++)
-		cout << studentsToShow.at(i) << endl;
+		cout << studentsToShow.at(i);
 	cout << endl;
 }
 
@@ -357,7 +358,7 @@ void Course::showStudentsYear(unsigned short int curricularYear) const {
 	studentsPrintHeader();
 
 	for (unsigned int i = 0; i < studentsToShow.size(); i++)
-		cout << studentsToShow.at(i) << endl;
+		cout << studentsToShow.at(i);
 	cout << endl;
 
 }
@@ -371,7 +372,7 @@ void Course::showRegisteredStudents() const {
 	studentsPrintHeader();
 
 	for (unsigned int i = 0; i < studentsToShow.size(); i++)
-		cout << studentsToShow.at(i) << endl;
+		cout << studentsToShow.at(i);
 	cout << endl;
 }
 
@@ -623,6 +624,19 @@ void Course::registerRandomStudent() {
 			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
 			manUnitsFromCurrentYear.erase(manUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
 		}
+        
+        float creditsLeft = MAX_ECTS-total_ects;
+        bool proceed = false;
+        /* Check if student still has credit left to register in mandatory units. If he does not, break loop */
+        for(unsigned int i = 0; i < manUnitsFromCurrentYear.size(); i++){
+            if(manUnitsFromCurrentYear.at(i)->getECTS() <= creditsLeft){
+                proceed = true;
+                break;
+            }
+        }
+        if(!proceed)
+            break;
+        
 	}
 
 	//Now, if it is the case (if empty vector just skips loop) and there's credit left, register to optional units
@@ -792,6 +806,20 @@ void Course::registerSpecificStudentByName() {
 			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
 			manUnitsFromCurrentYear.erase(manUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
 		}
+        
+        float creditsLeft = MAX_ECTS-total_ects;
+        bool proceed = false;
+        /* Check if student still has credit left to register in mandatory units. If he does not, break loop */
+        for(unsigned int i = 0; i < manUnitsFromCurrentYear.size(); i++){
+            if(manUnitsFromCurrentYear.at(i)->getECTS() <= creditsLeft){
+                proceed = true;
+                break;
+            }
+        }
+        if(!proceed)
+            break;
+        
+        
 	}
 
 	if (optUnitsFromCurrentYear.size() > 0) {
@@ -976,6 +1004,19 @@ void Course::registerSpecificStudentByCode() {
 				cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
 				manUnitsFromCurrentYear.erase(manUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
 			}
+            
+            float creditsLeft = MAX_ECTS-total_ects;
+            bool proceed = false;
+            /* Check if student still has credit left to register in mandatory units. If he does not, break loop */
+            for(unsigned int i = 0; i < manUnitsFromCurrentYear.size(); i++){
+                if(manUnitsFromCurrentYear.at(i)->getECTS() <= creditsLeft){
+                    proceed = true;
+                    break;
+                }
+            }
+            if(!proceed)
+                break;
+            
 		}
 
 		//Now, if it is the case (if empty vector just skips loop) and there's credit left, register to optional units
@@ -1086,7 +1127,8 @@ void Course::addTeacher() {
 		else
 			newTeacherUnitsTaught.push_back(abbreviationToUnit.at(abbreviation));
 	} while (true);
-
+    
+    Teacher::lessStudents = 0; //Update minimum value of pupils
 	Teacher t1(newTeacherName, newTeacherCode, newTeacherUnitsTaught);
 	teachers.push_back(t1);
 }
