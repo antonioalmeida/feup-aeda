@@ -327,4 +327,9 @@ public:
 	\param unitAbbreviation string corresponding to abbreviation of unit that will be verified
 	*/
 	bool verifyUnit(std::string unitAbbreviation) const;
+
+	void teacherAddReunion();
+	void teacherCancelReunion();
+	void teacherEditReunionConclusions();
+	void teacherMarkReunionAsDone();
 };

@@ -1547,3 +1547,49 @@ bool Course::verifyUnit(string unitAbbreviation) const {
 
 	return false;
 }
+
+void Course::teacherAddReunion() {
+	string teacherName;
+	cout << "Insert the teacher's full name: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	getline(cin, teacherName);
+	deleteWhitespace(teacherName);
+
+	vector<Teacher>::iterator it = teachers.begin();
+	for (it; it != teachers.end(); it++) {
+		if (it->getName() == teacherName)
+			break;
+	}
+
+	if (it == teachers.end())
+		throw invalidIdentification<string>(teacherName);
+	
+	Date reunionDate = generateValidDate();
+
+	string studentName;
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //may need to remove
+	cout << "Insert the student's full name: ";
+	getline(cin, studentName);
+	deleteWhitespace(studentName);
+	bool valid = false;
+	vector<Student*> teacherPupils = it->getPupils();
+	for (vector<Student*>::const_iterator s_it = teacherPupils.begin(); s_it != teacherPupils.end(); s_it++) {
+		if ((*s_it)->getName() == studentName) {
+			valid = true;
+			break;
+		}
+	}
+	if (!valid)
+		throw invalidIdentification<string>(studentName);
+
+	string reunionAgenda;
+	cout << "Insert the reunion's agenda: ";
+	getline(cin, reunionAgenda);
+
+	string reunionConclusions;
+	cout << "Insert the reunion's conclusions: ";
+	getline(cin, reunionConclusions);
+
+	Reunion newReunion(reunionDate, studentName, reunionAgenda, reunionConclusions);
+	it->addReunion(newReunion);
+}

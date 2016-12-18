@@ -243,15 +243,15 @@ public:
 class Reunion {
 private:
 	Date date;
-	Student* student;
+	std::string student;
 	std::string agenda;
 	std::string conclusions;
 	bool hasTakenPlace; //to avoid using weird Windows functions to get time (could always use RTC though...)
 public:
 	Reunion() {};
-	Reunion(Date date, Student* student, std::string agenda, std::string conclusions);
+	Reunion(Date date, std::string student, std::string agenda, std::string conclusions);
 	Date getDate() const;
-	Student* getStudent() const;
+	std::string getStudent() const;
 	std::string getAgenda() const;
 	std::string getConclusions() const;
 	bool hasTakenPlace() const;
@@ -351,9 +351,10 @@ public:
 	 */
 	friend std::ostream& operator<<(std::ostream& out, const Teacher& s);
 
-	void addReunion();
-	void cancelSpecificReunion();
-	void changeSpecificReunionConclusions();
+	void addReunion(Reunion r1);
+	void cancelSpecificReunion(Reunion r1);
+	void changeSpecificReunionConclusions(Reunion r1);
+	void setReunionAsTaken(Reunion r1);
 };
 
 //! Compares two students by their names (used as custom comparison function in STL sort)

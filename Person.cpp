@@ -208,19 +208,19 @@ bool sortByCurricularYear(Student s1, Student s2) {
 
 /*Reunion*/
 
-Reunion::Reunion(Date date, Student* student, std::string agenda, std::string conclusions) {
+Reunion::Reunion(Date date, string student, string agenda, string conclusions) {
 	this->date = date;
 	this->student = student;
 	this->agenda = agenda;
 	this->conclusions = conclusions;
-	hasTakenPlace = false;
+	this->hasTakenPlace = false;
 }
 
 Date Reunion::getDate() const {
 	return date;
 }
 
-Student* Reunion::getStudent() const {
+string Reunion::getStudent() const {
 	return student;
 }
 
@@ -319,57 +319,19 @@ ostream& operator<<(ostream& out, const Teacher& s) {
 	return out;
 }
 
-void Teacher::addReunion() {
-	Date reunionDate;
-	bool valid;
-	do {
-		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //may need to remove
-		cout << "Insert the new reunion date (DD/MM/YYYY): ";
-		string date;
-		getline(cin, date);
-		deleteWhitespace(date);
-		reunionDate = Date(date);
-
-		if (!(valid = validDate(reunionDate.getDay(), reunionDate.getMonth(), reunionDate.getYear())))
-			cout << "The date you inserted is not valid. Please insert a valid date: ";
-	} while (!valid);
-
-	string studentName;
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //may need to remove
-	cout << "Insert the student's full name: ";
-	getline(cin, studentName);
-	deleteWhitespace(studentName);
-	Student* student = NULL;
-	for (vector<Student*>::const_iterator it = pupils.begin(); it != pupils.end(); it++) {
-		if ((*it)->getName() == studentName) {
-			student = *it;
-			break;
-		}
-	}
-	if (student == NULL)
-		throw invalidIdentification<string>(studentName);
-
-	string reunionAgenda;
-	cout << "Insert the reunion's agenda: ";
-	getline(cin, reunionAgenda);
-
-	string reunionConclusions;
-	cout << "Insert the reunion's conclusions: ";
-	getline(cin, reunionConclusions);
-
-	Reunion newReunion(reunionDate, student, reunionAgenda, reunionConclusions);
-	pair<set<Reunion>::iterator, bool> result = reunions.insert(newReunion);
-	if (result.second)
-		cout << "Reunion successfully added" << endl;
-	else
-		cout << "Reunion already scheduled!" << endl;
+void Teacher::addReunion(Reunion r1) {
+	reunions.insert(r1);
 }
 
-void Teacher::cancelSpecificReunion() {
+void Teacher::cancelSpecificReunion(Reunion r1) {
 
 }
 
-void Teacher::changeSpecificReunionConclusions() {
+void Teacher::changeSpecificReunionConclusions(Reunion r1) {
+
+}
+
+void Teacher::setReunionAsTaken(Reunion r1) {
 
 }
 

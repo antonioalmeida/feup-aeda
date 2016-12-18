@@ -53,7 +53,7 @@ unsigned short int mainMenu() {
 	cout << TAB << "1 - Students menu" << endl;
 	cout << TAB << "2 - Teachers menu" << endl;
 	cout << TAB << "3 - Units menu" << endl;
-	cout << TAB << "0 - Exit" << endl << endl; //Maybe show some statistics before exiting
+	cout << TAB << "0 - Exit" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 3);
 
@@ -79,8 +79,6 @@ void mainOption(Course &course) {
 	course.save();
 }
 
-// EDIT STUDENT, TEACHER AND UNIT ADD A NEW MENU TO EACH ONE TO SET THIS OBJECTS
-
 /******************************************
  * Students Menu
  ******************************************/
@@ -97,7 +95,7 @@ unsigned short int studentsMenu() {
 	cout << TAB << "1 - Create Student" << endl; //DONE
 	cout << TAB << "2 - Edit Student" << endl; //DONE
 	cout << TAB << "3 - Remove Student" << endl; //DONE
-	cout << TAB << "4 - Register Student" << endl; //TO DO
+	cout << TAB << "4 - Register Student" << endl; //DONE
 	cout << TAB << "5 - List Students" << endl; //DONE
 	cout << TAB << "6 - List Registrations" << endl; //DONE
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
@@ -592,7 +590,7 @@ unsigned short int teachersMenu() {
 	cout << TAB_BIG << "----------------------" << endl;
 	cout << endl;
 	cout << TAB << "1 - Create Teacher" << endl; //DONE
-	cout << TAB << "2 - Edit Teacher" << endl; //DONE
+	cout << TAB << "2 - Edit Teacher" << endl; //TO DO
 	cout << TAB << "3 - Remove Teacher" << endl; //DONE
 	cout << TAB << "4 - List Teachers" << endl; //DONE
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
@@ -656,9 +654,13 @@ unsigned short int editTeacherMenu() {
 	cout << TAB << "1 - Edit a teacher's name" << endl;
 	cout << TAB << "2 - Edit a teacher's code" << endl;
 	cout << TAB << "3 - Add a new unit taught by a teacher" << endl;
+	cout << TAB << "4 - Add a reunion to a teacher" << endl;
+	cout << TAB << "5 - Cancel a reunion" << endl;
+	cout << TAB << "6 - Alter a reunion's conclusion topics" << endl;
+	cout << TAB << "7 - Mark reunion that has taken place" << endl;
 	cout << TAB << "0 - Return to previous menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = readOp(0, 3);
+	option = readOp(0, 7);
 
 	return option;
 }
@@ -704,6 +706,44 @@ void editTeacherOptions(Course & course) {
 			}
 			pressToContinue();
 			break;
+		case 4:
+			try {
+				course.teacherAddReunion();
+				cout << "Reunion added sucessfully" << endl;
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No person identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			pressToContinue();
+			break;
+		case 5:
+			try {
+				course.teacherCancelReunion();
+				cout << "Reunion canceled successfully" << endl;
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No person identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			pressToContinue();
+			break;
+		case 6:
+			try {
+				course.teacherEditReunionConclusions();
+				cout << "Reunion edited successfully" << endl;
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No person identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			pressToContinue();
+			break;
+		case 7:
+			try {
+				course.teacherMarkReunionAsDone();
+				cout << "Reunion successfully set has taken" << endl;
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No person identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
 		}
 }
 
