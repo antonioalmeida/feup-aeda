@@ -266,7 +266,7 @@ protected:
 	std::string code;
 	std::vector<Unit*> unitsTaught;
 	std::vector<Student*> pupils;
-	set<Reunion> reunions;
+	std::set<Reunion> reunions;
 public:
 	//! One (or more) teacher(s) will have the least amount of students as pupils. It is to those that should be assigned students first. This variable holds that minimum
 	/*!
@@ -351,6 +351,7 @@ public:
 	 */
 	friend std::ostream& operator<<(std::ostream& out, const Teacher& s);
 
+	std::set<Reunion> getReunions() const;
 	void addReunion(Reunion r1);
 	void cancelSpecificReunion(Reunion r1);
 	void changeSpecificReunionConclusions(Reunion r1);

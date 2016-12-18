@@ -1593,3 +1593,61 @@ void Course::teacherAddReunion() {
 	Reunion newReunion(reunionDate, studentName, reunionAgenda, reunionConclusions);
 	it->addReunion(newReunion);
 }
+
+void Course::teacherCancelReunion() {
+	string teacherName;
+	cout << "Insert the teacher's full name: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	getline(cin, teacherName);
+	deleteWhitespace(teacherName);
+
+	vector<Teacher>::iterator it = teachers.begin();
+	for (it; it != teachers.end(); it++) {
+		if (it->getName() == teacherName)
+			break;
+	}
+
+	if (it == teachers.end())
+		throw invalidIdentification<string>(teacherName);
+
+	string studentName;
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //may need to remove
+	cout << "Insert the student's full name: ";
+	getline(cin, studentName);
+	deleteWhitespace(studentName);
+	bool valid = false;
+	vector<Student*> teacherPupils = it->getPupils();
+	for (vector<Student*>::const_iterator s_it = teacherPupils.begin(); s_it != teacherPupils.end(); s_it++) {
+		if ((*s_it)->getName() == studentName) {
+			valid = true;
+			break;
+		}
+	}
+	if (!valid)
+		throw invalidIdentification<string>(studentName);
+
+	Date reunionDate = generateValidDate();
+
+	vector<Reunion> reunions;
+	set<Reunion> reunionset = it->getReunions();
+	for (set<Reunion>::const_iterator r_it = reunionset.cbegin(); r_it != reunionset.cend(); r_it++) {
+		if (r_it->getDate() == reunionDate && r_it->getStudent() == studentName)
+			reunions.push_back(*r_it);
+	}
+
+	if (reunions.size() == 0)
+		cout << "No reunions with pupil \"" << studentName << "\" on " << reunionDate << "!" << endl;
+	else if (reunions.size() == 1) {
+		it->cancelSpecificReunion(reunions.at(0));
+		cout << "Reunion successfully canceled" << endl;
+	}
+	else {
+		cout << "Reunions with pupil \"" << studentName << "\" on " << reunionDate << ":" << endl;
+		for (unsigned int i = 0; i < reunions.size(); i++)
+			cout << "Reunion " << i + 1 << ":" << reunions.at(i) << endl;
+		cout << "Please choose the one to cancel: ";
+		unsigned int choice = readOp(1, reunions.size());
+		it->cancelSpecificReunion(reunions.at(choice - 1));
+		cout << "Reunion sucessfully canceled" << endl;
+	}
+}

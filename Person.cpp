@@ -319,12 +319,16 @@ ostream& operator<<(ostream& out, const Teacher& s) {
 	return out;
 }
 
+set<Reunion> Teacher::getReunions() const {
+	return reunions;
+}
+
 void Teacher::addReunion(Reunion r1) {
 	reunions.insert(r1);
 }
 
 void Teacher::cancelSpecificReunion(Reunion r1) {
-
+	reunions.erase(r1);
 }
 
 void Teacher::changeSpecificReunionConclusions(Reunion r1) {
