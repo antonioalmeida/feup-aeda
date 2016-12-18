@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <set>
 #include "Date.h"
 #include "Unit.h"
 
@@ -239,11 +240,33 @@ public:
 
 };
 
+class Reunion {
+private:
+	Date date;
+	Student* student;
+	std::string agenda;
+	std::string conclusions;
+	bool hasTakenPlace; //to avoid using weird Windows functions to get time (could always use RTC though...)
+public:
+	Reunion() {};
+	Reunion(Date date, Student* student, std::string agenda, std::string conclusions);
+	Date getDate() const;
+	Student* getStudent() const;
+	std::string getAgenda() const;
+	std::string getConclusions() const;
+	bool hasTakenPlace() const;
+	void changeConclusions(std::string newConclusions);
+	bool operator<(const Reunion &r1);
+	bool operator==(const Reunion &r1); //not sure if we'll need it
+	friend std::ostream& operator<<(std::ostream& out, const Reunion &r1);
+};
+
 class Teacher : public Person {
 protected:
 	std::string code;
 	std::vector<Unit*> unitsTaught;
 	std::vector<Student*> pupils;
+	set<Reunion> reunions;
 public:
 	//! One (or more) teacher(s) will have the least amount of students as pupils. It is to those that should be assigned students first. This variable holds that minimum
 	/*!
@@ -327,6 +350,10 @@ public:
 	 \param s the teacher that will be printed.
 	 */
 	friend std::ostream& operator<<(std::ostream& out, const Teacher& s);
+
+	void addReunion();
+	void cancelSpecificReunion();
+	void changeSpecificReunionConclusions();
 };
 
 //! Compares two students by their names (used as custom comparison function in STL sort)
@@ -351,7 +378,7 @@ bool sortByAverage(Student s1, Student s2);
 \param s2 second student of the two to be compared
 \return true if s1's curricular year is inferior to s2's curricular year, false otherwise
 */
-bool sortByCurricularYear(Student s1, Student s2); //!< Returns true if s1.curricularYear < s2.curricularYear
+bool sortByCurricularYear(Student s1, Student s2);
 
 //! Compares two teachers by their names (used as custom comparison function in STL sort)
 /*!

@@ -98,3 +98,5 @@ public:
 	*/
 	friend bool operator==(const Date &dat1, const Date &dat2);
 };
+
+Date generateValidDate();

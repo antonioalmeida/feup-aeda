@@ -68,6 +68,20 @@ bool operator==(const Date &dat1, const Date &dat2) {
 	return (dat1.getYear() == dat2.getYear() && dat1.getMonth() == dat2.getMonth() && dat1.getDay() == dat2.getDay());
 }
 
+Date generateValidDate() {
+	Date result;
+	bool valid;
+	do {
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //may need to remove
+		cout << "Insert the new date (DD/MM/YYYY): ";
+		string date;
+		getline(cin, date);
+		deleteWhitespace(date);
+		result = Date(date);
 
+		if (!(valid = validDate(result.getDay(), result.getMonth(), result.getYear())))
+			cout << "The date you inserted is not valid. Please insert a valid date: ";
+	} while (!valid);
 
-
+	return result;
+}

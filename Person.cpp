@@ -206,6 +206,53 @@ bool sortByCurricularYear(Student s1, Student s2) {
 	return s1.getCurricularYear() < s2.getCurricularYear();
 }
 
+/*Reunion*/
+
+Reunion::Reunion(Date date, Student* student, std::string agenda, std::string conclusions) {
+	this->date = date;
+	this->student = student;
+	this->agenda = agenda;
+	this->conclusions = conclusions;
+	hasTakenPlace = false;
+}
+
+Date Reunion::getDate() const {
+	return date;
+}
+
+Student* Reunion::getStudent() const {
+	return student;
+}
+
+std::string Reunion::getAgenda() const {
+	return agenda;
+}
+
+std::string Reunion::getConclusions() const {
+	return conclusions;
+}
+
+bool Reunion::hasTakenPlace() const {
+	return hasTakenPlace;
+}
+
+void Reunion::changeConclusions(std::string newConclusions) {
+	conclusions = newConclusions;
+}
+
+bool Reunion::operator<(const Reunion &r1) {
+	return date < r1.getDate();
+}
+
+bool Reunion::operator==(const Reunion &r1) {
+	return date == r1.getDate() && student == r1.getStudent() && agenda == r1.getAgenda() && conclusions == r1.getConclusions();
+}
+
+std::ostream& operator<<(std::ostream& out, const Reunion &r1) {
+	/*To be defined*/
+	return out;
+}
+
 /*Teacher*/
 
 Teacher::Teacher(istream &in) :Person(in) {
@@ -270,6 +317,60 @@ ostream& operator<<(ostream& out, const Teacher& s) {
 		out << setw(6) << s.getUnitsTaught().at(i)->getAbbreviation() << " ";
 	out << endl;
 	return out;
+}
+
+void Teacher::addReunion() {
+	Date reunionDate;
+	bool valid;
+	do {
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //may need to remove
+		cout << "Insert the new reunion date (DD/MM/YYYY): ";
+		string date;
+		getline(cin, date);
+		deleteWhitespace(date);
+		reunionDate = Date(date);
+
+		if (!(valid = validDate(reunionDate.getDay(), reunionDate.getMonth(), reunionDate.getYear())))
+			cout << "The date you inserted is not valid. Please insert a valid date: ";
+	} while (!valid);
+
+	string studentName;
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //may need to remove
+	cout << "Insert the student's full name: ";
+	getline(cin, studentName);
+	deleteWhitespace(studentName);
+	Student* student = NULL;
+	for (vector<Student*>::const_iterator it = pupils.begin(); it != pupils.end(); it++) {
+		if ((*it)->getName() == studentName) {
+			student = *it;
+			break;
+		}
+	}
+	if (student == NULL)
+		throw invalidIdentification<string>(studentName);
+
+	string reunionAgenda;
+	cout << "Insert the reunion's agenda: ";
+	getline(cin, reunionAgenda);
+
+	string reunionConclusions;
+	cout << "Insert the reunion's conclusions: ";
+	getline(cin, reunionConclusions);
+
+	Reunion newReunion(reunionDate, student, reunionAgenda, reunionConclusions);
+	pair<set<Reunion>::iterator, bool> result = reunions.insert(newReunion);
+	if (result.second)
+		cout << "Reunion successfully added" << endl;
+	else
+		cout << "Reunion already scheduled!" << endl;
+}
+
+void Teacher::cancelSpecificReunion() {
+
+}
+
+void Teacher::changeSpecificReunionConclusions() {
+
 }
 
 bool sortTByName(Teacher t1, Teacher t2) {
