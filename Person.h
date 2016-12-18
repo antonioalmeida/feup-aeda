@@ -256,6 +256,7 @@ public:
 	std::string getConclusions() const;
 	bool hasTakenPlace() const;
 	void changeConclusions(std::string newConclusions);
+	void setAsTaken();
 	bool operator<(const Reunion &r1);
 	bool operator==(const Reunion &r1); //not sure if we'll need it
 	friend std::ostream& operator<<(std::ostream& out, const Reunion &r1);
@@ -354,7 +355,7 @@ public:
 	std::set<Reunion> getReunions() const;
 	void addReunion(Reunion r1);
 	void cancelSpecificReunion(Reunion r1);
-	void changeSpecificReunionConclusions(Reunion r1);
+	void changeSpecificReunionConclusions(Reunion r1, std::string newConclusions);
 	void setReunionAsTaken(Reunion r1);
 };
 

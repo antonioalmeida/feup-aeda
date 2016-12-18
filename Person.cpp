@@ -236,6 +236,10 @@ bool Reunion::hasTakenPlace() const {
 	return hasTakenPlace;
 }
 
+void Reunion::setAsTaken() {
+	hasTakenPlace = true;
+}
+
 void Reunion::changeConclusions(std::string newConclusions) {
 	conclusions = newConclusions;
 }
@@ -331,12 +335,18 @@ void Teacher::cancelSpecificReunion(Reunion r1) {
 	reunions.erase(r1);
 }
 
-void Teacher::changeSpecificReunionConclusions(Reunion r1) {
-
+void Teacher::changeSpecificReunionConclusions(Reunion r1, string newConclusions) {
+	Reunion temp = *reunions.find(r1);
+	reunions.erase(r1);
+	temp.changeConclusions(newConclusions);
+	reunions.insert(temp);
 }
 
 void Teacher::setReunionAsTaken(Reunion r1) {
-
+	Reunion temp = *reunions.find(r1);
+	reunions.erase(r1);
+	temp.setAsTaken();
+	reunions.insert(temp);
 }
 
 bool sortTByName(Teacher t1, Teacher t2) {
