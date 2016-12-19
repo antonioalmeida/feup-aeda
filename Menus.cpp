@@ -1172,24 +1172,24 @@ void classesOptions(Course &course) {
 	unsigned int option;
 
 	while ((option = classesMenu()))
-		switch (option) {
+	switch (option) {
 		case 1:
-			try {
-				course.addStudent();
-				cout << "Student added successfully" << endl; //Only reaches here if exception is not thrown
-			}
-			catch (repeatedIdentification<unsigned long> &r) {
-				cout << "ERROR: A student is already identified by \"" << r.getRepIdentification() << "\"!" << endl;
-			}
-			catch (repeatedIdentification<string> &r) {
-				cout << "ERROR: A student is already identified by \"" << r.getRepIdentification() << "\"!" << endl;
-			}
-			pressToContinue();
-			break;
+		try {
+			course.addStudent();
+			cout << "Student added successfully" << endl; //Only reaches here if exception is not thrown
+		}
+		catch (repeatedIdentification<unsigned long> &r) {
+			cout << "ERROR: A student is already identified by \"" << r.getRepIdentification() << "\"!" << endl;
+		}
+		catch (repeatedIdentification<string> &r) {
+			cout << "ERROR: A student is already identified by \"" << r.getRepIdentification() << "\"!" << endl;
+		}
+		pressToContinue();
+		break;
 		case 2:
-			//removeStudentOptions(course);
-			pressToContinue();
-			break;
+		//removeStudentOptions(course);
+		pressToContinue();
+		break;
 		case 3: {
 			clearScreen();
 			unsigned short choice;
@@ -1235,7 +1235,8 @@ void classesOptions(Course &course) {
 			break;
 		}
 		case 4:
-			//listStudentClassVacancies(course);
-			pressToContinue();
-			break;
+		//listStudentClassVacancies(course);
+		pressToContinue();
+		break;
+	}
 }
