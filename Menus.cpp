@@ -53,9 +53,10 @@ unsigned short int mainMenu() {
 	cout << TAB << "1 - Students menu" << endl;
 	cout << TAB << "2 - Teachers menu" << endl;
 	cout << TAB << "3 - Units menu" << endl;
+	cout << TAB << "4 - Classes menu" << endl;
 	cout << TAB << "0 - Exit" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = readOp(0, 3);
+	option = readOp(0, 4);
 
 	return option;
 }
@@ -73,6 +74,8 @@ void mainOption(Course &course) {
 			break;
 		case 3: unitsOptions(course);
 			pressToContinue();
+			break;
+		case 4: classesOptions(course);
 			break;
 		}
 
@@ -1139,4 +1142,100 @@ void listUnitsOptions(Course & course) {
 			break;
 		}
 		}
+}
+
+/******************************************
+ * Classes Menu
+ ******************************************/
+
+unsigned short int classesMenu() {
+	unsigned short int option;
+
+	clearScreen();
+	cout << endl;
+	cout << TAB_BIG << "----------------------" << endl;
+	cout << TAB_BIG << "---Classes Main Menu---" << endl;
+	cout << TAB_BIG << "----------------------" << endl;
+	cout << endl;
+	cout << TAB << "1 - Create Class" << endl; //TO DO
+	cout << TAB << "2 - Remove Class" << endl; //TO DO
+	cout << TAB << "3 - Register Student in Class" << endl; //TO DO
+	cout << TAB << "4 - List Classes' Vacancies" << endl; //TO DO
+	cout << TAB << "0 - Return to Main Menu" << endl << endl;
+	cout << TAB << "Enter your option: ";
+	option = readOp(0, 4);
+
+	return option;
+}
+
+void classesOptions(Course &course) {
+	unsigned int option;
+
+	while ((option = classesMenu()))
+		switch (option) {
+		case 1:
+			try {
+				course.addStudent();
+				cout << "Student added successfully" << endl; //Only reaches here if exception is not thrown
+			}
+			catch (repeatedIdentification<unsigned long> &r) {
+				cout << "ERROR: A student is already identified by \"" << r.getRepIdentification() << "\"!" << endl;
+			}
+			catch (repeatedIdentification<string> &r) {
+				cout << "ERROR: A student is already identified by \"" << r.getRepIdentification() << "\"!" << endl;
+			}
+			pressToContinue();
+			break;
+		case 2:
+			//removeStudentOptions(course);
+			pressToContinue();
+			break;
+		case 3: {
+			clearScreen();
+			unsigned short choice;
+			cout << TAB << "1 - Identify student by name" << endl;
+			cout << TAB << "2 - Identify student by code" << endl << endl;
+			cout << TAB << "0 - Return to previous menu" << endl << endl;
+			cout << TAB << "Enter your option: ";
+			choice = readOp(0, 2);
+			if (choice == 1) {
+				string studentName;
+				cout << "Insert the student's full name: ";
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				getline(cin, studentName);
+				deleteWhitespace(studentName);
+				try {
+					//course.registerStudentInClass(studentName);
+					cout << "Student registered successfully" << endl; //Only reaches here if exception is not thrown
+				}
+				catch (invalidIdentification<string> &s) {
+					cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+				}
+			}
+			else { //choice == 2
+				unsigned long studentCode;
+				cout << "Insert the student's code: ";
+				cin >> studentCode;
+				if (cin.fail()) {
+					cin.clear();
+					cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					cout << "ERROR: Input Invalid!" << endl;
+				}
+				else {
+					try {
+						//course.registerStudentInClass(studentCode);
+						cout << "Student registered successfully" << endl;
+					}
+					catch (invalidIdentification<unsigned long> &s) {
+						cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+					}
+				}
+			}
+			pressToContinue();
+			break;
+		}
+		case 4:
+			//listStudentClassVacancies(course);
+			pressToContinue();
+			break;
 }

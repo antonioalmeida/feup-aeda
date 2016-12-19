@@ -149,7 +149,16 @@ unsigned short int editTeacherMenu();
 */
 void editTeacherOptions(Course & course);
 
+//! Shows show teacher's reunions menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
 unsigned short int showTeacherReunionsMenu();
+
+//! Processes option read from show teacher's reunions menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
 void showTeacherReunionsOptions(Course & course);
 
 //! Shows listing teacher's menu options and reads user's option
@@ -223,3 +232,15 @@ unsigned short int listUnitsMenu();
 \param course course where the option will be processed at
 */
 void listUnitsOptions(Course & course);
+
+//! Shows classes' menu options and reads user's option
+/*!
+\return user's option from the menu
+*/
+unsigned short int classesMenu();
+
+//! Processes option read from classes' menu on object of type Course
+/*!
+\param course course where the option will be processed at
+*/
+void classesOptions(Course & course);
