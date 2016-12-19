@@ -149,6 +149,9 @@ unsigned short int editTeacherMenu();
 */
 void editTeacherOptions(Course & course);
 
+unsigned short int showTeacherReunionsMenu();
+void showTeacherReunionsOptions(Course & course);
+
 //! Shows listing teacher's menu options and reads user's option
 /*!
 \return user's option from the menu

@@ -590,7 +590,7 @@ unsigned short int teachersMenu() {
 	cout << TAB_BIG << "----------------------" << endl;
 	cout << endl;
 	cout << TAB << "1 - Create Teacher" << endl; //DONE
-	cout << TAB << "2 - Edit Teacher" << endl; //TO DO
+	cout << TAB << "2 - Edit Teacher" << endl; //DONE
 	cout << TAB << "3 - Remove Teacher" << endl; //DONE
 	cout << TAB << "4 - List Teachers" << endl; //DONE
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
@@ -757,9 +757,10 @@ unsigned short int listTeachersMenu() {
 	cout << endl;
 	cout << TAB << "1 - Show teachers alphabetically" << endl; //Done
 	cout << TAB << "2 - Show a teacher" << endl;  //Done
+	cout << TAB << "3 - Show a teacher's reunions" << endl; //Done
 	cout << TAB << "0 - Return to previous menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = readOp(0, 2);
+	option = readOp(0, 3);
 
 	return option;
 }
@@ -776,6 +777,61 @@ void listTeachersOptions(Course & course) {
 			break;
 		case 2:
 			showTeacherOptions(course);
+			pressToContinue();
+			break;
+		case 3:
+			showTeacherReunionsOptions(course);
+			pressToContinue();
+			break;
+		}
+}
+
+unsigned short int showTeacherReunionsMenu() {
+	unsigned short int option;
+
+	clearScreen();
+	cout << TAB_BIG << "Show Teacher Reunions Menu" << endl;
+	cout << endl;
+	cout << TAB << "1 - Show every reunion from a teacher" << endl; //DONE
+	cout << TAB << "2 - Show every reunion from a teacher that has taken place" << endl;  //DONE
+	cout << TAB << "3 - Show every reunion from a teacher in a certain period" << endl; //DONE
+	cout << TAB << "0 - Return to previous menu" << endl << endl;
+	cout << TAB << "Enter your option: ";
+	option = readOp(0, 3);
+
+	return option;
+}
+
+void showTeacherReunionsOptions(Course & course) {
+	unsigned int option;
+
+	while ((option = showTeacherReunionsMenu()))
+		switch (option) {
+		case 1:
+			try {
+				course.showTeacherReunions();
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No teacher identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			pressToContinue();
+			break;
+		case 2:
+			try {
+				course.showTeacherReunionsDone();
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No teacher identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			pressToContinue();
+			break;
+		case 3:
+			try {
+				course.showTeacherReunionsInPeriod();
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No teacher identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
 			pressToContinue();
 			break;
 		}

@@ -332,4 +332,7 @@ public:
 	void teacherCancelReunion();
 	void teacherEditReunionConclusions();
 	void teacherMarkReunionAsDone();
+	void showTeacherReunions();
+	void showTeacherReunionsDone();
+	void showTeacherReunionsInPeriod();
 };

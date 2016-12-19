@@ -237,7 +237,7 @@ bool Reunion::hasTakenPlace() const {
 }
 
 void Reunion::setAsTaken() {
-	hasTakenPlace = true;
+	this->hasTakenPlace = true;
 }
 
 void Reunion::changeConclusions(std::string newConclusions) {
