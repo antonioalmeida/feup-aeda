@@ -1629,8 +1629,8 @@ void Course::teacherCancelReunion() {
 	Date reunionDate = generateValidDate();
 
 	vector<Reunion> reunions;
-	set<Reunion> reunionset = it->getReunions();
-	for (set<Reunion>::const_iterator r_it = reunionset.cbegin(); r_it != reunionset.cend(); r_it++) {
+	set<Reunion,compareReunions> reunionset = it->getReunions();
+	for (set<Reunion,compareReunions>::const_iterator r_it = reunionset.cbegin(); r_it != reunionset.cend(); r_it++) {
 		if (r_it->getDate() == reunionDate && r_it->getStudent() == studentName)
 			reunions.push_back(*r_it);
 	}
@@ -1687,8 +1687,8 @@ void Course::teacherEditReunionConclusions() {
 	Date reunionDate = generateValidDate();
 
 	vector<Reunion> reunions;
-	set<Reunion> reunionset = it->getReunions();
-	for (set<Reunion>::const_iterator r_it = reunionset.cbegin(); r_it != reunionset.cend(); r_it++) {
+	set<Reunion,compareReunions> reunionset = it->getReunions();
+	for (set<Reunion,compareReunions>::const_iterator r_it = reunionset.cbegin(); r_it != reunionset.cend(); r_it++) {
 		if (r_it->getDate() == reunionDate && r_it->getStudent() == studentName)
 			reunions.push_back(*r_it);
 	}
@@ -1752,8 +1752,8 @@ void Course::teacherMarkReunionAsDone() {
 	Date reunionDate = generateValidDate();
 
 	vector<Reunion> reunions;
-	set<Reunion> reunionset = it->getReunions();
-	for (set<Reunion>::const_iterator r_it = reunionset.cbegin(); r_it != reunionset.cend(); r_it++) {
+	set<Reunion,compareReunions> reunionset = it->getReunions();
+	for (set<Reunion,compareReunions>::const_iterator r_it = reunionset.cbegin(); r_it != reunionset.cend(); r_it++) {
 		if (r_it->getDate() == reunionDate && r_it->getStudent() == studentName)
 			reunions.push_back(*r_it);
 	}
@@ -1791,9 +1791,9 @@ void Course::showTeacherReunions() {
 	if (it == teachers.end())
 		throw invalidIdentification<string>(teacherName);
 
-	cout << "All of \"" << teacherName << "'s reunions:" << endl;
-	set<Reunion> teacherReunions = it->getReunions();
-	for (set<Reunion>::const_iterator r_it = teacherReunions.cbegin(); r_it != teacherReunions.cend(); r_it++)
+	cout << "All of " << teacherName << "\'s reunions:" << endl;
+	set<Reunion,compareReunions> teacherReunions = it->getReunions();
+	for (set<Reunion,compareReunions>::const_iterator r_it = teacherReunions.cbegin(); r_it != teacherReunions.cend(); r_it++)
 		cout << *r_it << endl;
 	cout << endl << endl;
 }
@@ -1814,16 +1814,16 @@ void Course::showTeacherReunionsDone() {
 	if (it == teachers.end())
 		throw invalidIdentification<string>(teacherName);
 
-	cout << "All of \"" << teacherName << "'s reunions that have taken place:" << endl;
-	set<Reunion> teacherReunions = it->getReunions();
-	for (set<Reunion>::const_iterator r_it = teacherReunions.cbegin(); r_it != teacherReunions.cend(); r_it++) {
-		if(r_it->hasTakenPlace())
+	cout << "All of " << teacherName << "'s reunions that have taken place:" << endl;
+	set<Reunion,compareReunions> teacherReunions = it->getReunions();
+	for (set<Reunion,compareReunions>::const_iterator r_it = teacherReunions.cbegin(); r_it != teacherReunions.cend(); r_it++) {
+		if(r_it->reunionHasTakenPlace())
 			cout << *r_it << endl;
 	}
 	cout << endl << endl;
 }
 
-void showTeacherReunionsInPeriod() {
+void Course::showTeacherReunionsInPeriod() {
 	string teacherName;
 	cout << "Insert the teacher's full name: ";
 	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -1844,9 +1844,9 @@ void showTeacherReunionsInPeriod() {
 	cout << "Insert the date corresponding to the end of the period (DD/MM/YYYY): ";
 	Date end = generateValidDate();
 
-	cout << "All of \"" << teacherName << "'s reunions between" << beginning << " and " << end << ":" << endl;
-	set<Reunion> teacherReunions = it->getReunions();
-	for (set<Reunion>::const_iterator r_it = teacherReunions.cbegin(); r_it != teacherReunions.cend(); r_it++) {
+	cout << "All of " << teacherName << "'s reunions between " << beginning << " and " << end << ":" << endl;
+	set<Reunion,compareReunions> teacherReunions = it->getReunions();
+	for (set<Reunion,compareReunions>::const_iterator r_it = teacherReunions.cbegin(); r_it != teacherReunions.cend(); r_it++) {
 		if (beginning < r_it->getDate() && r_it->getDate() < end)
 			cout << *r_it << endl;
 	}

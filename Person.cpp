@@ -232,7 +232,7 @@ std::string Reunion::getConclusions() const {
 	return conclusions;
 }
 
-bool Reunion::hasTakenPlace() const {
+bool Reunion::reunionHasTakenPlace() const {
 	return hasTakenPlace;
 }
 
@@ -244,16 +244,14 @@ void Reunion::changeConclusions(std::string newConclusions) {
 	conclusions = newConclusions;
 }
 
-bool Reunion::operator<(const Reunion &r1) {
-	return date < r1.getDate();
-}
-
 bool Reunion::operator==(const Reunion &r1) {
 	return date == r1.getDate() && student == r1.getStudent() && agenda == r1.getAgenda() && conclusions == r1.getConclusions();
 }
 
 std::ostream& operator<<(std::ostream& out, const Reunion &r1) {
-	/*To be defined*/
+	out << "Student: " << r1.getStudent() << " | On " << r1.getDate() << endl;
+	out << "Agenda: " << r1.getAgenda() << endl;
+	out << "Conclusions: " << r1.getConclusions() << endl;
 	return out;
 }
 
@@ -323,7 +321,7 @@ ostream& operator<<(ostream& out, const Teacher& s) {
 	return out;
 }
 
-set<Reunion> Teacher::getReunions() const {
+set<Reunion, compareReunions> Teacher::getReunions() const {
 	return reunions;
 }
 

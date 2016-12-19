@@ -254,12 +254,17 @@ public:
 	std::string getStudent() const;
 	std::string getAgenda() const;
 	std::string getConclusions() const;
-	bool hasTakenPlace() const;
+	bool reunionHasTakenPlace() const;
 	void changeConclusions(std::string newConclusions);
 	void setAsTaken();
-	bool operator<(const Reunion &r1);
 	bool operator==(const Reunion &r1); //not sure if we'll need it
 	friend std::ostream& operator<<(std::ostream& out, const Reunion &r1);
+};
+
+struct compareReunions {
+	bool operator()(const Reunion &r1, const Reunion &r2) {
+		return r1.getDate() < r2.getDate();
+	}
 };
 
 class Teacher : public Person {
@@ -267,7 +272,7 @@ protected:
 	std::string code;
 	std::vector<Unit*> unitsTaught;
 	std::vector<Student*> pupils;
-	std::set<Reunion> reunions;
+	std::set<Reunion,compareReunions> reunions;
 public:
 	//! One (or more) teacher(s) will have the least amount of students as pupils. It is to those that should be assigned students first. This variable holds that minimum
 	/*!
@@ -352,7 +357,7 @@ public:
 	 */
 	friend std::ostream& operator<<(std::ostream& out, const Teacher& s);
 
-	std::set<Reunion> getReunions() const;
+	std::set<Reunion,compareReunions> getReunions() const;
 	void addReunion(Reunion r1);
 	void cancelSpecificReunion(Reunion r1);
 	void changeSpecificReunionConclusions(Reunion r1, std::string newConclusions);

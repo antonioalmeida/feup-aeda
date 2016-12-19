@@ -739,11 +739,12 @@ void editTeacherOptions(Course & course) {
 		case 7:
 			try {
 				course.teacherMarkReunionAsDone();
-				cout << "Reunion successfully set has taken" << endl;
 			}
 			catch (invalidIdentification<string> &s) {
 				cout << "ERROR: No person identified by \"" << s.getInvIdentification() << "\"!" << endl;
 			}
+			pressToContinue();
+			break;
 		}
 }
 

@@ -72,7 +72,6 @@ Date generateValidDate() {
 	Date result;
 	bool valid;
 	do {
-		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //may need to remove
 		cout << "Insert the new date (DD/MM/YYYY): ";
 		string date;
 		getline(cin, date);
