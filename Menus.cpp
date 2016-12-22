@@ -1157,10 +1157,10 @@ unsigned short int classesMenu() {
 	cout << TAB_BIG << "---Classes Main Menu---" << endl;
 	cout << TAB_BIG << "----------------------" << endl;
 	cout << endl;
-	cout << TAB << "1 - Create Class" << endl; //TO DO
-	cout << TAB << "2 - Remove Class" << endl; //TO DO
+	cout << TAB << "1 - Create Class" << endl; //DONE
+	cout << TAB << "2 - Remove Class" << endl; //DONE - to complete -> verify if class hasn't already been removed
 	cout << TAB << "3 - Register Student in Class" << endl; //TO DO
-	cout << TAB << "4 - List Classes' Vacancies" << endl; //TO DO
+	cout << TAB << "4 - List Classes' Vacancies - Top 3" << endl; //DONE
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
 	option = readOp(0, 4);
@@ -1174,69 +1174,35 @@ void classesOptions(Course &course) {
 	while ((option = classesMenu()))
 	switch (option) {
 		case 1:
-		try {
-			course.addStudent();
-			cout << "Student added successfully" << endl; //Only reaches here if exception is not thrown
-		}
-		catch (repeatedIdentification<unsigned long> &r) {
-			cout << "ERROR: A student is already identified by \"" << r.getRepIdentification() << "\"!" << endl;
-		}
-		catch (repeatedIdentification<string> &r) {
-			cout << "ERROR: A student is already identified by \"" << r.getRepIdentification() << "\"!" << endl;
-		}
-		pressToContinue();
-		break;
-		case 2:
-		//removeStudentOptions(course);
-		pressToContinue();
-		break;
-		case 3: {
-			clearScreen();
-			unsigned short choice;
-			cout << TAB << "1 - Identify student by name" << endl;
-			cout << TAB << "2 - Identify student by code" << endl << endl;
-			cout << TAB << "0 - Return to previous menu" << endl << endl;
-			cout << TAB << "Enter your option: ";
-			choice = readOp(0, 2);
-			if (choice == 1) {
-				string studentName;
-				cout << "Insert the student's full name: ";
-				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				getline(cin, studentName);
-				deleteWhitespace(studentName);
-				try {
-					//course.registerStudentInClass(studentName);
-					cout << "Student registered successfully" << endl; //Only reaches here if exception is not thrown
-				}
-				catch (invalidIdentification<string> &s) {
-					cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
-				}
-			}
-			else { //choice == 2
-				unsigned long studentCode;
-				cout << "Insert the student's code: ";
-				cin >> studentCode;
-				if (cin.fail()) {
-					cin.clear();
-					cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-					cout << "ERROR: Input Invalid!" << endl;
-				}
-				else {
-					try {
-						//course.registerStudentInClass(studentCode);
-						cout << "Student registered successfully" << endl;
-					}
-					catch (invalidIdentification<unsigned long> &s) {
-						cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
-					}
-				}
-			}
+			cout << "Insert the classes' curricular year: " << endl;
+			unsigned short cYear;
+			cYear = readOp(1,5);
+			course.addStudentsClass(cYear);
+			cout << "Class added successfully" << endl;
 			pressToContinue();
 			break;
-		}
+		case 2:
+			cout << "Insert the classes' curricular year: " << endl;
+			cYear = readOp(1,5);
+			cout << "Insert the classes' number within the year: (1 - " << course.getStudentsClasses().at(cYear-1).size() << ")" << endl;
+			unsigned short cNumber;
+			cNumber = readOp(1,course.getStudentsClasses().at(cYear-1).size());
+			course.removeStudentsClass(cYear, cNumber);
+			cout << "Class " << cYear << "MIEIC" << cNumber << " successfully removed" << endl;
+			pressToContinue();
+			break;
+		case 3:
+			//registerStudentInClass;
+			pressToContinue();
+			break;
 		case 4:
-		//listStudentClassVacancies(course);
-		pressToContinue();
-		break;
+			cout << "Insert the classes' curricular year: " << endl;
+			cYear = readOp(1,5);
+			if(course.getStudentsClasses().at(cYear-1).size() >= 3)
+				course.listStudentsClassVacancies(cYear);
+			else
+				cout << "The curricular year you selected has less than 3 classes" << endl;
+			pressToContinue();
+			break;
 	}
 }

@@ -1,10 +1,13 @@
 #include <iostream>
 #include "Menus.h"
+#include <stdlib.h>
+#include <time.h>
 
 using namespace std;
 
 int main(int argc, char **argv) {
 
+	srand(time(NULL));
 	std::string course, studentsFileName, teachersFileName, mandatoryUnitsFileName, optionalUnitsFileName;
 
 	try {

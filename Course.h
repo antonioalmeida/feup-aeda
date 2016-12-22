@@ -6,9 +6,11 @@
 #include <map>
 #include <fstream>
 #include <algorithm>
+#include <queue>
 #include "Person.h"
 #include "Unit.h"
 #include "Utils.h"
+#include "StudentsClass.h"
 
 /*! \file Course.h
  \brief Course, a class to handle a specific studies course
@@ -19,6 +21,7 @@ private:
 	std::vector<Student> students;
 	std::vector<Teacher> teachers;
 	std::map<std::string, Unit*> abbreviationToUnit; //Map whose key is a unit abbreviation, which is associated with its respective Unit pointer
+	std::vector<std::priority_queue<StudentsClass>> studentsClasses;
 public:
 	//! Default constructor (does nothing)
 	/*!
@@ -335,4 +338,10 @@ public:
 	void showTeacherReunions();
 	void showTeacherReunionsDone();
 	void showTeacherReunionsInPeriod();
+
+	std::vector<std::priority_queue<StudentsClass>> getStudentsClasses();
+	void addStudentsClass(unsigned int curricularYear);
+	void removeStudentsClass(unsigned int curricularYear, unsigned int classNumber);
+	void listStudentsClassVacancies(unsigned int curricularYear);
+
 };

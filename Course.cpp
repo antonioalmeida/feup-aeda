@@ -72,6 +72,8 @@ Course::Course(string studentsFile, string teachersFile, string manUnitsFile, st
 		studentsIn.ignore(1000, '\n'); //Not sure but I think Student constructor does not skip blank line between students
 	}
 	studentsIn.close(); //To avoid conflict
+
+	studentsClasses.resize(5);
 }
 
 vector<Student> Course::getStudents() const {
@@ -624,7 +626,7 @@ void Course::registerRandomStudent() {
 			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
 			manUnitsFromCurrentYear.erase(manUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
 		}
-        
+
         float creditsLeft = MAX_ECTS-total_ects;
         bool proceed = false;
         /* Check if student still has credit left to register in mandatory units. If he does not, break loop */
@@ -636,7 +638,7 @@ void Course::registerRandomStudent() {
         }
         if(!proceed)
             break;
-        
+
 	}
 
 	//Now, if it is the case (if empty vector just skips loop) and there's credit left, register to optional units
@@ -806,7 +808,7 @@ void Course::registerSpecificStudentByName() {
 			cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
 			manUnitsFromCurrentYear.erase(manUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
 		}
-        
+
         float creditsLeft = MAX_ECTS-total_ects;
         bool proceed = false;
         /* Check if student still has credit left to register in mandatory units. If he does not, break loop */
@@ -818,8 +820,8 @@ void Course::registerSpecificStudentByName() {
         }
         if(!proceed)
             break;
-        
-        
+
+
 	}
 
 	if (optUnitsFromCurrentYear.size() > 0) {
@@ -1004,7 +1006,7 @@ void Course::registerSpecificStudentByCode() {
 				cout << "Unit \"" << abbreviation << "\" successfully added" << endl;
 				manUnitsFromCurrentYear.erase(manUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
 			}
-            
+
             float creditsLeft = MAX_ECTS-total_ects;
             bool proceed = false;
             /* Check if student still has credit left to register in mandatory units. If he does not, break loop */
@@ -1016,7 +1018,7 @@ void Course::registerSpecificStudentByCode() {
             }
             if(!proceed)
                 break;
-            
+
 		}
 
 		//Now, if it is the case (if empty vector just skips loop) and there's credit left, register to optional units
@@ -1127,7 +1129,7 @@ void Course::addTeacher() {
 		else
 			newTeacherUnitsTaught.push_back(abbreviationToUnit.at(abbreviation));
 	} while (true);
-    
+
     Teacher::lessStudents = 0; //Update minimum value of pupils
 	Teacher t1(newTeacherName, newTeacherCode, newTeacherUnitsTaught);
 	teachers.push_back(t1);
@@ -1563,7 +1565,7 @@ void Course::teacherAddReunion() {
 
 	if (it == teachers.end())
 		throw invalidIdentification<string>(teacherName);
-	
+
 	Date reunionDate = generateValidDate();
 
 	string studentName;
@@ -1851,4 +1853,45 @@ void Course::showTeacherReunionsInPeriod() {
 			cout << *r_it << endl;
 	}
 	cout << endl << endl;
+}
+
+vector<priority_queue<StudentsClass>> Course::getStudentsClasses() {
+	return studentsClasses;
+}
+
+void Course::addStudentsClass(unsigned int curricularYear) {
+	StudentsClass temp(curricularYear,getUnitsFromYear(curricularYear));
+	studentsClasses.at(curricularYear-1).push(temp);
+
+	cout << temp << endl;
+}
+
+void Course::removeStudentsClass(unsigned int curricularYear, unsigned int classNumber) {
+	string classCode = to_string(curricularYear) + "MIEIC" + to_string(classNumber);
+	priority_queue<StudentsClass> currentYear = studentsClasses.at(curricularYear-1);
+	priority_queue<StudentsClass> result; //queue to store the altered version
+
+	while(!currentYear.empty()) {
+		StudentsClass currentClass = currentYear.top();
+		if(currentClass.getCode() != classCode)
+			result.push(currentClass);
+
+		currentYear.pop();
+	}
+	studentsClasses.at(curricularYear-1) = result;
+}
+
+void Course::listStudentsClassVacancies(unsigned int curricularYear) {
+	priority_queue<StudentsClass> temp = studentsClasses.at(curricularYear-1);
+
+	for(int i = 0; i < 3; i++) {
+		priority_queue<pair<unsigned long, Unit*>> currentVacanciesToUnits = temp.top().getVacanciesToUnits();
+
+		cout << temp.top().getCode() << endl;
+		while(!currentVacanciesToUnits.empty()) {
+			cout << currentVacanciesToUnits.top() << endl;
+			currentVacanciesToUnits.pop();
+		}
+		temp.pop();
+	}
 }
