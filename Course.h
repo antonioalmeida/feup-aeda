@@ -7,6 +7,7 @@
 #include <fstream>
 #include <algorithm>
 #include <queue>
+#include <unordered_set>
 #include "Person.h"
 #include "Unit.h"
 #include "Utils.h"
@@ -16,12 +17,33 @@
  \brief Course, a class to handle a specific studies course
  */
 
+
+struct studentOutHash
+{
+	int operator() (const Student &s1) const
+	{
+		int v = 0;
+		for (unsigned int i = 0; i < s1.getName().size(); i++)
+			v = 37 * v + s1.getName()[i];
+		return v;
+	}
+
+	bool operator() (const Student &s1, const Student &s2) const
+	{
+		return s1.getCode() == s2.getCode();
+	}
+};
+
+typedef std::unordered_set <Student, studentOutHash, studentOutHash> studentsHash;
+
 class Course {
 private:
 	std::vector<Student> students;
 	std::vector<Teacher> teachers;
 	std::map<std::string, Unit*> abbreviationToUnit; //Map whose key is a unit abbreviation, which is associated with its respective Unit pointer
 	std::vector<std::priority_queue<StudentsClass>> studentsClasses;
+	studentsHash studentsOut;
+
 public:
 	//! Default constructor (does nothing)
 	/*!
@@ -344,4 +366,5 @@ public:
 	void removeStudentsClass(unsigned int curricularYear, unsigned int classNumber);
 	void listStudentsClassVacancies(unsigned int curricularYear);
 
+	void editStudentCourseStatus();
 };

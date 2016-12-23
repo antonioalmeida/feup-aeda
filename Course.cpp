@@ -627,17 +627,17 @@ void Course::registerRandomStudent() {
 			manUnitsFromCurrentYear.erase(manUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
 		}
 
-        float creditsLeft = MAX_ECTS-total_ects;
-        bool proceed = false;
-        /* Check if student still has credit left to register in mandatory units. If he does not, break loop */
-        for(unsigned int i = 0; i < manUnitsFromCurrentYear.size(); i++){
-            if(manUnitsFromCurrentYear.at(i)->getECTS() <= creditsLeft){
-                proceed = true;
-                break;
-            }
-        }
-        if(!proceed)
-            break;
+		float creditsLeft = MAX_ECTS - total_ects;
+		bool proceed = false;
+		/* Check if student still has credit left to register in mandatory units. If he does not, break loop */
+		for (unsigned int i = 0; i < manUnitsFromCurrentYear.size(); i++) {
+			if (manUnitsFromCurrentYear.at(i)->getECTS() <= creditsLeft) {
+				proceed = true;
+				break;
+			}
+		}
+		if (!proceed)
+			break;
 
 	}
 
@@ -713,6 +713,15 @@ void Course::registerRandomStudent() {
 	it->setECTSTaking(total_ects);
 	it->setRegistration();
 
+
+	//CHECK IF STUDENT IS IN HASH TABLE
+	unordered_set<Student, studentOutHash, studentOutHash>::iterator ite = studentsOut.find(*it);
+	if (ite != studentsOut.end()) {
+		studentsOut.erase(ite);
+		it->setInterrupted();
+		//Question if user want to update student's contact
+	}
+	
 }
 
 void Course::registerSpecificStudentByName() {
@@ -809,17 +818,17 @@ void Course::registerSpecificStudentByName() {
 			manUnitsFromCurrentYear.erase(manUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
 		}
 
-        float creditsLeft = MAX_ECTS-total_ects;
-        bool proceed = false;
-        /* Check if student still has credit left to register in mandatory units. If he does not, break loop */
-        for(unsigned int i = 0; i < manUnitsFromCurrentYear.size(); i++){
-            if(manUnitsFromCurrentYear.at(i)->getECTS() <= creditsLeft){
-                proceed = true;
-                break;
-            }
-        }
-        if(!proceed)
-            break;
+		float creditsLeft = MAX_ECTS - total_ects;
+		bool proceed = false;
+		/* Check if student still has credit left to register in mandatory units. If he does not, break loop */
+		for (unsigned int i = 0; i < manUnitsFromCurrentYear.size(); i++) {
+			if (manUnitsFromCurrentYear.at(i)->getECTS() <= creditsLeft) {
+				proceed = true;
+				break;
+			}
+		}
+		if (!proceed)
+			break;
 
 
 	}
@@ -902,6 +911,14 @@ void Course::registerSpecificStudentByName() {
 
 	it->setECTSTaking(total_ects);
 	it->setRegistration();
+
+	//CHECK IF STUDENT IS IN HASH TABLE
+	unordered_set<Student, studentOutHash, studentOutHash>::iterator ite = studentsOut.find(*it);
+	if (ite != studentsOut.end()) {
+		studentsOut.erase(ite);
+		it->setInterrupted();
+		//Question if user want to update student's contact
+	}
 }
 
 void Course::registerSpecificStudentByCode() {
@@ -1007,17 +1024,17 @@ void Course::registerSpecificStudentByCode() {
 				manUnitsFromCurrentYear.erase(manUnitsFromCurrentYear.begin() + indexOfCurrentUnit);
 			}
 
-            float creditsLeft = MAX_ECTS-total_ects;
-            bool proceed = false;
-            /* Check if student still has credit left to register in mandatory units. If he does not, break loop */
-            for(unsigned int i = 0; i < manUnitsFromCurrentYear.size(); i++){
-                if(manUnitsFromCurrentYear.at(i)->getECTS() <= creditsLeft){
-                    proceed = true;
-                    break;
-                }
-            }
-            if(!proceed)
-                break;
+			float creditsLeft = MAX_ECTS - total_ects;
+			bool proceed = false;
+			/* Check if student still has credit left to register in mandatory units. If he does not, break loop */
+			for (unsigned int i = 0; i < manUnitsFromCurrentYear.size(); i++) {
+				if (manUnitsFromCurrentYear.at(i)->getECTS() <= creditsLeft) {
+					proceed = true;
+					break;
+				}
+			}
+			if (!proceed)
+				break;
 
 		}
 
@@ -1130,7 +1147,7 @@ void Course::addTeacher() {
 			newTeacherUnitsTaught.push_back(abbreviationToUnit.at(abbreviation));
 	} while (true);
 
-    Teacher::lessStudents = 0; //Update minimum value of pupils
+	Teacher::lessStudents = 0; //Update minimum value of pupils
 	Teacher t1(newTeacherName, newTeacherCode, newTeacherUnitsTaught);
 	teachers.push_back(t1);
 }
@@ -1459,7 +1476,7 @@ void Course::save() const {
 	cout << "Insert the filename where mandatory units will be saved: ";
 	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	getline(cin, mandatoryUnitsFileName);
-	ofstream mandatoryUnitsOut(mandatoryUnitsFileName+".txt");
+	ofstream mandatoryUnitsOut(mandatoryUnitsFileName + ".txt");
 	vector<Unit*> manUnits = getAllMandatoryUnits();
 	mandatoryUnitsOut << manUnits.size() << endl;
 	for (unsigned int i = 0; i < manUnits.size(); i++) {
@@ -1469,7 +1486,7 @@ void Course::save() const {
 
 	cout << "Insert the filename where optional units will be saved: ";
 	getline(cin, optionalUnitsFileName);
-	ofstream optionalUnitsOut(optionalUnitsFileName+".txt");
+	ofstream optionalUnitsOut(optionalUnitsFileName + ".txt");
 	vector<Unit*> optUnits = getAllOptionalUnits();
 	optionalUnitsOut << optUnits.size() << endl;
 	for (unsigned int i = 0; i < optUnits.size(); i++) {
@@ -1480,7 +1497,7 @@ void Course::save() const {
 
 	cout << "Insert the filename where students will be saved: ";
 	getline(cin, studentsFileName);
-	ofstream studentsOut(studentsFileName+".txt");
+	ofstream studentsOut(studentsFileName + ".txt");
 	studentsOut << students.size() << endl;
 	for (unsigned int i = 0; i < students.size(); i++) {
 		students.at(i).save(studentsOut);
@@ -1518,7 +1535,7 @@ void Course::save() const {
 
 	cout << "Insert the filename where teachers will be saved: ";
 	getline(cin, teachersFileName);
-	ofstream teachersOut(teachersFileName+".txt");
+	ofstream teachersOut(teachersFileName + ".txt");
 	teachersOut << teachers.size() << endl;
 	for (unsigned int i = 0; i < teachers.size(); i++) {
 		teachers.at(i).save(teachersOut);
@@ -1526,7 +1543,7 @@ void Course::save() const {
 	}
 	teachersOut.close();
 
-	ofstream teachersOutExecution(teachersFileName+"_execution.txt");
+	ofstream teachersOutExecution(teachersFileName + "_execution.txt");
 	teachersOutExecution << teachers.size() << endl;
 	for (unsigned int i = 0; i < teachers.size(); i++) {
 		teachers.at(i).save(teachersOutExecution);
@@ -1631,8 +1648,8 @@ void Course::teacherCancelReunion() {
 	Date reunionDate = generateValidDate();
 
 	vector<Reunion> reunions;
-	set<Reunion,compareReunions> reunionset = it->getReunions();
-	for (set<Reunion,compareReunions>::const_iterator r_it = reunionset.cbegin(); r_it != reunionset.cend(); r_it++) {
+	set<Reunion, compareReunions> reunionset = it->getReunions();
+	for (set<Reunion, compareReunions>::const_iterator r_it = reunionset.cbegin(); r_it != reunionset.cend(); r_it++) {
 		if (r_it->getDate() == reunionDate && r_it->getStudent() == studentName)
 			reunions.push_back(*r_it);
 	}
@@ -1689,8 +1706,8 @@ void Course::teacherEditReunionConclusions() {
 	Date reunionDate = generateValidDate();
 
 	vector<Reunion> reunions;
-	set<Reunion,compareReunions> reunionset = it->getReunions();
-	for (set<Reunion,compareReunions>::const_iterator r_it = reunionset.cbegin(); r_it != reunionset.cend(); r_it++) {
+	set<Reunion, compareReunions> reunionset = it->getReunions();
+	for (set<Reunion, compareReunions>::const_iterator r_it = reunionset.cbegin(); r_it != reunionset.cend(); r_it++) {
 		if (r_it->getDate() == reunionDate && r_it->getStudent() == studentName)
 			reunions.push_back(*r_it);
 	}
@@ -1714,7 +1731,7 @@ void Course::teacherEditReunionConclusions() {
 		string newConclusions;
 		cout << "Insert the reunion's new conclusions: ";
 		getline(cin, newConclusions);
-		it->changeSpecificReunionConclusions(reunions.at(choice-1), newConclusions);
+		it->changeSpecificReunionConclusions(reunions.at(choice - 1), newConclusions);
 		cout << "Reunion successfully edited" << endl;
 	}
 }
@@ -1754,8 +1771,8 @@ void Course::teacherMarkReunionAsDone() {
 	Date reunionDate = generateValidDate();
 
 	vector<Reunion> reunions;
-	set<Reunion,compareReunions> reunionset = it->getReunions();
-	for (set<Reunion,compareReunions>::const_iterator r_it = reunionset.cbegin(); r_it != reunionset.cend(); r_it++) {
+	set<Reunion, compareReunions> reunionset = it->getReunions();
+	for (set<Reunion, compareReunions>::const_iterator r_it = reunionset.cbegin(); r_it != reunionset.cend(); r_it++) {
 		if (r_it->getDate() == reunionDate && r_it->getStudent() == studentName)
 			reunions.push_back(*r_it);
 	}
@@ -1794,8 +1811,8 @@ void Course::showTeacherReunions() {
 		throw invalidIdentification<string>(teacherName);
 
 	cout << "All of " << teacherName << "\'s reunions:" << endl;
-	set<Reunion,compareReunions> teacherReunions = it->getReunions();
-	for (set<Reunion,compareReunions>::const_iterator r_it = teacherReunions.cbegin(); r_it != teacherReunions.cend(); r_it++)
+	set<Reunion, compareReunions> teacherReunions = it->getReunions();
+	for (set<Reunion, compareReunions>::const_iterator r_it = teacherReunions.cbegin(); r_it != teacherReunions.cend(); r_it++)
 		cout << *r_it << endl;
 	cout << endl << endl;
 }
@@ -1817,9 +1834,9 @@ void Course::showTeacherReunionsDone() {
 		throw invalidIdentification<string>(teacherName);
 
 	cout << "All of " << teacherName << "'s reunions that have taken place:" << endl;
-	set<Reunion,compareReunions> teacherReunions = it->getReunions();
-	for (set<Reunion,compareReunions>::const_iterator r_it = teacherReunions.cbegin(); r_it != teacherReunions.cend(); r_it++) {
-		if(r_it->reunionHasTakenPlace())
+	set<Reunion, compareReunions> teacherReunions = it->getReunions();
+	for (set<Reunion, compareReunions>::const_iterator r_it = teacherReunions.cbegin(); r_it != teacherReunions.cend(); r_it++) {
+		if (r_it->reunionHasTakenPlace())
 			cout << *r_it << endl;
 	}
 	cout << endl << endl;
@@ -1847,8 +1864,8 @@ void Course::showTeacherReunionsInPeriod() {
 	Date end = generateValidDate();
 
 	cout << "All of " << teacherName << "'s reunions between " << beginning << " and " << end << ":" << endl;
-	set<Reunion,compareReunions> teacherReunions = it->getReunions();
-	for (set<Reunion,compareReunions>::const_iterator r_it = teacherReunions.cbegin(); r_it != teacherReunions.cend(); r_it++) {
+	set<Reunion, compareReunions> teacherReunions = it->getReunions();
+	for (set<Reunion, compareReunions>::const_iterator r_it = teacherReunions.cbegin(); r_it != teacherReunions.cend(); r_it++) {
 		if (beginning < r_it->getDate() && r_it->getDate() < end)
 			cout << *r_it << endl;
 	}
@@ -1860,38 +1877,102 @@ vector<priority_queue<StudentsClass>> Course::getStudentsClasses() {
 }
 
 void Course::addStudentsClass(unsigned int curricularYear) {
-	StudentsClass temp(curricularYear,getUnitsFromYear(curricularYear));
-	studentsClasses.at(curricularYear-1).push(temp);
+	StudentsClass temp(curricularYear, getUnitsFromYear(curricularYear));
+	studentsClasses.at(curricularYear - 1).push(temp);
 
 	cout << temp << endl;
 }
 
 void Course::removeStudentsClass(unsigned int curricularYear, unsigned int classNumber) {
 	string classCode = to_string(curricularYear) + "MIEIC" + to_string(classNumber);
-	priority_queue<StudentsClass> currentYear = studentsClasses.at(curricularYear-1);
+	priority_queue<StudentsClass> currentYear = studentsClasses.at(curricularYear - 1);
 	priority_queue<StudentsClass> result; //queue to store the altered version
 
-	while(!currentYear.empty()) {
+	while (!currentYear.empty()) {
 		StudentsClass currentClass = currentYear.top();
-		if(currentClass.getCode() != classCode)
+		if (currentClass.getCode() != classCode)
 			result.push(currentClass);
 
 		currentYear.pop();
 	}
-	studentsClasses.at(curricularYear-1) = result;
+	studentsClasses.at(curricularYear - 1) = result;
 }
 
 void Course::listStudentsClassVacancies(unsigned int curricularYear) {
-	priority_queue<StudentsClass> temp = studentsClasses.at(curricularYear-1);
+	priority_queue<StudentsClass> temp = studentsClasses.at(curricularYear - 1);
 
-	for(int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 		priority_queue<pair<unsigned long, Unit*>> currentVacanciesToUnits = temp.top().getVacanciesToUnits();
 
 		cout << temp.top().getCode() << endl;
-		while(!currentVacanciesToUnits.empty()) {
+		while (!currentVacanciesToUnits.empty()) {
 			cout << currentVacanciesToUnits.top() << endl;
 			currentVacanciesToUnits.pop();
 		}
 		temp.pop();
 	}
+}
+
+void Course::editStudentCourseStatus() {
+	string studentName;
+	cout << "Insert the student's full name: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	getline(cin, studentName);
+	deleteWhitespace(studentName);
+	vector<Student>::iterator it = students.begin();
+	for (it; it != students.end(); it++) {
+		if (it->getName() == studentName)
+			break;
+	}
+
+	if (it == students.end())
+		throw invalidIdentification<string>(studentName);
+
+	//TABELA DE DISPERSAO BUT FIRST LET ME TAKE A SELFIE
+
+	unsigned short int option;
+
+	clearScreen();
+	cout << TAB_BIG << "Edit Student's Course" << endl;
+	cout << endl;
+	cout << TAB << "1 - Edit interrupted status of student" << endl;
+	cout << TAB << "2 - Edit completed status of student" << endl;
+	cout << TAB << "0 - Return to previous menu" << endl << endl;
+	cout << TAB << "Enter your option: ";
+	option = readOp(0, 2);
+
+	switch (option) {
+	case 1:
+		cout << "Actual state of student is: " << (it->getInterrupted() ? "Interrupted" : "Not Interruped") << endl;
+
+		if (it->getInterrupted())
+			cout << "Student state cannot be edited" << endl;
+		else {
+			it->setInterrupted();
+			pair<studentsHash::iterator , bool> temp = studentsOut.insert(*it);
+			if (temp.second) {
+				cout << "Student state successfully edited and added to new structure" << endl;
+			}
+			else
+				cout << "This student already exists" << endl;
+		}
+		break;
+	case 2:
+		cout << "Actual state of student is: " << (it->getCompleted() ? "Completed" : "Not Completed") << endl;
+		if (it->getCompleted() || it->getCurricularYear() != 5)
+			cout << "Student state cannot be edited" << endl;
+		else {
+			it->setCompleted();
+			pair<studentsHash::iterator, bool> temp = studentsOut.insert(*it);
+			if (temp.second) {
+				cout << "Student state successfully edited and added to new structure" << endl;
+			}
+			else
+				cout << "This student already exists" << endl;
+		}
+		break;
+	}
+
+
+
 }

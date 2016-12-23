@@ -184,6 +184,7 @@ ostream& operator<<(ostream& out, const Student& s) {
 	out << setw(32) << s.getName();
 	out << setw(9) << s.getAverage();
 	out << setw(7) << s.getECTSTaking();
+	out << setw(19) << (s.getCompleted() ? "Completed" : "") << (s.getInterrupted() ? "Interrupted" : "Active");
 
 	if (s.getUnitsTaking().size() != 0) {
 		out << "  ";
@@ -350,3 +351,20 @@ void Teacher::setReunionAsTaken(Reunion r1) {
 bool sortTByName(Teacher t1, Teacher t2) {
 	return t1.getName() < t2.getName();
 }
+
+//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bool Student::getInterrupted() const {
+	return interrupted;
+}
+bool Student::getCompleted() const {
+	return completed;
+}
+
+void Student::setInterrupted() {
+	interrupted = !interrupted;
+}
+void Student:: setCompleted() {
+	completed = !completed;
+}
+
+//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

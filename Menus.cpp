@@ -200,9 +200,10 @@ unsigned short int editStudentMenu() {
 	cout << endl;
 	cout << TAB << "1 - Edit a student's name" << endl;
 	cout << TAB << "2 - Edit a student's status" << endl;
+	cout << TAB << "3 - Edit a student's course status" << endl;
 	cout << TAB << "0 - Return to previous menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = readOp(0, 2);
+	option = readOp(0, 3);
 
 	return option;
 }
@@ -232,6 +233,19 @@ void editStudentOptions(Course & course) {
 			}
 			catch (invalidIdentification<string> &s) {
 				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			pressToContinue();
+			break;
+		case 3:
+			try {
+				course.editStudentCourseStatus();
+			//	cout << "Student name successfully edited" << endl;
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
+			catch (repeatedIdentification<string> &s) {
+				cout << "ERROR: There's already a student identified by \"" << s.getRepIdentification() << "\"!" << endl;
 			}
 			pressToContinue();
 			break;

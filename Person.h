@@ -75,6 +75,8 @@ protected:
 	std::vector<Unit*> unitsTaking;
 	bool registrationComplete;
 	Date registrationDate;
+	bool completed;
+	bool interrupted;
 
 public:
 	//! Sequential code used for freshmen
@@ -238,6 +240,11 @@ public:
 	*/
 	friend std::ostream& operator<<(std::ostream& out, const Student& s);
 
+
+	bool getInterrupted() const;
+	bool getCompleted() const;
+	void setInterrupted();
+	void setCompleted();
 };
 
 class Reunion {
