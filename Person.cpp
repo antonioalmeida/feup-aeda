@@ -184,7 +184,7 @@ ostream& operator<<(ostream& out, const Student& s) {
 	out << setw(32) << s.getName();
 	out << setw(9) << s.getAverage();
 	out << setw(7) << s.getECTSTaking();
-	out << setw(19) << (s.getCompleted() ? "Completed" : "") << (s.getInterrupted() ? "Interrupted" : "Active");
+	out << setw(19) << (s.getCompleted() ? "Completed" : "") << (s.getInterrupted() ? "Interrupted" : "")<< (s.getCompleted() && s.getInterrupted() ? "":"Active");
 
 	if (s.getUnitsTaking().size() != 0) {
 		out << "  ";

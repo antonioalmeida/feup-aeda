@@ -360,9 +360,12 @@ unsigned short int listStudentsMenu() {
 	cout << TAB << "6 - Show a single student" << endl;
 	cout << TAB << "7 - Show registered students" << endl;
 	cout << TAB << "8 - Show un-registered students" << endl;
+	cout << TAB << "9 - Show all concluded and interrupted students" << endl;
+	cout << TAB << "10 - Show concluded students" << endl;
+	cout << TAB << "11 - Show interrupted students" << endl;
 	cout << TAB << "0 - Return to students menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = readOp(0, 8);
+	option = readOp(0, 11);
 
 	return option;
 }
@@ -412,6 +415,18 @@ void listStudentsOptions(Course & course) {
 			break;
 		case 8:
 			course.showUnregisteredStudents();
+			pressToContinue();
+			break;
+		case 9:
+			course.showStudentsHash();
+			pressToContinue();
+			break;
+		case 10:
+			course.showStudentsConcluded();
+			pressToContinue();
+			break;
+		case 11:
+			course.showStudentsInterrupted();
 			pressToContinue();
 			break;
 		}

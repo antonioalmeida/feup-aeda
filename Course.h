@@ -367,4 +367,7 @@ public:
 	void listStudentsClassVacancies(unsigned int curricularYear);
 
 	void editStudentCourseStatus();
+	void showStudentsConcluded();
+	void showStudentsInterrupted();
+	void showStudentsHash();
 };

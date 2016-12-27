@@ -721,7 +721,7 @@ void Course::registerRandomStudent() {
 		it->setInterrupted();
 		//Question if user want to update student's contact
 	}
-	
+
 }
 
 void Course::registerSpecificStudentByName() {
@@ -1949,7 +1949,7 @@ void Course::editStudentCourseStatus() {
 			cout << "Student state cannot be edited" << endl;
 		else {
 			it->setInterrupted();
-			pair<studentsHash::iterator , bool> temp = studentsOut.insert(*it);
+			pair<studentsHash::iterator, bool> temp = studentsOut.insert(*it);
 			if (temp.second) {
 				cout << "Student state successfully edited and added to new structure" << endl;
 			}
@@ -1974,5 +1974,25 @@ void Course::editStudentCourseStatus() {
 	}
 
 
+
+}
+
+void Course::showStudentsConcluded() {
+	for (studentsHash::iterator it = studentsOut.begin(); it != studentsOut.end(); it++) {
+		if (it->getCompleted())
+			cout << *it;
+	}
+}
+void Course::showStudentsInterrupted() {
+	for (studentsHash::iterator it = studentsOut.begin(); it != studentsOut.end(); it++) {
+		if (it->getInterrupted())
+			cout << *it;
+	}
+
+}
+void Course::showStudentsHash() {
+	for (studentsHash::iterator it = studentsOut.begin(); it != studentsOut.end(); it++) {
+		cout << *it;
+	}
 
 }
