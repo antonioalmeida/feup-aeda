@@ -43,6 +43,8 @@ Student::Student(istream &in) :Person(in) {
 	email = "up" + to_string(code) + "@fe.up.pt";
 	ectsTaking = 0;
 	registrationComplete = false;
+	interrupted = false;
+	completed = false;
 	/* Units are read when read-from-files function is called! */
 }
 
@@ -57,6 +59,8 @@ Student::Student(string name, string status, unsigned int curricularYear, vector
 	this->unitsToDo = unitsToDo;
 	calculateAverage();
 	registrationComplete = false;
+	completed = false;
+	interrupted = false;
 }
 
 unsigned long int Student::getCode() const {
@@ -184,13 +188,13 @@ ostream& operator<<(ostream& out, const Student& s) {
 	out << setw(32) << s.getName();
 	out << setw(9) << s.getAverage();
 	out << setw(7) << s.getECTSTaking();
-	out << setw(19) << (s.getCompleted() ? "Completed" : "") << (s.getInterrupted() ? "Interrupted" : "")<< ((!s.getCompleted() && !s.getInterrupted()) ? "Active":"");
-
 	if (s.getUnitsTaking().size() != 0) {
 		out << "  ";
 		for (unsigned int i = 0; i < s.getUnitsTaking().size(); i++)
 			out << s.getUnitsTaking().at(i)->getAbbreviation() << " ";
 	}
+	out << setw(19) << (s.getCompleted() ? "Completed" : "") << (s.getInterrupted() ? 	"Interrupted" : "")<< ((!s.getCompleted() && !s.getInterrupted()) ? "Active":"");
+
 	out << endl;
 	return out;
 }

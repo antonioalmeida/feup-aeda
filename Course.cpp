@@ -1111,6 +1111,14 @@ void Course::registerSpecificStudentByCode() {
 		it->setECTSTaking(total_ects);
 		it->setRegistration();
 	}
+
+	//CHECK IF STUDENT IS IN HASH TABLE
+	unordered_set<Student, studentOutHash, studentOutHash>::iterator ite = studentsOut.find(*it);
+	if (ite != studentsOut.end()) {
+		studentsOut.erase(ite);
+		it->setInterrupted();
+		//Question if user want to update student's contact
+	}
 }
 
 //Teachers
