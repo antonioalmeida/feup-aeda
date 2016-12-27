@@ -1943,7 +1943,7 @@ void Course::editStudentCourseStatus() {
 
 	switch (option) {
 	case 1:
-		cout << "Actual state of student is: " << (it->getInterrupted() ? "Interrupted" : "Not Interruped") << endl;
+		cout << "Actual state of student is: " << (it->getInterrupted() ? "Interrupted" : "Not Interrupted") << endl;
 
 		if (it->getInterrupted())
 			cout << "Student state cannot be edited" << endl;
