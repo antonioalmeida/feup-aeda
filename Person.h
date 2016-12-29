@@ -273,7 +273,7 @@ private:
 	std::string student;
 	std::string agenda;
 	std::string conclusions;
-	bool hasTakenPlace; //to avoid using weird Windows functions to get time (could always use RTC though...)
+	bool hasTakenPlace; //to avoid using weird Windows functions to get time
 public:
 	Reunion() {};
 	Reunion(Date date, std::string student, std::string agenda, std::string conclusions);
@@ -288,6 +288,9 @@ public:
 	friend std::ostream& operator<<(std::ostream& out, const Reunion &r1);
 };
 
+//! Struct holding comparison function for Reunion type objects (used for BST). A reunion is "smaller" if it's scheduled to a prior date than the other
+/*!
+*/
 struct compareReunions {
 	bool operator()(const Reunion &r1, const Reunion &r2) {
 		return r1.getDate() < r2.getDate();
@@ -384,10 +387,35 @@ public:
 	 */
 	friend std::ostream& operator<<(std::ostream& out, const Teacher& s);
 
+	//! Gets a copy of BST that holds reunions professor has had
+	/*!
+	\return copy of set<Reunion,compareReunions> data member reunions
+	*/
 	std::set<Reunion,compareReunions> getReunions() const;
+
+	//! Adds a reunion to the reunions BST
+	/*!
+	\param r1 reunion to be added
+	*/
 	void addReunion(Reunion r1);
+
+	//! Cancels a reunion, removing it from the BST
+	/*!
+	\param r1 reunion to be removed
+	*/
 	void cancelSpecificReunion(Reunion r1);
+
+	//! Changes a reunion's conclusion topics
+	/*!
+	\param r1 reunion to be modified
+	\param newConclusions new conclusion topics
+	*/
 	void changeSpecificReunionConclusions(Reunion r1, std::string newConclusions);
+
+	//! Marks the fact that a reunion has taken place
+	/*!
+	\param r1 reunion to be modified
+	*/
 	void setReunionAsTaken(Reunion r1);
 };
 
