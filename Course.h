@@ -363,10 +363,36 @@ public:
 	void showTeacherReunionsDone();
 	void showTeacherReunionsInPeriod();
 
+	//! Gets a copy of the matrix thats holds the course's classes by curricular year. Curricular year n is at index n-1, with its classes in a priority queue.
+	/*!
+	\return vector of priority queues, one for each curricular year
+	*/
 	std::vector<std::priority_queue<StudentsClass>> getStudentsClasses();
+
+	//! Adds a new studentsClass to the classes matrix in the respetive curricular year's index
+	/*!
+	\param curricularYear the new class' curricular year
+	*/
 	void addStudentsClass(unsigned int curricularYear);
+
+	//! Removes a studentsClass from the matrix, identified by its code
+	/*!
+	\param curricularYear the class' curricular year
+	\param classNumber the class' classNumber - the final digit at the end of the code
+	*/
 	void removeStudentsClass(unsigned int curricularYear, unsigned int classNumber);
+
+	//! Prints the first 3 studentsClass' information from a specifi  curricular year
+	/*!
+	\param curricularYear the class' curricular year
+	*/
 	void listStudentsClassVacancies(unsigned int curricularYear);
+
+	//! Registers student in the class at the top of the respective curricularYear's priority queue
+	/*!
+	\param student pointer to student to register
+	*/
+	void registerStudentInClass(Student* student);
 
 	void editStudentCourseStatus();
 	void showStudentsConcluded();

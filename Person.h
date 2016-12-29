@@ -6,6 +6,7 @@
 #include <set>
 #include "Date.h"
 #include "Unit.h"
+#include "StudentsClass.h"
 
 #define MAX_ECTS 75
 
@@ -80,6 +81,7 @@ protected:
 	std::vector<std::vector<std::pair<Unit*, unsigned int>>> unitsDone;
 	std::vector<std::vector<std::pair<Unit*, unsigned int>>> unitsToDo;
 	std::vector<Unit*> unitsTaking;
+	StudentsClass* studentsClass;
 	bool registrationComplete;
 	Date registrationDate;
 	bool completed;
@@ -247,6 +249,17 @@ public:
 	*/
 	friend std::ostream& operator<<(std::ostream& out, const Student& s);
 
+	//! Gets a pointer to the student's class. NULL if student isn't registered yet
+	/*!
+	\return pointer to the student's class
+	*/
+	StudentsClass* getStudentsClass() const;
+
+	//! Sets the student's studentClass to newClass
+	/*!
+	\param newClass pointer to the class to be set
+	*/
+	void setStudentsClass(StudentsClass *newClass);
 
 	bool getInterrupted() const;
 	bool getCompleted() const;

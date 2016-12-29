@@ -716,6 +716,9 @@ void Course::registerRandomStudent() {
 	it->setECTSTaking(total_ects);
 	it->setRegistration();
 
+	//Register student in class
+	registerStudentInClass(&(*it));
+	cout << "The student was successfuly registered in the class " << it->getStudentsClass()->getCode() << endl;
 
 	//CHECK IF STUDENT IS IN HASH TABLE
 	unordered_set<Student, studentOutHash, studentOutHash>::iterator ite = studentsOut.find(*it);
@@ -724,7 +727,6 @@ void Course::registerRandomStudent() {
 		it->setInterrupted();
 		string newEmail = "up" + to_string(it->getCode()) + "@fe.up.pt";
 		it->setEmail(newEmail);
-
 	}
 }
 
@@ -918,6 +920,10 @@ void Course::registerSpecificStudentByName() {
 
 	it->setECTSTaking(total_ects);
 	it->setRegistration();
+
+	//Register student in class
+	registerStudentInClass(&(*it));
+	cout << "The student was successfuly registered in the class " << it->getStudentsClass()->getCode() << endl;
 
 	//CHECK IF STUDENT IS IN HASH TABLE
 	unordered_set<Student, studentOutHash, studentOutHash>::iterator ite = studentsOut.find(*it);
@@ -1121,6 +1127,10 @@ void Course::registerSpecificStudentByCode() {
 
 		it->setECTSTaking(total_ects);
 		it->setRegistration();
+
+		//Register student in class
+		registerStudentInClass(&(*it));
+		cout << "The student was successfuly registered in the class " << it->getStudentsClass()->getCode() << endl;
 
 		//CHECK IF STUDENT IS IN HASH TABLE
 		unordered_set<Student, studentOutHash, studentOutHash>::iterator ite = studentsOut.find(*it);
@@ -1933,6 +1943,29 @@ void Course::listStudentsClassVacancies(unsigned int curricularYear) {
 		}
 		temp.pop();
 	}
+}
+
+void Course::registerStudentInClass(Student* student) {
+	StudentsClass tempClass = studentsClasses.at(student->getCurricularYear()-1).top();
+	StudentsClass finalClass(student->getCurricularYear(), tempClass.getCode());
+	vector<Unit*> studentUnits = student->getUnitsTaking();
+
+	//Check if class has vacancies for all the units the student is taking
+	for(int i = 0; i < studentUnits.size(); i++) {
+		int currentUnitVacancies = tempClass.getVacanciesFromUnit(studentUnits.at(i));
+
+		if(currentUnitVacancies > 0) { //if class has unit and vacancies
+			//Create pair with one less vacancy
+			pair<unsigned long, Unit*> toInsert(currentUnitVacancies - 1, studentUnits.at(i));
+			//Add pair to final class
+			finalClass.addPairToQueue(toInsert);
+		}
+	}
+
+	//Update the studentClass in both the course strucuture and the student
+	studentsClasses.at(student->getCurricularYear()-1).pop();
+	studentsClasses.at(student->getCurricularYear()-1).push(finalClass);
+	student->setStudentsClass(&finalClass);
 }
 
 void Course::editStudentCourseStatus() {

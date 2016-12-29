@@ -14,12 +14,37 @@ StudentsClass::StudentsClass(unsigned int newCurricularYear, vector<Unit*> units
     incClassesNumeration(curricularYear);
 }
 
+StudentsClass::StudentsClass(unsigned int newCurricularYear, string newCode) {
+    curricularYear = newCurricularYear;
+    code = newCode;
+}
+
 priority_queue<pair<unsigned long,Unit*>> StudentsClass::getVacanciesToUnits() const {
     return vacanciesToUnits;
 }
 
+int StudentsClass::getVacanciesFromUnit(Unit* unit) {
+    priority_queue<pair<unsigned long,Unit*>> copy = vacanciesToUnits;
+
+    while(!copy.empty()) {
+        pair<unsigned long, Unit*> currentPair = copy.top();
+
+        if(currentPair.second->getAbbreviation() == unit->getAbbreviation())
+            return currentPair.first;
+
+        copy.pop();
+    }
+
+    //Only reaches here is Unit is not in class
+    return -1;
+}
+
 unsigned int StudentsClass::getCurricularYear() const {
     return curricularYear;
+}
+
+void StudentsClass::addPairToQueue(std::pair<unsigned long, Unit*> pair) {
+    vacanciesToUnits.push(pair);
 }
 
 vector<unsigned int> StudentsClass::classesNumeration(5,1);

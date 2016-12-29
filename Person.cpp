@@ -47,6 +47,7 @@ Student::Student(istream &in) :Person(in) {
 	unitsToDo = vector<vector<pair<Unit*, unsigned int>>>(5);
 	email = "up" + to_string(code) + "@fe.up.pt";
 	ectsTaking = 0;
+	studentsClass = NULL;
 	registrationComplete = false;
 	interrupted = false;
 	completed = false;
@@ -102,6 +103,10 @@ vector<Unit*> Student::getUnitsTaking() const {
 
 Date Student::getRegistrationDate() const {
 	return registrationDate;
+}
+
+StudentsClass* Student::getStudentsClass() const {
+	return studentsClass;
 }
 
 void Student::addUnitDone(std::pair<Unit*, unsigned int> p) {
@@ -167,6 +172,10 @@ void Student::setECTSTaking(float newECTS) {
 	ectsTaking = newECTS;
 }
 
+void Student::setStudentsClass(StudentsClass *newClass) {
+	studentsClass = newClass;
+}
+
 void Student::save(std::ostream &out) const {
 	out << name << endl << curricularYear;
 	if (curricularYear > 1)
@@ -215,6 +224,9 @@ bool sortByAverage(Student s1, Student s2) {
 bool sortByCurricularYear(Student s1, Student s2) {
 	return s1.getCurricularYear() < s2.getCurricularYear();
 }
+
+
+
 
 /*Reunion*/
 
