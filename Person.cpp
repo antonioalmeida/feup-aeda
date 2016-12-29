@@ -28,6 +28,11 @@ void Person::setName(string newName) {
 	name = newName;
 }
 
+void Person::setEmail(string newEmail) {
+	email = newEmail;
+}
+
+
 /*Student*/
 
 Student::Student(istream &in) :Person(in) {

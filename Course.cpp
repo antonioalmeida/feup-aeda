@@ -549,6 +549,9 @@ void Course::registerRandomStudent() {
 	if (it == students.end())
 		throw alreadyRegistered<string>("Everybody"); //Everybody has been registered
 
+	if (it->getCompleted())
+		throw alreadyRegistered<string>(it->getName());
+
 	vector<Unit*> unitsLeftBehind;
 	for (unsigned int i = 0; i < it->getUnitsToDo().size(); i++) {
 		for (unsigned int j = 0; j < it->getUnitsToDo().at(i).size(); j++)
@@ -719,9 +722,10 @@ void Course::registerRandomStudent() {
 	if (ite != studentsOut.end()) {
 		studentsOut.erase(ite);
 		it->setInterrupted();
-		//Question if user want to update student's contact
-	}
+		string newEmail = "up" + to_string(it->getCode()) + "@fe.up.pt";
+		it->setEmail(newEmail);
 
+	}
 }
 
 void Course::registerSpecificStudentByName() {
@@ -740,6 +744,9 @@ void Course::registerSpecificStudentByName() {
 		throw invalidIdentification<string>(studentName);
 	else if (it->isRegistered())
 		throw alreadyRegistered<string>(studentName);
+
+	if (it->getCompleted())
+		throw alreadyRegistered<string>(it->getName());
 
 	vector<Unit*> unitsLeftBehind;
 	for (unsigned int i = 0; i < it->getUnitsToDo().size(); i++) {
@@ -917,7 +924,8 @@ void Course::registerSpecificStudentByName() {
 	if (ite != studentsOut.end()) {
 		studentsOut.erase(ite);
 		it->setInterrupted();
-		//Question if user want to update student's contact
+		string newEmail = "up" + to_string(it->getCode()) + "@fe.up.pt";
+		it->setEmail(newEmail);
 	}
 }
 
@@ -944,6 +952,9 @@ void Course::registerSpecificStudentByCode() {
 			throw invalidIdentification<unsigned long int>(studentCode);
 		else if (it->isRegistered())
 			throw alreadyRegistered<unsigned long int>(studentCode);
+
+		if (it->getCompleted())
+			throw alreadyRegistered<string>(it->getName());
 
 		vector<Unit*> unitsLeftBehind;
 		for (unsigned int i = 0; i < it->getUnitsToDo().size(); i++) {
@@ -1110,15 +1121,18 @@ void Course::registerSpecificStudentByCode() {
 
 		it->setECTSTaking(total_ects);
 		it->setRegistration();
+
+		//CHECK IF STUDENT IS IN HASH TABLE
+		unordered_set<Student, studentOutHash, studentOutHash>::iterator ite = studentsOut.find(*it);
+		if (ite != studentsOut.end()) {
+			studentsOut.erase(ite);
+			it->setInterrupted();
+			string newEmail = "up" + to_string(it->getCode()) + "@fe.up.pt";
+			it->setEmail(newEmail);
+		}
 	}
 
-	//CHECK IF STUDENT IS IN HASH TABLE
-	unordered_set<Student, studentOutHash, studentOutHash>::iterator ite = studentsOut.find(*it);
-	if (ite != studentsOut.end()) {
-		studentsOut.erase(ite);
-		it->setInterrupted();
-		//Question if user want to update student's contact
-	}
+
 }
 
 //Teachers
@@ -1957,6 +1971,16 @@ void Course::editStudentCourseStatus() {
 			cout << "Student state cannot be edited" << endl;
 		else {
 			it->setInterrupted();
+
+			//Question if user want to update student's contact
+			cout << "Actual contact of student is: " << (it->getEmail()) << endl;
+			string studentEmail;
+			cout << "Please, enter the new contact of student:" << endl;
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			getline(cin, studentEmail);
+			deleteWhitespace(studentEmail);
+			it->setEmail(studentEmail);
+
 			pair<studentsHash::iterator, bool> temp = studentsOut.insert(*it);
 			if (temp.second) {
 				cout << "Student state successfully edited and added to new structure" << endl;
@@ -1971,6 +1995,16 @@ void Course::editStudentCourseStatus() {
 			cout << "Student state cannot be edited" << endl;
 		else {
 			it->setCompleted();
+
+			//Question if user want to update student's contact
+			cout << "Actual contact of student is: " << (it->getEmail()) << endl;
+			string studentEmail;
+			cout << "Please, enter the new contact of student:" << endl;
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			getline(cin, studentEmail);
+			deleteWhitespace(studentEmail);
+			it->setEmail(studentEmail);
+
 			pair<studentsHash::iterator, bool> temp = studentsOut.insert(*it);
 			if (temp.second) {
 				cout << "Student state successfully edited and added to new structure" << endl;

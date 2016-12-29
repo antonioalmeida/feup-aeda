@@ -56,6 +56,13 @@ public:
 	 */
 	void setName(std::string newName);
 
+	//! Sets the person's e-mail to newMail
+	/*!
+	\param newMail string with person's new e-mail
+	\sa getEmail()
+	*/
+	void setEmail(std::string newEmail);
+
 	//! Prints person to out, used for writing to files. Virtual function, only used in derivated classed Student and Teacher
 	/*!
 	 \param out stream the person will be printed to.

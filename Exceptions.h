@@ -91,3 +91,28 @@ public:
 		return identifier;
 	}
 };
+
+
+
+
+/*! Template exception class completedCourse, used when trying to register a student that's already completed the course*/
+template <class T> class completedCourse {
+private:
+	T identifier;
+public:
+	//! Creates a new object to throw an exception
+	/*!
+	\param id identifier of student that's already been completed
+	*/
+	completedCourse(T id) {
+		identifier = id;
+	}
+
+	//! Gets a copy of already completed student's identifier
+	/*!
+	\return copy of data member identifier
+	*/
+	T getIdentifier() const {
+		return identifier;
+	}
+};

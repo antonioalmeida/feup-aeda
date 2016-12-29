@@ -284,6 +284,9 @@ void registrateStudentOptions(Course & course) {
 			catch (alreadyRegistered<string> &s) {
 				cout << "ERROR: \"" << s.getIdentifier() << "\" has been registered!" << endl;
 			}
+			catch (completedCourse<Student> &s) {
+				cout << "ERROR: Student \"" << s.getIdentifier() << "\" is already completed!" << endl;
+			}
 			pressToContinue();
 			break;
 		case 2:
@@ -326,6 +329,9 @@ void registrateSpecificStudentOptions(Course & course) {
 			catch (alreadyRegistered<string> &s) {
 				cout << "ERROR: Student \"" << s.getIdentifier() << "\" is already registered!" << endl;
 			}
+			catch (completedCourse<Student> &s) {
+				cout << "ERROR: Student \"" << s.getIdentifier() << "\" is already completed!" << endl;
+			}
 			pressToContinue();
 			break;
 		case 2:
@@ -337,6 +343,9 @@ void registrateSpecificStudentOptions(Course & course) {
 			}
 			catch (alreadyRegistered<unsigned long> &s) {
 				cout << "ERROR: Student \"" << s.getIdentifier() << "\" is already registered!" << endl;
+			}
+			catch (completedCourse<Student> &s) {
+				cout << "ERROR: Student \"" << s.getIdentifier() << "\" is already completed!" << endl;
 			}
 			pressToContinue();
 			break;

@@ -22,10 +22,12 @@ struct studentOutHash
 {
 	int operator() (const Student &s1) const
 	{
-		int v = 0;
+		unsigned long hash = 5381;
+		int c = 0;
+
 		for (unsigned int i = 0; i < s1.getName().size(); i++)
-			v = 37 * v + s1.getName()[i];
-		return v;
+			hash = ((hash << 5) + hash) + s1.getName()[i]; /* hash * 33 + c */
+		return hash % 97;
 	}
 
 	bool operator() (const Student &s1, const Student &s2) const
