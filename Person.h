@@ -261,9 +261,26 @@ public:
 	*/
 	void setStudentsClass(StudentsClass *newClass);
 
+	//! Checks if given student has interrupted the course
+	/*!
+	\return current value of data member interrupted: true if student has interrupted course, false otherwise
+	*/
 	bool getInterrupted() const;
+
+	//! Checks if given student has completed the course
+	/*!
+	\return current value of data member completed: true if student has completed course, false otherwise
+	*/
 	bool getCompleted() const;
+
+	//! Changes a student's course interrupted status to its current opposite (true if false and vice-versa)
+	/*!
+	*/
 	void setInterrupted();
+
+	//! Changes a student's course completed status to its current opposite (true if false and vice-versa)
+	/*!
+	*/
 	void setCompleted();
 };
 

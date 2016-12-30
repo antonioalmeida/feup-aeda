@@ -720,7 +720,7 @@ void Course::registerRandomStudent() {
 	registerStudentInClass(&(*it));
 	cout << "The student was successfuly registered in the class " << it->getStudentsClass()->getCode() << endl;
 
-	//CHECK IF STUDENT IS IN HASH TABLE
+	//Check if Student is in Hash Table
 	unordered_set<Student, studentOutHash, studentOutHash>::iterator ite = studentsOut.find(*it);
 	if (ite != studentsOut.end()) {
 		studentsOut.erase(ite);
@@ -925,7 +925,7 @@ void Course::registerSpecificStudentByName() {
 	registerStudentInClass(&(*it));
 	cout << "The student was successfuly registered in the class " << it->getStudentsClass()->getCode() << endl;
 
-	//CHECK IF STUDENT IS IN HASH TABLE
+	//Check if Student is in Hash Table
 	unordered_set<Student, studentOutHash, studentOutHash>::iterator ite = studentsOut.find(*it);
 	if (ite != studentsOut.end()) {
 		studentsOut.erase(ite);
@@ -1132,7 +1132,7 @@ void Course::registerSpecificStudentByCode() {
 		registerStudentInClass(&(*it));
 		cout << "The student was successfuly registered in the class " << it->getStudentsClass()->getCode() << endl;
 
-		//CHECK IF STUDENT IS IN HASH TABLE
+		//Check if Student is in Hash Table
 		unordered_set<Student, studentOutHash, studentOutHash>::iterator ite = studentsOut.find(*it);
 		if (ite != studentsOut.end()) {
 			studentsOut.erase(ite);
@@ -1983,8 +1983,6 @@ void Course::editStudentCourseStatus() {
 	if (it == students.end())
 		throw invalidIdentification<string>(studentName);
 
-	//TABELA DE DISPERSAO BUT FIRST LET ME TAKE A SELFIE
-
 	unsigned short int option;
 
 	clearScreen();
@@ -2063,11 +2061,9 @@ void Course::showStudentsInterrupted() {
 		if (it->getInterrupted())
 			cout << *it;
 	}
-
 }
 void Course::showStudentsHash() {
 	for (studentsHash::iterator it = studentsOut.begin(); it != studentsOut.end(); it++) {
 		cout << *it;
 	}
-
 }

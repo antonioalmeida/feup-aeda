@@ -17,7 +17,9 @@
  \brief Course, a class to handle a specific studies course
  */
 
-
+ //! Struct holding comparison function for studentsHash type objects (used for Hash Table) and the hash function. A student is "equal" if it's have same code than the other
+ /*!
+ */
 struct studentOutHash
 {
 	int operator() (const Student &s1) const
@@ -421,8 +423,23 @@ public:
 	*/
 	void registerStudentInClass(Student* student);
 
+	//! Edits a specific student's status (type of status identified inside the function). Throws exception if specified student does not exist
+	/*!
+	*/
 	void editStudentCourseStatus();
+
+	//! Shows students that concluded the course
+	/*!
+	*/
 	void showStudentsConcluded();
+
+	//! Shows students that interrupted the course
+	/*!
+	*/
 	void showStudentsInterrupted();
+
+	//! Shows students that interrupted or concluded the course
+	/*!
+	*/
 	void showStudentsHash();
 };
