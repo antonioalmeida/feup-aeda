@@ -292,16 +292,74 @@ private:
 	std::string conclusions;
 	bool hasTakenPlace; //to avoid using weird Windows functions to get time
 public:
+	//! Default constructor (does nothing)
+	/*!
+	*/
 	Reunion() {};
+
+	//! Constructor used for reunions created during program execution
+	/*!
+	\param date The new reunion's date
+	\param student The student the teacher set the reunion with
+	\param agenda Topics to be discussed in the new reunion
+	\param conclusions Topics discussed in the new reunion
+	*/
 	Reunion(Date date, std::string student, std::string agenda, std::string conclusions);
+
+	//! Gets a copy of the reunion's date
+	/*!
+	\return copy of Date data member date
+	*/
 	Date getDate() const;
+
+	//! Gets a copy of the name of the student present in the reunion
+	/*!
+	\return copy of string data member student
+	*/
 	std::string getStudent() const;
+
+	//! Gets a copy of the reunion's agenda
+	/*!
+	\return copy of string data member ageda
+	*/
 	std::string getAgenda() const;
+
+	//! Gets a copy of the reunion's conclusion topics
+	/*!
+	\return copy of string data member conclusions
+	*/
 	std::string getConclusions() const;
+
+	//! Gets information about whether the reunion has taken place yet
+	/*!
+	\return copy of bool data member hasTakenPlace
+	*/
 	bool reunionHasTakenPlace() const;
+
+	//! Changes the reunion's conclusion topics
+	/*!
+	\param newConclusions The reunion's new conclusion topics
+	*/
 	void changeConclusions(std::string newConclusions);
+
+	//! Marks the fact that the reunion has taken place
+	/*!
+	*/
 	void setAsTaken();
-	bool operator==(const Reunion &r1); //not sure if we'll need it
+
+	//! Compares two reunions to see if they are equivalent
+	/*!
+	\param r1 Reunion to be compared with
+	\return true if reunions are equivalent, false otherwise
+	*/
+	bool operator==(const Reunion &r1);
+
+	//! Outputs a reunion on screen
+	/*!
+	\param out ostream where the reunion will be written to
+ 	\param r1 Reunion to be written
+	*/
+
 	friend std::ostream& operator<<(std::ostream& out, const Reunion &r1);
 };
 
