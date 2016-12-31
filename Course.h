@@ -22,6 +22,9 @@
  */
 struct studentOutHash
 {
+	//! Create a value based in a function with a low probability of collision to use in hash table
+	/*!
+	*/
 	int operator() (const Student &s1) const
 	{
 		unsigned long hash = 5381;
@@ -32,6 +35,12 @@ struct studentOutHash
 		return hash % 97;
 	}
 
+	//! Compares two students to test if they are equal
+	/*!
+	\param r1 first of two students to be compared
+	\param r2 second of two students to be compared
+	\return true if s1's code if equal to s2's code, false otherwise
+	*/
 	bool operator() (const Student &s1, const Student &s2) const
 	{
 		return s1.getCode() == s2.getCode();

@@ -367,6 +367,13 @@ public:
 /*!
 */
 struct compareReunions {
+
+	//! Compares two reunions to test inequalty
+	/*!
+	\param r1 first of two reunions to be compared
+	\param r2 second of two reunions to be compared
+	\return true if r1's date if prior to r2's date, false otherwise
+	*/
 	bool operator()(const Reunion &r1, const Reunion &r2) {
 		return r1.getDate() < r2.getDate();
 	}
