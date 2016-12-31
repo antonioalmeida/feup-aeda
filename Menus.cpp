@@ -239,7 +239,6 @@ void editStudentOptions(Course & course) {
 		case 3:
 			try {
 				course.editStudentCourseStatus();
-			//	cout << "Student name successfully edited" << endl;
 			}
 			catch (invalidIdentification<string> &s) {
 				cout << "ERROR: No student identified by \"" << s.getInvIdentification() << "\"!" << endl;

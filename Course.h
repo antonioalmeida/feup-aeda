@@ -17,7 +17,9 @@
  \brief Course, a class to handle a specific studies course
  */
 
-
+ //! Struct holding comparison function for studentsHash type objects (used for Hash Table) and the hash function. A student is "equal" if it's have same code than the other
+ /*!
+ */
 struct studentOutHash
 {
 	int operator() (const Student &s1) const
@@ -26,7 +28,7 @@ struct studentOutHash
 		int c = 0;
 
 		for (unsigned int i = 0; i < s1.getName().size(); i++)
-			hash = ((hash << 5) + hash) + s1.getName()[i]; /* hash * 33 + c */
+			hash = ((hash << 5) + hash) + s1.getName()[i]; /* hash * 32 + c */
 		return hash % 97;
 	}
 
@@ -355,12 +357,39 @@ public:
 	*/
 	bool verifyUnit(std::string unitAbbreviation) const;
 
+	//! Adds a new reunion to a specific teacher. Throws exception if teacher does not exist or chosen student is not one of his pupils
+	/*!
+	*/
 	void teacherAddReunion();
+
+	//! Cancels a reunion from a specific teacher (removes it from the BST). Throws exception if teacher does not exist or chosen student is not his pupil or teacher does not have a reunion with said student
+	/*!
+	*/
 	void teacherCancelReunion();
+
+	//! Changes a specific reunion from a specific teacher's conclusion topics. Throws exception if teacher does not exist or chosen student is not his pupil or teacher does not have a reunion with said student
+	/*!
+	*/
 	void teacherEditReunionConclusions();
+
+	//! Registers the fact that a specific reunion from a specific teacher has taken place. Throws exception if teacher does not exist or chosen student is not his pupil or teacher does not have a reunion with said student
+	/*!
+	*/
 	void teacherMarkReunionAsDone();
+
+	//! Lists every reunion a specific teacher had, has and will have. Throws exception if teacher does not exist
+	/*!
+	*/
 	void showTeacherReunions();
+
+	//! Lists every reunion a specific teacher has attended. Throws exception if teacher does not exist
+	/*!
+	*/
 	void showTeacherReunionsDone();
+
+	//! Lists every reunion a specific teacher has or has between two specified dates. Throws exception if teacher does not exist
+	/*!
+	*/
 	void showTeacherReunionsInPeriod();
 
 	//! Gets a copy of the matrix thats holds the course's classes by curricular year. Curricular year n is at index n-1, with its classes in a priority queue.
@@ -394,8 +423,23 @@ public:
 	*/
 	void registerStudentInClass(Student* student);
 
+	//! Edits a specific student's status (type of status identified inside the function). Throws exception if specified student does not exist
+	/*!
+	*/
 	void editStudentCourseStatus();
+
+	//! Shows students that concluded the course
+	/*!
+	*/
 	void showStudentsConcluded();
+
+	//! Shows students that interrupted the course
+	/*!
+	*/
 	void showStudentsInterrupted();
+
+	//! Shows students that interrupted or concluded the course
+	/*!
+	*/
 	void showStudentsHash();
 };

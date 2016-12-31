@@ -110,6 +110,13 @@ string Student::getClassCode() const {
 	return classCode;
 }
 
+bool Student::getInterrupted() const {
+	return interrupted;
+}
+bool Student::getCompleted() const {
+	return completed;
+}
+
 void Student::addUnitDone(std::pair<Unit*, unsigned int> p) {
 	int index = p.first->getCurricularYear();
 	unitsDone.at(index - 1).push_back(p);
@@ -175,6 +182,13 @@ void Student::setECTSTaking(float newECTS) {
 
 void Student::setClassCode(string newClass) {
 	classCode = newClass;
+}
+
+void Student::setInterrupted() {
+	interrupted = !interrupted;
+}
+void Student::setCompleted() {
+	completed = !completed;
 }
 
 void Student::save(std::ostream &out) const {
@@ -375,19 +389,4 @@ bool sortTByName(Teacher t1, Teacher t2) {
 	return t1.getName() < t2.getName();
 }
 
-//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bool Student::getInterrupted() const {
-	return interrupted;
-}
-bool Student::getCompleted() const {
-	return completed;
-}
 
-void Student::setInterrupted() {
-	interrupted = !interrupted;
-}
-void Student:: setCompleted() {
-	completed = !completed;
-}
-
-//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
