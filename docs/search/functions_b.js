@@ -2,6 +2,7 @@ var searchData=
 [
   ['save',['save',['../class_course.html#aeb63571fc43854d2a151f014a4c99dd4',1,'Course::save()'],['../class_person.html#a03d3f8bcbcdcac0e179fa0f25ad6bc8c',1,'Person::save()'],['../class_student.html#a25ebfb4b9b151782cc35eb2582100701',1,'Student::save()'],['../class_teacher.html#ac8805de62cdc360a8dbc3e89fe53f6dd',1,'Teacher::save()'],['../class_unit.html#a4d84d963ceee8a16fddfe63f444f7601',1,'Unit::save()'],['../class_mandatory_unit.html#a45816632b3dd326242db2ebf48974b77',1,'MandatoryUnit::save()'],['../class_optional_unit.html#a5cb87b35b50c0bfebf6fe6896b5aab65',1,'OptionalUnit::save()']]],
   ['setabbreviation',['setAbbreviation',['../class_unit.html#abc1f47080077bb853493e86834394b01',1,'Unit']]],
+  ['setastaken',['setAsTaken',['../class_reunion.html#a9b463b50e238358e377a3101c53e8f16',1,'Reunion']]],
   ['setclasscode',['setClassCode',['../class_student.html#acef06e5a20035b25bf7ad811e76248ad',1,'Student']]],
   ['setcode',['setCode',['../class_teacher.html#a0713e971f3ed27f7a0fe7c6d4dbae37d',1,'Teacher']]],
   ['setcompleted',['setCompleted',['../class_student.html#ac4e47fbb742806a761fa7e765c6b496e',1,'Student']]],

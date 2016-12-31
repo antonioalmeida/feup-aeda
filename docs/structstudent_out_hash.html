@@ -74,15 +74,63 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a0dad49aad6232cf6560f665506459476"><td class="memItemLeft" align="right" valign="top"><a id="a0dad49aad6232cf6560f665506459476"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (const <a class="el" href="class_student.html">Student</a> &amp;s1) const</td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstudent_out_hash.html#a0dad49aad6232cf6560f665506459476">operator()</a> (const <a class="el" href="class_student.html">Student</a> &amp;s1) const</td></tr>
+<tr class="memdesc:a0dad49aad6232cf6560f665506459476"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a value based in a function with a low probability of collision to use in hash table. <br /></td></tr>
 <tr class="separator:a0dad49aad6232cf6560f665506459476"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a20edebae9d3943be095a2c6ebc229b"><td class="memItemLeft" align="right" valign="top"><a id="a1a20edebae9d3943be095a2c6ebc229b"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (const <a class="el" href="class_student.html">Student</a> &amp;s1, const <a class="el" href="class_student.html">Student</a> &amp;s2) const</td></tr>
+<tr class="memitem:a1a20edebae9d3943be095a2c6ebc229b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstudent_out_hash.html#a1a20edebae9d3943be095a2c6ebc229b">operator()</a> (const <a class="el" href="class_student.html">Student</a> &amp;s1, const <a class="el" href="class_student.html">Student</a> &amp;s2) const</td></tr>
+<tr class="memdesc:a1a20edebae9d3943be095a2c6ebc229b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two students to test if they are equal.  <a href="#a1a20edebae9d3943be095a2c6ebc229b">More...</a><br /></td></tr>
 <tr class="separator:a1a20edebae9d3943be095a2c6ebc229b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Struct holding comparison function for studentsHash type objects (used for Hash Table) and the hash function. A student is "equal" if it's have same code than the other. </p>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a1a20edebae9d3943be095a2c6ebc229b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a20edebae9d3943be095a2c6ebc229b">&sect;&nbsp;</a></span>operator()()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool studentOutHash::operator() </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_student.html">Student</a> &amp;&#160;</td>
+          <td class="paramname"><em>s1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_student.html">Student</a> &amp;&#160;</td>
+          <td class="paramname"><em>s2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compares two students to test if they are equal. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r1</td><td>first of two students to be compared </td></tr>
+    <tr><td class="paramname">r2</td><td>second of two students to be compared </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if s1's code if equal to s2's code, false otherwise </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="_course_8h_source.html">Course.h</a></li>
 </ul>
 </div><!-- contents -->

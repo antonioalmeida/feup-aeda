@@ -13,5 +13,7 @@ var searchData=
   ['removestudentsclass',['removeStudentsClass',['../class_course.html#a914d47b6b6169fba008127298451c2aa',1,'Course']]],
   ['removeteacher',['removeTeacher',['../class_course.html#ab7f91267330ac71c648890b21d77dd7b',1,'Course']]],
   ['removeunittodo',['removeUnitToDo',['../class_student.html#a08a7d9354ab82857229324c0c5196b75',1,'Student']]],
-  ['repeatedidentification',['repeatedIdentification',['../classrepeated_identification.html#a16f5409eab4a4c949ada7f8067f3a174',1,'repeatedIdentification']]]
+  ['repeatedidentification',['repeatedIdentification',['../classrepeated_identification.html#a16f5409eab4a4c949ada7f8067f3a174',1,'repeatedIdentification']]],
+  ['reunion',['Reunion',['../class_reunion.html#a66813b87dfbc77569ed2c950c2d7c298',1,'Reunion::Reunion()'],['../class_reunion.html#a566f01a511a2e3cdd229cd6b3661d34c',1,'Reunion::Reunion(Date date, std::string student, std::string agenda, std::string conclusions)']]],
+  ['reunionhastakenplace',['reunionHasTakenPlace',['../class_reunion.html#a14c11b785955180576b3f3b3436ce29b',1,'Reunion']]]
 ];

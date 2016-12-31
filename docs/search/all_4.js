@@ -1,6 +1,7 @@
 var searchData=
 [
   ['getabbreviation',['getAbbreviation',['../class_unit.html#af3a04a93ef33f047fb38100263924214',1,'Unit']]],
+  ['getagenda',['getAgenda',['../class_reunion.html#a633468af1f74ebcc9b03721f01fb0df6',1,'Reunion']]],
   ['getallmandatoryunits',['getAllMandatoryUnits',['../class_course.html#ab1ed2c363abaa6c99b94daf115293aae',1,'Course']]],
   ['getalloptionalunits',['getAllOptionalUnits',['../class_course.html#a1dbf903e16ed02db202b57ac9f0e6440',1,'Course']]],
   ['getallunits',['getAllUnits',['../class_course.html#ae4386b4c4aacb87ff3a33cce8f673651',1,'Course']]],
@@ -8,8 +9,9 @@ var searchData=
   ['getclasscode',['getClassCode',['../class_student.html#abee4505ecc7f400b3e1365363e83cb47',1,'Student']]],
   ['getcode',['getCode',['../class_student.html#ad7d43f78253563db8a67f5af55a216da',1,'Student::getCode()'],['../class_teacher.html#a967d80a04519abf7b20a6459140b497e',1,'Teacher::getCode()'],['../class_students_class.html#af9ffa6d1200ca86ea7ad11d1543e5088',1,'StudentsClass::getCode()']]],
   ['getcompleted',['getCompleted',['../class_student.html#a6aaa4b35017964053f097af09816f2cd',1,'Student']]],
+  ['getconclusions',['getConclusions',['../class_reunion.html#a672d5918d38652a4ec8472d4d62cf20e',1,'Reunion']]],
   ['getcurricularyear',['getCurricularYear',['../class_student.html#a40e4932da73265df93cf942d162c41b3',1,'Student::getCurricularYear()'],['../class_students_class.html#abf1935b826946ccbcba2c79bb0e2282f',1,'StudentsClass::getCurricularYear()'],['../class_unit.html#a1ce777bd3f2e319d6ee15b27a9ac8f3a',1,'Unit::getCurricularYear()']]],
-  ['getdate',['getDate',['../class_date.html#ac33192f734973548e97e9b5d8da44a5b',1,'Date']]],
+  ['getdate',['getDate',['../class_date.html#ac33192f734973548e97e9b5d8da44a5b',1,'Date::getDate()'],['../class_reunion.html#aa085ebdcab047f408a76b62659e0f159',1,'Reunion::getDate()']]],
   ['getday',['getDay',['../class_date.html#a13855b25efb79eaf7dccf08555421a1d',1,'Date']]],
   ['getects',['getECTS',['../class_unit.html#addf4651cb72d43a675523213220ff85a',1,'Unit']]],
   ['getectstaking',['getECTSTaking',['../class_student.html#a73cd9c19d8dc5aa907670fb903d4b755',1,'Student']]],
@@ -30,6 +32,7 @@ var searchData=
   ['getreunions',['getReunions',['../class_teacher.html#ae8bf9f5ca9636573b1aaded4d056bab0',1,'Teacher']]],
   ['getscientificarea',['getScientificArea',['../class_unit.html#aa041f0f12d24f8061ca026c0f378dc1a',1,'Unit']]],
   ['getstatus',['getStatus',['../class_student.html#af06d1d8eea2705c7eb31ffbf8a780788',1,'Student']]],
+  ['getstudent',['getStudent',['../class_reunion.html#a678e17a67d5bccca069c138c4d3c70dc',1,'Reunion']]],
   ['getstudents',['getStudents',['../class_course.html#a3013a0727808302d9de10f2a974840c0',1,'Course']]],
   ['getstudentsclasses',['getStudentsClasses',['../class_course.html#a5150f5abe3f6fcab4a3c8be03061b0d2',1,'Course']]],
   ['getteachers',['getTeachers',['../class_course.html#a316d30e97f323b630c5cf97efe78a329',1,'Course']]],

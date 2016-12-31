@@ -2,6 +2,7 @@ var searchData=
 [
   ['calculateaverage',['calculateAverage',['../class_student.html#a1dec1372297b03b74868ac35f29558df',1,'Student']]],
   ['cancelspecificreunion',['cancelSpecificReunion',['../class_teacher.html#a9b1ae852c06cdf50e735f7d2f126bc2f',1,'Teacher']]],
+  ['changeconclusions',['changeConclusions',['../class_reunion.html#a668350190d68d8b1d3ff9967b50e239f',1,'Reunion']]],
   ['changespecificreunionconclusions',['changeSpecificReunionConclusions',['../class_teacher.html#a033b2afe9173ab74dace3b5355b14f4d',1,'Teacher']]],
   ['classesmenu',['classesMenu',['../_menus_8h.html#a2bb0adf4da5ecbf2b76a63cd58fdedaa',1,'Menus.cpp']]],
   ['classesoptions',['classesOptions',['../_menus_8h.html#abc73097456ae3bde3943d1ba82565ff4',1,'Menus.cpp']]],
