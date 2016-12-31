@@ -74,6 +74,9 @@ Course::Course(string studentsFile, string teachersFile, string manUnitsFile, st
 	studentsIn.close(); //To avoid conflict
 
 	studentsClasses.resize(5);
+	//Initialize with 1 StudentsClass per curricular year
+	for(int i = 1; i <= 5; i++)
+		addStudentsClass(i);
 }
 
 vector<Student> Course::getStudents() const {
@@ -718,7 +721,7 @@ void Course::registerRandomStudent() {
 
 	//Register student in class
 	registerStudentInClass(&(*it));
-	cout << "The student was successfuly registered in the class " << it->getStudentsClass()->getCode() << endl;
+	cout << "The student was successfuly registered in the class " << it->getClassCode() << endl;
 
 	//CHECK IF STUDENT IS IN HASH TABLE
 	unordered_set<Student, studentOutHash, studentOutHash>::iterator ite = studentsOut.find(*it);
@@ -923,7 +926,7 @@ void Course::registerSpecificStudentByName() {
 
 	//Register student in class
 	registerStudentInClass(&(*it));
-	cout << "The student was successfuly registered in the class " << it->getStudentsClass()->getCode() << endl;
+	cout << "The student was successfuly registered in the class " << it->getClassCode() << endl;
 
 	//CHECK IF STUDENT IS IN HASH TABLE
 	unordered_set<Student, studentOutHash, studentOutHash>::iterator ite = studentsOut.find(*it);
@@ -1130,7 +1133,7 @@ void Course::registerSpecificStudentByCode() {
 
 		//Register student in class
 		registerStudentInClass(&(*it));
-		cout << "The student was successfuly registered in the class " << it->getStudentsClass()->getCode() << endl;
+		cout << "The student was successfuly registered in the class " << it->getClassCode() << endl;
 
 		//CHECK IF STUDENT IS IN HASH TABLE
 		unordered_set<Student, studentOutHash, studentOutHash>::iterator ite = studentsOut.find(*it);
@@ -1912,10 +1915,11 @@ void Course::addStudentsClass(unsigned int curricularYear) {
 	StudentsClass temp(curricularYear, getUnitsFromYear(curricularYear));
 	studentsClasses.at(curricularYear - 1).push(temp);
 
-	cout << temp << endl;
+	cout << "The class " << temp << " was successfully created." << endl;
 }
 
 void Course::removeStudentsClass(unsigned int curricularYear, unsigned int classNumber) {
+	bool found = false;
 	string classCode = to_string(curricularYear) + "MIEIC" + to_string(classNumber);
 	priority_queue<StudentsClass> currentYear = studentsClasses.at(curricularYear - 1);
 	priority_queue<StudentsClass> result; //queue to store the altered version
@@ -1924,9 +1928,16 @@ void Course::removeStudentsClass(unsigned int curricularYear, unsigned int class
 		StudentsClass currentClass = currentYear.top();
 		if (currentClass.getCode() != classCode)
 			result.push(currentClass);
+		else
+			found = true;
 
 		currentYear.pop();
 	}
+
+	if(!found)
+		throw invalidIdentification<string>(classCode);
+
+	//Only reaches this point if the class is removed
 	studentsClasses.at(curricularYear - 1) = result;
 }
 
@@ -1937,12 +1948,14 @@ void Course::listStudentsClassVacancies(unsigned int curricularYear) {
 		priority_queue<pair<unsigned long, Unit*>> currentVacanciesToUnits = temp.top().getVacanciesToUnits();
 
 		cout << temp.top().getCode() << endl;
+		classesPrintHeader();
 		while (!currentVacanciesToUnits.empty()) {
 			cout << currentVacanciesToUnits.top() << endl;
 			currentVacanciesToUnits.pop();
 		}
 		temp.pop();
 	}
+	cout << endl;
 }
 
 void Course::registerStudentInClass(Student* student) {
@@ -1960,12 +1973,18 @@ void Course::registerStudentInClass(Student* student) {
 			//Add pair to final class
 			finalClass.addPairToQueue(toInsert);
 		}
+		if(currentUnitVacancies == 0) { //if Unit exists but doesn't have vacancies
+			//Create pair with unaltered vacancies (always 0)
+			pair<unsigned long, Unit*> unalteredToInsert(0, studentUnits.at(i));
+			//Add pair to final class
+			finalClass.addPairToQueue(unalteredToInsert);
+		}
 	}
 
 	//Update the studentClass in both the course strucuture and the student
 	studentsClasses.at(student->getCurricularYear()-1).pop();
 	studentsClasses.at(student->getCurricularYear()-1).push(finalClass);
-	student->setStudentsClass(&finalClass);
+	student->setClassCode(finalClass.getCode());
 }
 
 void Course::editStudentCourseStatus() {

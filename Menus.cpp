@@ -1216,17 +1216,21 @@ void classesOptions(Course &course) {
 			unsigned short cYear;
 			cYear = readOp(1,5);
 			course.addStudentsClass(cYear);
-			cout << "Class added successfully" << endl;
 			pressToContinue();
 			break;
 		case 2:
 			cout << "Insert the classes' curricular year: " << endl;
 			cYear = readOp(1,5);
-			cout << "Insert the classes' number within the year: (1 - " << course.getStudentsClasses().at(cYear-1).size() << ")" << endl;
+			cout << "Insert the classes' number within the year: " << endl;
 			unsigned short cNumber;
 			cNumber = readOp(1,course.getStudentsClasses().at(cYear-1).size());
-			course.removeStudentsClass(cYear, cNumber);
-			cout << "Class " << cYear << "MIEIC" << cNumber << " successfully removed" << endl;
+			try {
+				course.removeStudentsClass(cYear, cNumber);
+				cout << "Class " << cYear << "MIEIC" << cNumber << " successfully removed" << endl;
+			}
+			catch (invalidIdentification<string> &s) {
+				cout << "ERROR: No class identified by \"" << s.getInvIdentification() << "\"!" << endl;
+			}
 			pressToContinue();
 			break;
 		case 3:

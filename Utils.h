@@ -11,7 +11,7 @@
 
 /*! \file utils.h
  \brief Useful functions to use throughout the program.
- 
+
  */
 
 
@@ -62,3 +62,8 @@ void studentsPrintHeader();
 /*!
 */
 void teachersPrintHeader();
+
+//! Prints table header used when listing the top 3 studentsClasses in the respective priority queue
+/*!
+*/
+void classesPrintHeader();

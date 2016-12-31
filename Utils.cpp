@@ -83,12 +83,18 @@ void studentsPrintHeader() {
 	cout << setw(37) << "Name";
 	cout << setw(9) << "Average";
 	cout << setw(7) << "ECTS";
-	cout << setw(15) << "Units Taking";
-	cout << setw(9) << "State" << endl << endl;
+	cout << setw(9) << "Class";
+	cout << setw(9) << "State";
+	cout << setw(15) << "Units Taking" << endl << endl;
 }
 
 void teachersPrintHeader() {
 	cout << setw(8) << "Code";
 	cout << setw(50) << "Name";
 	cout << "   Units Taught" << endl << endl;
+}
+
+void classesPrintHeader() {
+	cout << setw(8) << "Abbreviation";
+	cout << setw(12) << "Vacancies" << endl;
 }

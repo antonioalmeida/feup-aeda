@@ -92,9 +92,6 @@ public:
 	}
 };
 
-
-
-
 /*! Template exception class completedCourse, used when trying to register a student that's already completed the course*/
 template <class T> class completedCourse {
 private:

@@ -47,7 +47,7 @@ Student::Student(istream &in) :Person(in) {
 	unitsToDo = vector<vector<pair<Unit*, unsigned int>>>(5);
 	email = "up" + to_string(code) + "@fe.up.pt";
 	ectsTaking = 0;
-	studentsClass = NULL;
+	classCode = "";
 	registrationComplete = false;
 	interrupted = false;
 	completed = false;
@@ -64,6 +64,7 @@ Student::Student(string name, string status, unsigned int curricularYear, vector
 	this->unitsDone = unitsDone;
 	this->unitsToDo = unitsToDo;
 	calculateAverage();
+	classCode = "";
 	registrationComplete = false;
 	completed = false;
 	interrupted = false;
@@ -105,8 +106,8 @@ Date Student::getRegistrationDate() const {
 	return registrationDate;
 }
 
-StudentsClass* Student::getStudentsClass() const {
-	return studentsClass;
+string Student::getClassCode() const {
+	return classCode;
 }
 
 void Student::addUnitDone(std::pair<Unit*, unsigned int> p) {
@@ -172,8 +173,8 @@ void Student::setECTSTaking(float newECTS) {
 	ectsTaking = newECTS;
 }
 
-void Student::setStudentsClass(StudentsClass *newClass) {
-	studentsClass = newClass;
+void Student::setClassCode(string newClass) {
+	classCode = newClass;
 }
 
 void Student::save(std::ostream &out) const {
@@ -202,12 +203,13 @@ ostream& operator<<(ostream& out, const Student& s) {
 	out << setw(32) << s.getName();
 	out << setw(9) << s.getAverage();
 	out << setw(7) << s.getECTSTaking();
+	out << setw(9) << (s.getClassCode() != "" ? s.getClassCode() : "None");
+	out << setw(4) << (s.getCompleted() ? "Completed" : "") << (s.getInterrupted() ? 	"Interrupted" : "")<< ((!s.getCompleted() && !s.getInterrupted()) ? "Active":"");
 	if (s.getUnitsTaking().size() != 0) {
 		out << "  ";
 		for (unsigned int i = 0; i < s.getUnitsTaking().size(); i++)
 			out << s.getUnitsTaking().at(i)->getAbbreviation() << " ";
 	}
-	out << setw(19) << (s.getCompleted() ? "Completed" : "") << (s.getInterrupted() ? 	"Interrupted" : "")<< ((!s.getCompleted() && !s.getInterrupted()) ? "Active":"");
 
 	out << endl;
 	return out;

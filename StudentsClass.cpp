@@ -62,7 +62,7 @@ bool StudentsClass::operator<(const StudentsClass &sc1) const {
 }
 
 ostream& operator<<(std::ostream &out, const StudentsClass &sc1) {
-    out << sc1.getCode() << " " << sc1.getCurricularYear() << "  " << sc1.getVacanciesToUnits().top().first << " " << sc1.getVacanciesToUnits().size();
+    out << sc1.getCode();
     return out;
 }
 
@@ -71,6 +71,6 @@ bool operator<(const pair<unsigned long, Unit*> &p1, const pair<unsigned long,Un
 }
 
 std::ostream& operator<<(std::ostream &out, const pair<unsigned long,Unit*> &p1) {
-    out << setw(7) << p1.second->getAbbreviation() << setw(5) << p1.first;
+    out << setw(7) << p1.second->getAbbreviation() << setw(10) << p1.first;
     return out;
 }
