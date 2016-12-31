@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>aedamieic: Course Class Reference</title>
+<title>AEDA - Students Registrations II: Course Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">aedamieic
+   <div id="projectname">AEDA - Students Registrations II
    </div>
   </td>
  </tr>
@@ -254,6 +254,65 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a0139f8b383d276430776e97e4014c535"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#a0139f8b383d276430776e97e4014c535">verifyUnit</a> (std::string unitAbbreviation) const</td></tr>
 <tr class="memdesc:a0139f8b383d276430776e97e4014c535"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if abbreviation passeda as argument corresponds to an existent unit.  <a href="#a0139f8b383d276430776e97e4014c535">More...</a><br /></td></tr>
 <tr class="separator:a0139f8b383d276430776e97e4014c535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90d3652984bccf5cd64a9ecc6047d7e2"><td class="memItemLeft" align="right" valign="top"><a id="a90d3652984bccf5cd64a9ecc6047d7e2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#a90d3652984bccf5cd64a9ecc6047d7e2">teacherAddReunion</a> ()</td></tr>
+<tr class="memdesc:a90d3652984bccf5cd64a9ecc6047d7e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new reunion to a specific teacher. Throws exception if teacher does not exist or chosen student is not one of his pupils. <br /></td></tr>
+<tr class="separator:a90d3652984bccf5cd64a9ecc6047d7e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb31cf5e071da3d5361bce0b8d60737f"><td class="memItemLeft" align="right" valign="top"><a id="adb31cf5e071da3d5361bce0b8d60737f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#adb31cf5e071da3d5361bce0b8d60737f">teacherCancelReunion</a> ()</td></tr>
+<tr class="memdesc:adb31cf5e071da3d5361bce0b8d60737f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels a reunion from a specific teacher (removes it from the BST). Throws exception if teacher does not exist or chosen student is not his pupil or teacher does not have a reunion with said student. <br /></td></tr>
+<tr class="separator:adb31cf5e071da3d5361bce0b8d60737f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea32f614ee01a1322dc1d9c0dcd4a5e4"><td class="memItemLeft" align="right" valign="top"><a id="aea32f614ee01a1322dc1d9c0dcd4a5e4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#aea32f614ee01a1322dc1d9c0dcd4a5e4">teacherEditReunionConclusions</a> ()</td></tr>
+<tr class="memdesc:aea32f614ee01a1322dc1d9c0dcd4a5e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes a specific reunion from a specific teacher's conclusion topics. Throws exception if teacher does not exist or chosen student is not his pupil or teacher does not have a reunion with said student. <br /></td></tr>
+<tr class="separator:aea32f614ee01a1322dc1d9c0dcd4a5e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9c594adfe08339b2d2789d64c29c574"><td class="memItemLeft" align="right" valign="top"><a id="ac9c594adfe08339b2d2789d64c29c574"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#ac9c594adfe08339b2d2789d64c29c574">teacherMarkReunionAsDone</a> ()</td></tr>
+<tr class="memdesc:ac9c594adfe08339b2d2789d64c29c574"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the fact that a specific reunion from a specific teacher has taken place. Throws exception if teacher does not exist or chosen student is not his pupil or teacher does not have a reunion with said student. <br /></td></tr>
+<tr class="separator:ac9c594adfe08339b2d2789d64c29c574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a269fe5269cee47034b7b41764876a1dd"><td class="memItemLeft" align="right" valign="top"><a id="a269fe5269cee47034b7b41764876a1dd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#a269fe5269cee47034b7b41764876a1dd">showTeacherReunions</a> ()</td></tr>
+<tr class="memdesc:a269fe5269cee47034b7b41764876a1dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists every reunion a specific teacher had, has and will have. Throws exception if teacher does not exist. <br /></td></tr>
+<tr class="separator:a269fe5269cee47034b7b41764876a1dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eb45d7466456419caac820b9264cb26"><td class="memItemLeft" align="right" valign="top"><a id="a2eb45d7466456419caac820b9264cb26"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#a2eb45d7466456419caac820b9264cb26">showTeacherReunionsDone</a> ()</td></tr>
+<tr class="memdesc:a2eb45d7466456419caac820b9264cb26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists every reunion a specific teacher has attended. Throws exception if teacher does not exist. <br /></td></tr>
+<tr class="separator:a2eb45d7466456419caac820b9264cb26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d37d51645a0056c1d9a8a780f8c83fc"><td class="memItemLeft" align="right" valign="top"><a id="a2d37d51645a0056c1d9a8a780f8c83fc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#a2d37d51645a0056c1d9a8a780f8c83fc">showTeacherReunionsInPeriod</a> ()</td></tr>
+<tr class="memdesc:a2d37d51645a0056c1d9a8a780f8c83fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists every reunion a specific teacher has or has between two specified dates. Throws exception if teacher does not exist. <br /></td></tr>
+<tr class="separator:a2d37d51645a0056c1d9a8a780f8c83fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5150f5abe3f6fcab4a3c8be03061b0d2"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::priority_queue&lt; <a class="el" href="class_students_class.html">StudentsClass</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#a5150f5abe3f6fcab4a3c8be03061b0d2">getStudentsClasses</a> ()</td></tr>
+<tr class="memdesc:a5150f5abe3f6fcab4a3c8be03061b0d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a copy of the matrix thats holds the course's classes by curricular year. Curricular year n is at index n-1, with its classes in a priority queue.  <a href="#a5150f5abe3f6fcab4a3c8be03061b0d2">More...</a><br /></td></tr>
+<tr class="separator:a5150f5abe3f6fcab4a3c8be03061b0d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95718ffa6e9da476e97ac87758443436"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#a95718ffa6e9da476e97ac87758443436">addStudentsClass</a> (unsigned int curricularYear)</td></tr>
+<tr class="memdesc:a95718ffa6e9da476e97ac87758443436"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new studentsClass to the classes matrix in the respetive curricular year's index.  <a href="#a95718ffa6e9da476e97ac87758443436">More...</a><br /></td></tr>
+<tr class="separator:a95718ffa6e9da476e97ac87758443436"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a914d47b6b6169fba008127298451c2aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#a914d47b6b6169fba008127298451c2aa">removeStudentsClass</a> (unsigned int curricularYear, unsigned int classNumber)</td></tr>
+<tr class="memdesc:a914d47b6b6169fba008127298451c2aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a studentsClass from the matrix, identified by its code.  <a href="#a914d47b6b6169fba008127298451c2aa">More...</a><br /></td></tr>
+<tr class="separator:a914d47b6b6169fba008127298451c2aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a748d9f66f5961d9b03a02c35be41737e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#a748d9f66f5961d9b03a02c35be41737e">listStudentsClassVacancies</a> (unsigned int curricularYear)</td></tr>
+<tr class="memdesc:a748d9f66f5961d9b03a02c35be41737e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the first 3 studentsClass' information from a specifi curricular year.  <a href="#a748d9f66f5961d9b03a02c35be41737e">More...</a><br /></td></tr>
+<tr class="separator:a748d9f66f5961d9b03a02c35be41737e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4428b46631ab5c5a67da57efedcd2786"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#a4428b46631ab5c5a67da57efedcd2786">registerStudentInClass</a> (<a class="el" href="class_student.html">Student</a> *student)</td></tr>
+<tr class="memdesc:a4428b46631ab5c5a67da57efedcd2786"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers student in the class at the top of the respective curricularYear's priority queue.  <a href="#a4428b46631ab5c5a67da57efedcd2786">More...</a><br /></td></tr>
+<tr class="separator:a4428b46631ab5c5a67da57efedcd2786"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38528847bf39dbec80614e950c7ed7d5"><td class="memItemLeft" align="right" valign="top"><a id="a38528847bf39dbec80614e950c7ed7d5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#a38528847bf39dbec80614e950c7ed7d5">editStudentCourseStatus</a> ()</td></tr>
+<tr class="memdesc:a38528847bf39dbec80614e950c7ed7d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Edits a specific student's status (type of status identified inside the function). Throws exception if specified student does not exist. <br /></td></tr>
+<tr class="separator:a38528847bf39dbec80614e950c7ed7d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a724d043128f00ab53d63ab289c658744"><td class="memItemLeft" align="right" valign="top"><a id="a724d043128f00ab53d63ab289c658744"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#a724d043128f00ab53d63ab289c658744">showStudentsConcluded</a> ()</td></tr>
+<tr class="memdesc:a724d043128f00ab53d63ab289c658744"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows students that concluded the course. <br /></td></tr>
+<tr class="separator:a724d043128f00ab53d63ab289c658744"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f1d4a701c57665e5bf4ca44711919d7"><td class="memItemLeft" align="right" valign="top"><a id="a8f1d4a701c57665e5bf4ca44711919d7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#a8f1d4a701c57665e5bf4ca44711919d7">showStudentsInterrupted</a> ()</td></tr>
+<tr class="memdesc:a8f1d4a701c57665e5bf4ca44711919d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows students that interrupted the course. <br /></td></tr>
+<tr class="separator:a8f1d4a701c57665e5bf4ca44711919d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0785c7ae836b5e9dc59e8e17fd8cc42"><td class="memItemLeft" align="right" valign="top"><a id="af0785c7ae836b5e9dc59e8e17fd8cc42"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_course.html#af0785c7ae836b5e9dc59e8e17fd8cc42">showStudentsHash</a> ()</td></tr>
+<tr class="memdesc:af0785c7ae836b5e9dc59e8e17fd8cc42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows students that interrupted or concluded the course. <br /></td></tr>
+<tr class="separator:af0785c7ae836b5e9dc59e8e17fd8cc42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aeaf9155e5dae17b1ecd3a273af5e7576"></a>
@@ -308,6 +367,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a95718ffa6e9da476e97ac87758443436"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95718ffa6e9da476e97ac87758443436">&sect;&nbsp;</a></span>addStudentsClass()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Course::addStudentsClass </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>curricularYear</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a new studentsClass to the classes matrix in the respetive curricular year's index. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">curricularYear</td><td>the new class' curricular year </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ab1ed2c363abaa6c99b94daf115293aae"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab1ed2c363abaa6c99b94daf115293aae">&sect;&nbsp;</a></span>getAllMandatoryUnits()</h2>
 
@@ -462,6 +547,26 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a id="a5150f5abe3f6fcab4a3c8be03061b0d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5150f5abe3f6fcab4a3c8be03061b0d2">&sect;&nbsp;</a></span>getStudentsClasses()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; priority_queue&lt; <a class="el" href="class_students_class.html">StudentsClass</a> &gt; &gt; Course::getStudentsClasses </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets a copy of the matrix thats holds the course's classes by curricular year. Curricular year n is at index n-1, with its classes in a priority queue. </p>
+<dl class="section return"><dt>Returns</dt><dd>vector of priority queues, one for each curricular year </dd></dl>
+
+</div>
+</div>
 <a id="a316d30e97f323b630c5cf97efe78a329"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a316d30e97f323b630c5cf97efe78a329">&sect;&nbsp;</a></span>getTeachers()</h2>
 
@@ -536,6 +641,58 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a id="a748d9f66f5961d9b03a02c35be41737e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a748d9f66f5961d9b03a02c35be41737e">&sect;&nbsp;</a></span>listStudentsClassVacancies()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Course::listStudentsClassVacancies </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>curricularYear</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prints the first 3 studentsClass' information from a specifi curricular year. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">curricularYear</td><td>the class' curricular year </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4428b46631ab5c5a67da57efedcd2786"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4428b46631ab5c5a67da57efedcd2786">&sect;&nbsp;</a></span>registerStudentInClass()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Course::registerStudentInClass </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_student.html">Student</a> *&#160;</td>
+          <td class="paramname"><em>student</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Registers student in the class at the top of the respective curricularYear's priority queue. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">student</td><td>pointer to student to register </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a3b6a7e02e361ead1d2e2917d32416bb0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3b6a7e02e361ead1d2e2917d32416bb0">&sect;&nbsp;</a></span>removeStudent() <span class="overload">[1/2]</span></h2>
 
@@ -582,6 +739,43 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">studentName</td><td>string corresponding to the name of student to be removed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a914d47b6b6169fba008127298451c2aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a914d47b6b6169fba008127298451c2aa">&sect;&nbsp;</a></span>removeStudentsClass()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Course::removeStudentsClass </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>curricularYear</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>classNumber</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Removes a studentsClass from the matrix, identified by its code. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">curricularYear</td><td>the class' curricular year </td></tr>
+    <tr><td class="paramname">classNumber</td><td>the class' classNumber - the final digit at the end of the code </td></tr>
   </table>
   </dd>
 </dl>

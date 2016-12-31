@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lessstudents',['lessStudents',['../class_teacher.html#ad4b50f8c2d928cd24e11a43bba06a19e',1,'Teacher']]]
+  ['classesnumeration',['classesNumeration',['../class_students_class.html#a741a5592741e329a89ecf78892361eac',1,'StudentsClass']]]
 ];

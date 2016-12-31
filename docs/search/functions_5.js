@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['incclassesnumeration',['incClassesNumeration',['../class_students_class.html#aaab01da56bb0c1212ff76f6f72edefb7',1,'StudentsClass']]],
   ['incrementvacancies',['incrementVacancies',['../class_unit.html#abdbef2e2eb129b97a38e37ea61feac3b',1,'Unit::incrementVacancies()'],['../class_optional_unit.html#a1a2984dd457b95d31c75f3694ed0aeab',1,'OptionalUnit::incrementVacancies()']]],
   ['inexistentfile',['inexistentFile',['../classinexistent_file.html#a978d9afa5881792c04d90e9011e88257',1,'inexistentFile']]],
   ['invalididentification',['invalidIdentification',['../classinvalid_identification.html#a421f8cceb4dcc18b71ba538273ce789a',1,'invalidIdentification']]],

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>aedamieic: Teacher Class Reference</title>
+<title>AEDA - Students Registrations II: Teacher Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">aedamieic
+   <div id="projectname">AEDA - Students Registrations II
    </div>
   </td>
  </tr>
@@ -114,6 +114,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac8805de62cdc360a8dbc3e89fe53f6dd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_teacher.html#ac8805de62cdc360a8dbc3e89fe53f6dd">save</a> (std::ostream &amp;out) const</td></tr>
 <tr class="memdesc:ac8805de62cdc360a8dbc3e89fe53f6dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints teacher to out, used for writing to files.  <a href="#ac8805de62cdc360a8dbc3e89fe53f6dd">More...</a><br /></td></tr>
 <tr class="separator:ac8805de62cdc360a8dbc3e89fe53f6dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8bf9f5ca9636573b1aaded4d056bab0"><td class="memItemLeft" align="right" valign="top">std::set&lt; <a class="el" href="class_reunion.html">Reunion</a>, <a class="el" href="structcompare_reunions.html">compareReunions</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_teacher.html#ae8bf9f5ca9636573b1aaded4d056bab0">getReunions</a> () const</td></tr>
+<tr class="memdesc:ae8bf9f5ca9636573b1aaded4d056bab0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a copy of BST that holds reunions professor has had.  <a href="#ae8bf9f5ca9636573b1aaded4d056bab0">More...</a><br /></td></tr>
+<tr class="separator:ae8bf9f5ca9636573b1aaded4d056bab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaca097cd6b87675e324f121fd2fb4e6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_teacher.html#aaca097cd6b87675e324f121fd2fb4e6c">addReunion</a> (<a class="el" href="class_reunion.html">Reunion</a> r1)</td></tr>
+<tr class="memdesc:aaca097cd6b87675e324f121fd2fb4e6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a reunion to the reunions BST.  <a href="#aaca097cd6b87675e324f121fd2fb4e6c">More...</a><br /></td></tr>
+<tr class="separator:aaca097cd6b87675e324f121fd2fb4e6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b1ae852c06cdf50e735f7d2f126bc2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_teacher.html#a9b1ae852c06cdf50e735f7d2f126bc2f">cancelSpecificReunion</a> (<a class="el" href="class_reunion.html">Reunion</a> r1)</td></tr>
+<tr class="memdesc:a9b1ae852c06cdf50e735f7d2f126bc2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels a reunion, removing it from the BST.  <a href="#a9b1ae852c06cdf50e735f7d2f126bc2f">More...</a><br /></td></tr>
+<tr class="separator:a9b1ae852c06cdf50e735f7d2f126bc2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a033b2afe9173ab74dace3b5355b14f4d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_teacher.html#a033b2afe9173ab74dace3b5355b14f4d">changeSpecificReunionConclusions</a> (<a class="el" href="class_reunion.html">Reunion</a> r1, std::string newConclusions)</td></tr>
+<tr class="memdesc:a033b2afe9173ab74dace3b5355b14f4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes a reunion's conclusion topics.  <a href="#a033b2afe9173ab74dace3b5355b14f4d">More...</a><br /></td></tr>
+<tr class="separator:a033b2afe9173ab74dace3b5355b14f4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5edd26da38845cac1d29b9330ca5dc40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_teacher.html#a5edd26da38845cac1d29b9330ca5dc40">setReunionAsTaken</a> (<a class="el" href="class_reunion.html">Reunion</a> r1)</td></tr>
+<tr class="memdesc:a5edd26da38845cac1d29b9330ca5dc40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marks the fact that a reunion has taken place.  <a href="#a5edd26da38845cac1d29b9330ca5dc40">More...</a><br /></td></tr>
+<tr class="separator:a5edd26da38845cac1d29b9330ca5dc40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_person"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_person')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_person.html">Person</a></td></tr>
 <tr class="memitem:a0397c6f89fafc12e738923f612bc41a3 inherit pub_methods_class_person"><td class="memItemLeft" align="right" valign="top"><a id="a0397c6f89fafc12e738923f612bc41a3"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_person.html#a0397c6f89fafc12e738923f612bc41a3">Person</a> ()</td></tr>
@@ -134,6 +149,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab524adb5ceaf422c2d815bddf43b3eae inherit pub_methods_class_person"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_person.html#ab524adb5ceaf422c2d815bddf43b3eae">setName</a> (std::string newName)</td></tr>
 <tr class="memdesc:ab524adb5ceaf422c2d815bddf43b3eae inherit pub_methods_class_person"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the person's name to newName.  <a href="class_person.html#ab524adb5ceaf422c2d815bddf43b3eae">More...</a><br /></td></tr>
 <tr class="separator:ab524adb5ceaf422c2d815bddf43b3eae inherit pub_methods_class_person"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ecf687fd61cfb3eebeed5a4ba1539f5 inherit pub_methods_class_person"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_person.html#a0ecf687fd61cfb3eebeed5a4ba1539f5">setEmail</a> (std::string newEmail)</td></tr>
+<tr class="memdesc:a0ecf687fd61cfb3eebeed5a4ba1539f5 inherit pub_methods_class_person"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the person's e-mail to newMail.  <a href="class_person.html#a0ecf687fd61cfb3eebeed5a4ba1539f5">More...</a><br /></td></tr>
+<tr class="separator:a0ecf687fd61cfb3eebeed5a4ba1539f5 inherit pub_methods_class_person"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -153,6 +171,9 @@ std::vector&lt; <a class="el" href="class_unit.html">Unit</a> * &gt;&#160;</td><
 <tr class="memitem:a3037a980e9f018bc40e48839a6762cd5"><td class="memItemLeft" align="right" valign="top"><a id="a3037a980e9f018bc40e48839a6762cd5"></a>
 std::vector&lt; <a class="el" href="class_student.html">Student</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pupils</b></td></tr>
 <tr class="separator:a3037a980e9f018bc40e48839a6762cd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a563a47a6571ca94443e2a5c21bdb1d7f"><td class="memItemLeft" align="right" valign="top"><a id="a563a47a6571ca94443e2a5c21bdb1d7f"></a>
+std::set&lt; <a class="el" href="class_reunion.html">Reunion</a>, <a class="el" href="structcompare_reunions.html">compareReunions</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>reunions</b></td></tr>
+<tr class="separator:a563a47a6571ca94443e2a5c21bdb1d7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_person"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_person')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_person.html">Person</a></td></tr>
 <tr class="memitem:a7594663aadc0de77616506df8a2f4128 inherit pro_attribs_class_person"><td class="memItemLeft" align="right" valign="top"><a id="a7594663aadc0de77616506df8a2f4128"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>name</b></td></tr>
@@ -239,6 +260,32 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="aaca097cd6b87675e324f121fd2fb4e6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaca097cd6b87675e324f121fd2fb4e6c">&sect;&nbsp;</a></span>addReunion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Teacher::addReunion </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_reunion.html">Reunion</a>&#160;</td>
+          <td class="paramname"><em>r1</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a reunion to the reunions BST. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r1</td><td>reunion to be added </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a2b9f2c6e0dddc67789ac2f8689795525"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2b9f2c6e0dddc67789ac2f8689795525">&sect;&nbsp;</a></span>addStudent()</h2>
 
@@ -293,6 +340,69 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a9b1ae852c06cdf50e735f7d2f126bc2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b1ae852c06cdf50e735f7d2f126bc2f">&sect;&nbsp;</a></span>cancelSpecificReunion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Teacher::cancelSpecificReunion </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_reunion.html">Reunion</a>&#160;</td>
+          <td class="paramname"><em>r1</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cancels a reunion, removing it from the BST. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r1</td><td>reunion to be removed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a033b2afe9173ab74dace3b5355b14f4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a033b2afe9173ab74dace3b5355b14f4d">&sect;&nbsp;</a></span>changeSpecificReunionConclusions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Teacher::changeSpecificReunionConclusions </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_reunion.html">Reunion</a>&#160;</td>
+          <td class="paramname"><em>r1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>newConclusions</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Changes a reunion's conclusion topics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r1</td><td>reunion to be modified </td></tr>
+    <tr><td class="paramname">newConclusions</td><td>new conclusion topics </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a967d80a04519abf7b20a6459140b497e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a967d80a04519abf7b20a6459140b497e">&sect;&nbsp;</a></span>getCode()</h2>
 
@@ -330,6 +440,26 @@ Friends</h2></td></tr>
 
 <p>Gets a copy of vector that holds the teacher's pupils. </p>
 <dl class="section return"><dt>Returns</dt><dd>copy of Student* data member pupils </dd></dl>
+
+</div>
+</div>
+<a id="ae8bf9f5ca9636573b1aaded4d056bab0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8bf9f5ca9636573b1aaded4d056bab0">&sect;&nbsp;</a></span>getReunions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">set&lt; <a class="el" href="class_reunion.html">Reunion</a>, <a class="el" href="structcompare_reunions.html">compareReunions</a> &gt; Teacher::getReunions </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets a copy of BST that holds reunions professor has had. </p>
+<dl class="section return"><dt>Returns</dt><dd>copy of set&lt;Reunion,compareReunions&gt; data member reunions </dd></dl>
 
 </div>
 </div>
@@ -437,6 +567,32 @@ Friends</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">newCode</td><td>string that represents the teacher's new code </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5edd26da38845cac1d29b9330ca5dc40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5edd26da38845cac1d29b9330ca5dc40">&sect;&nbsp;</a></span>setReunionAsTaken()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Teacher::setReunionAsTaken </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_reunion.html">Reunion</a>&#160;</td>
+          <td class="paramname"><em>r1</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Marks the fact that a reunion has taken place. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r1</td><td>reunion to be modified </td></tr>
   </table>
   </dd>
 </dl>

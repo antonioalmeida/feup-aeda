@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['operator_3c',['operator&lt;',['../class_students_class.html#a14089f659d81f1d63af02854b9046ef8',1,'StudentsClass::operator&lt;()'],['../_students_class_8h.html#a8f6a598af9e89b292c9efe4feb0e6745',1,'operator&lt;():&#160;StudentsClass.h']]],
+  ['operator_3c_3c',['operator&lt;&lt;',['../_students_class_8h.html#a73a1018e561861cd86f7b7effd87ca24',1,'StudentsClass.h']]],
   ['operator_3d_3d',['operator==',['../class_student.html#a702d50ba6931c6f58e364ab2a28ccdc8',1,'Student']]],
   ['optionalunit',['OptionalUnit',['../class_optional_unit.html#a1fde14d7229a5b3025fac016a8965b1c',1,'OptionalUnit::OptionalUnit()'],['../class_optional_unit.html#a2b422ae649d36eaebc4370590b49bee4',1,'OptionalUnit::OptionalUnit(std::istream &amp;in)']]]
 ];

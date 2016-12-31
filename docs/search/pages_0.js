@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mieic',['MIEIC',['../md__r_e_a_d_m_e.html',1,'']]]
+  ['mieic_20registrations',['MIEIC Registrations',['../md__r_e_a_d_m_e.html',1,'']]]
 ];

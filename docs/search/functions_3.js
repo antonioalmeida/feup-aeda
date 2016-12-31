@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['editstudentcoursestatus',['editStudentCourseStatus',['../class_course.html#a38528847bf39dbec80614e950c7ed7d5',1,'Course']]],
   ['editstudentmenu',['editStudentMenu',['../_menus_8h.html#af76b38ad0792d52bb7e30991ff70e765',1,'Menus.cpp']]],
   ['editstudentname',['editStudentName',['../class_course.html#a5ac85f1c1d30574bbfb64362d0fe65d7',1,'Course']]],
   ['editstudentoptions',['editStudentOptions',['../_menus_8h.html#ae61e00761279f188fc778a7911d03241',1,'Menus.cpp']]],
