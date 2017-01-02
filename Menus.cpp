@@ -1195,12 +1195,11 @@ unsigned short int classesMenu() {
 	cout << TAB_BIG << "----------------------" << endl;
 	cout << endl;
 	cout << TAB << "1 - Create Class" << endl; //DONE
-	cout << TAB << "2 - Remove Class" << endl; //DONE - to complete -> verify if class hasn't already been removed
-	cout << TAB << "3 - Register Student in Class" << endl; //TO DO
-	cout << TAB << "4 - List Classes' Vacancies - Top 3" << endl; //DONE
+	cout << TAB << "2 - Remove Class" << endl; //DONE
+	cout << TAB << "3 - List Classes' Vacancies - Top 3" << endl; //DONE
 	cout << TAB << "0 - Return to Main Menu" << endl << endl;
 	cout << TAB << "Enter your option: ";
-	option = readOp(0, 4);
+	option = readOp(0, 3);
 
 	return option;
 }
@@ -1233,10 +1232,6 @@ void classesOptions(Course &course) {
 			pressToContinue();
 			break;
 		case 3:
-			//registerStudentInClass;
-			pressToContinue();
-			break;
-		case 4:
 			cout << "Insert the classes' curricular year: " << endl;
 			cYear = readOp(1,5);
 			if(course.getStudentsClasses().at(cYear-1).size() >= 3)
